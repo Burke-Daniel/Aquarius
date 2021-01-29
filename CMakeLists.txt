@@ -9,6 +9,7 @@ include_directories(${PROJECT_SOURCE_DIR}/Aquarius/Vendor/easyloggingpp/src)
 include_directories(${PROJECT_SOURCE_DIR}/Aquarius/Vendor/stb_image)
 include_directories(${GLM_INCLUDE_DIRS})
 
+# So that easylogging++ is build as a static lib
 set(build_static_lib ON CACHE BOOL "build static library" FORCE)
 
 # Find GLM
