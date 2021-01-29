@@ -1,0 +1,9 @@
+[submodule "Aquarius/Vendor/glfw"]
+	path = Aquarius/Vendor/glfw
+	url = https://github.com/glfw/glfw.git
+[submodule "Aquarius/Vendor/easyloggingpp"]
+	path = Aquarius/Vendor/easyloggingpp
+	url = https://github.com/amrayn/easyloggingpp.git
+[submodule "Aquarius/Vendor/glm"]
+	path = Aquarius/Vendor/glm
+	url = https://github.com/g-truc/glm.git
