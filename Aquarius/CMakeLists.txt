@@ -5,9 +5,9 @@ project(Aquarius-Engine)
 set(CMAKE_CXX_STANDARD 14)
 set(CMAKE_CXX_STANDARD_REQUIRED True)
 
-set(sources test.cpp)
+set(sources Aquarius.cpp Aquarius.h)
 
-add_executable(Aquarius-Engine ${sources})
+add_library(Aquarius-Engine STATIC ${sources})
 
 target_link_libraries(Aquarius-Engine glad)
 target_link_libraries(Aquarius-Engine glfw ${GLFW_LIBRARIES})

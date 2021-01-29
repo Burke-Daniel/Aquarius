@@ -2,6 +2,7 @@ cmake_minimum_required(VERSION 3.10)
 
 project(Aquarius)
 
+include_directories(${PROJECT_SOURCE_DIR}/Aquarius)
 include_directories(${PROJECT_SOURCE_DIR}/Aquarius/Vendor/glfw/include)
 include_directories(${PROJECT_SOURCE_DIR}/Aquarius/Vendor/glad/include)
 include_directories(${PROJECT_SOURCE_DIR}/Aquarius/Vendor/easyloggingpp/src)
@@ -20,4 +21,4 @@ add_subdirectory(Aquarius/Vendor/easyloggingpp)
 add_subdirectory(Aquarius/Vendor/glad)
 add_subdirectory(Aquarius/Vendor/glfw)
 add_subdirectory(Aquarius/Vendor/stb_image)
-
+add_subdirectory(Sandbox)
