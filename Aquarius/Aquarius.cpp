@@ -2,7 +2,9 @@
 
 INITIALIZE_EASYLOGGINGPP
 
-int Aquarius::Test::testMain()
+namespace Aquarius {
+
+int Test::testMain()
 {
     glfwInit();
     glfwWindowHint(GLFW_CONTEXT_VERSION_MAJOR, 4);
@@ -23,7 +25,7 @@ int Aquarius::Test::testMain()
     }
 
     AQ_LOG_INFO << "Window created successfully!";
-    
+
     while (!glfwWindowShouldClose(window))
     {
         glClearColor(0.2f, 0.3f, 0.3f, 1.0f);
@@ -34,3 +36,5 @@ int Aquarius::Test::testMain()
 
     return 0;
 }
+
+} // namespace Aquarius
