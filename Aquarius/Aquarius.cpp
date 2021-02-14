@@ -1,11 +1,12 @@
 #include "Aquarius.h"
-
-INITIALIZE_EASYLOGGINGPP
+#include "Aquarius/Core/Log.h"
 
 namespace Aquarius {
 
 int Test::testMain()
 {
+    Log::initLoggers();
+
     glfwInit();
     glfwWindowHint(GLFW_CONTEXT_VERSION_MAJOR, 4);
     glfwWindowHint(GLFW_CONTEXT_VERSION_MINOR, 1);
@@ -14,17 +15,20 @@ int Test::testMain()
     GLFWwindow* window = glfwCreateWindow(800, 600, "Aquarius-Test", NULL, NULL);
     if (window == NULL)
     {
-        AQ_LOG_WARNING << "Could not create window";
+        AQ_WARNING("Could not create window");
     }
     glfwMakeContextCurrent(window);
 
     if (!gladLoadGLLoader((GLADloadproc)glfwGetProcAddress))
     {
-        AQ_LOG_WARNING << "Could not initialize glad";
+        AQ_WARNING("Could not initialize glad");
         return -1;
     }
 
-    AQ_LOG_INFO << "Window created successfully!";
+    AQ_INFO("Window created successfully!");
+
+    AQ_INFO("Testing %v %v", "client", "logger");
+    AQ_CORE_INFO("Testing %v %v", "core", "logger");
 
     while (!glfwWindowShouldClose(window))
     {
