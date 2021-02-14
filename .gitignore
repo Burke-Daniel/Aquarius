@@ -35,5 +35,9 @@
 build/
 cmake-build-debug/
 
-# User Specific IDE Settings
+
+
+# IDE folders
 .idea/
+.vs/
+
