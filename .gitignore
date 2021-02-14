@@ -33,3 +33,7 @@
 
 # Build folders
 build/
+cmake-build-debug/
+
+# User Specific IDE Settings
+.idea/
