@@ -4,15 +4,18 @@ A 2D game engine developed by Colton Smith, Daniel Burke, & Liam Warren for the 
 
 ## Additional Required Software
 - CMake Version 3.10 ([Download](https://cmake.org/download/))
-- A C++ Integrated Development Environment (IDE) (Development is being completed on [JetBrains CLion](https://www.jetbrains.com/clion/))
 
 ## Building Aquarius
 1. Unzip the ZIP File
-2. Open the unzipped folder as a project in IDE
-3. Execute Build `Aquarius-Engine` in IDE, this will compile all source code  
-
+2. Navigate in command-line interface to the unzipped project folder 
+3. Make a build directory by executing the following command `mkdir build`
+4. Navigate to the build directory by executing the following command `cd build`
+5. Execute CMake to build the project by executing the following command `cmake ..`
+6. Generate an executable file by executing the following command `cmake --build . --config Release`
 
 ## Running Aquarius
-1. Add `Sandbox/Sandbox.cpp` to executables in IDE Run Configurations settings
-2. Run `Aquarius-Engine`
-3. A window will appear, Aquarius has successfully been built and run!
+1. Remain in the same command-line interface window as above, navigate to the Sandbox directory by executing 
+   the following command `cd Sandbox`    
+2. Run the generated executable by executing the following command `./Sandbox`
+3. A window will open, you have successfully built and run Aquarius!
+    
