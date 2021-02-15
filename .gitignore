@@ -35,9 +35,9 @@
 build/
 cmake-build-debug/
 
-
-
 # IDE folders
 .idea/
 .vs/
 
+# Python venv
+.venv
