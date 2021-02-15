@@ -1,8 +1,6 @@
 #!/bin/bash
 
 # Simple build script for Aquarius sandbox application
-set -x
-
 echo "-----------------------------------"
 echo "Creating build folder..."
 mkdir build
@@ -16,7 +14,7 @@ echo "-----------------------------------"
 
 echo "-----------------------------------"
 echo "Building executable..."
-cmake --build . 
+cmake --build . --config Release
 echo "-----------------------------------"
 
 echo "-----------------------------------"
