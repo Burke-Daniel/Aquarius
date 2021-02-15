@@ -33,8 +33,8 @@ application manually on Windows, MAC, and Linux but not WSL.**
 5. Generate an executable file by executing the following command `cmake --build . --config Release`
 
 ## Running a Sample Aquarius Application Manually
-1. Remain in the same command-line interface window used to build the project, navigate to the Sandbox directory of the 
-   build directory by executing the following command `cd Sandbox`. If you have exited out of the command-line interface
-   used to build the project please navigate to `Aquarius/build/Sandbox` before proceeding to the next step. 
+1. If using Windows navigate to Aquarius/build/Sandbox/Release in command-line interface. If using MAC or Linux navigate
+   to Aquarius/build/Sandbox in command-line interface. Use the `cd` command in the command-line interface to navigate 
+   to the correct directory.
 2. Run the generated executable file by executing the following command `./Sandbox`
 3. If a window opens, you have successfully built and run a sample Aquarius application!
