@@ -6,18 +6,36 @@ A 2D game engine developed by Colton Smith, Daniel Burke, & Liam Warren for the 
 ## Additional Required Software
 - CMake Version 3.10 ([Download](https://cmake.org/download/))
 
-**The below commands and the sample application works for Windows, MAC, and Linux but not Windows Subsystem for Linux 
-(WSL)**
+**The below commands and the sample application works for Windows, MAC, and Linux but not Windows
+Subsystem for Linux (WSL)**
 
-## Building Aquarius
+**For ease of building and running a sample Aquarius application scripts were developed to automate the building and 
+running. Please see the below instructions based on your operating system.**
+
+## Building and Running a Sample Aquarius Application Automatically on Mac & Linux
 1. Extract the zip file to Aquarius/
-2. Navigate in command-line interface to the unzipped project folder 
+2. Navigate in a command-line interface to the unzipped project folder Aquarius/
+3. In your command-line execute the following command `sh build-run-sample-app.sh`
+4. If a window opens, you have successfully built and run a sample Aquarius application!
+
+## Building and Running a Sample Aquarius Application Automatically on Windows
+1. Extract the zip file to Aquarius/
+2. Navigate in a command-line interface to the unzipped project folder Aquarius/
+3. In your command-line interface execute the following command `build-run-sample-app.bat`
+4. If a window opens, you have successfully built and run a sample Aquarius application!
+
+**Alternatively, the below instructions could be used to complete the building and running of a sample Aquarius 
+application manually on Windows, MAC, and Linux but not WSL.**
+
+## Building Aquarius Manually
+1. Extract the zip file to Aquarius/
+2. Navigate in a command-line interface to the unzipped project folder 
 3. Make a build directory by executing the following command `mkdir build`
 4. Navigate to the build directory by executing the following command `cd build`
 5. Execute CMake to build the project by executing the following command `cmake ..`
 6. Generate an executable file by executing the following command `cmake --build . --config Release`
 
-## Running Sample Aquarius Application
+## Running a Sample Aquarius Application Manually
 1. Remain in the same command-line interface window used to build the project, navigate to the Sandbox directory of the 
    build directory by executing the following command `cd Sandbox`. If you have exited out of the command-line interface
    used to build the project please navigate to `Aquarius/build/Sandbox` before proceeding to the next step. 
