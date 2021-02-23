@@ -86,6 +86,9 @@ namespace Aquarius {
     void Window::Deallocate()
     {
         glfwDestroyWindow(m_Window);
+        glfwTerminate();
+
+        AQ_CORE_INFO("Window destroyed and GLFW terminated");
     }
 
     void Window::setVsync(bool enabled)

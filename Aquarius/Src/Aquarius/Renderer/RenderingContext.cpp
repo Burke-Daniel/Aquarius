@@ -42,15 +42,4 @@ namespace Aquarius {
     {
         glfwSwapBuffers(m_Window);
     }
-
-    void RenderingContext::Deallocate()
-    {
-        glfwTerminate();
-    }
-
-    RenderingContext::~RenderingContext()
-    {
-        Deallocate();
-    }
-
 } // namespace Aquarius

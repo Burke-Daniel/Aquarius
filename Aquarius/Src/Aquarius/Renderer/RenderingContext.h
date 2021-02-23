@@ -16,9 +16,6 @@ namespace Aquarius {
         void Initialize();
         void SwapBuffers();
 
-        void Deallocate();
-        ~RenderingContext();
-
     private:
         GLFWwindow* m_Window;
     };
