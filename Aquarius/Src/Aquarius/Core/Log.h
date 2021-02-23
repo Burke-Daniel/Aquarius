@@ -21,6 +21,16 @@
 
 namespace Aquarius {
 
+	enum class LogLevel
+	{
+		All = 0,
+		Trace,
+		Info,
+		Warning,
+		Error,
+		Fatal,
+		Disabled
+	};
 	class Log
 	{
 	public:
@@ -28,10 +38,17 @@ namespace Aquarius {
 
 		static el::Logger* getClientLogger() { return s_clientLogger; }
 		static el::Logger* getCoreLogger() { return s_coreLogger; }
+
+		static void setClientLogFile(const std::string& fileName);
+		static void setCoreLogFile(const std::string& fileName);
+
+		static void setLogLevel(LogLevel level);
 	private:
 		Log() = delete;
 
 		static el::Logger* s_clientLogger;
 		static el::Logger* s_coreLogger;
+		static el::Configurations s_clientConfig;
+		static el::Configurations s_coreConfig;
 	};
 } // namespace Aquarius
