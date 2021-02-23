@@ -1,3 +1,5 @@
+#define AQ_ASSERT_ENABLE
+
 #include "Aquarius.h"
 #include "Aquarius/Core/Log.h"
 #include "Aquarius/Core/Window.h"
