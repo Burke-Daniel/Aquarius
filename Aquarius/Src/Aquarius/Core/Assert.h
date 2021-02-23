@@ -12,6 +12,7 @@ inline void aqCoreAssert(bool expression)
 	if (!expression)
 	{
 		AQ_CORE_ERROR("Assertion failed at %v:%v", __FILE__, __LINE__);
+		std::abort();
 	}
 	#endif
 }
@@ -24,6 +25,7 @@ inline void aqCoreAssert(bool expression, Msg message, Ts ... args)
 	{
 		std::string errorMessage = "Assertion failed: " + std::string(message);
 		AQ_ERROR(errorMessage.c_str(), args...);
+		std::abort();
 	}
 	#endif
 }
@@ -34,6 +36,7 @@ inline void aqAssert(bool expression)
 	if (!expression)
 	{
 		AQ_ERROR("Assertion failed at %v:%v", __FILE__, __LINE__);
+		std::abort();
 	}
 	#endif
 }
@@ -46,6 +49,7 @@ inline void aqAssert(bool expression, Msg message, Ts ... args)
 	{
 		std::string errorMessage = "Assertion failed: " + std::string(message);
 		AQ_ERROR(errorMessage.c_str(), args...);
+		std::abort();
 	}
 	#endif
 }
