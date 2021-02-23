@@ -1,44 +1,28 @@
 #include "Aquarius.h"
 #include "Aquarius/Core/Log.h"
+#include "Aquarius/Core/Window.h"
 
 namespace Aquarius {
 
-int Test::testMain()
-{
-    Log::initLoggers();
-
-    glfwInit();
-    glfwWindowHint(GLFW_CONTEXT_VERSION_MAJOR, 4);
-    glfwWindowHint(GLFW_CONTEXT_VERSION_MINOR, 1);
-    glfwWindowHint(GLFW_OPENGL_PROFILE, GLFW_OPENGL_CORE_PROFILE);
-
-    GLFWwindow* window = glfwCreateWindow(800, 600, "Aquarius-Test", NULL, NULL);
-    if (window == NULL)
+    int Test::testMain()
     {
-        AQ_WARNING("Could not create window");
+        Log::initLoggers();
+
+        std::unique_ptr<Window> Window = Window::Create(800, 600, "Aquarius");
+        Window->Initialize();
+
+        AQ_INFO("Testing %v %v", "client", "logger");
+        AQ_CORE_INFO("Testing %v %v", "core", "logger");
+
+        while (1)
+        {
+            glClearColor(0.2f, 0.3f, 0.3f, 1.0f);
+            glClear(GL_COLOR_BUFFER_BIT);
+            Window->OnUpdate();
+        }
+
+        return 0;
     }
-    glfwMakeContextCurrent(window);
-
-    if (!gladLoadGLLoader((GLADloadproc)glfwGetProcAddress))
-    {
-        AQ_WARNING("Could not initialize glad");
-        return -1;
-    }
-
-    AQ_INFO("Window created successfully!");
-
-    AQ_INFO("Testing %v %v", "client", "logger");
-    AQ_CORE_INFO("Testing %v %v", "core", "logger");
-
-    while (!glfwWindowShouldClose(window))
-    {
-        glClearColor(0.2f, 0.3f, 0.3f, 1.0f);
-        glClear(GL_COLOR_BUFFER_BIT);
-        glfwSwapBuffers(window);
-        glfwPollEvents();
-    }
-
-    return 0;
-}
 
 } // namespace Aquarius
+
