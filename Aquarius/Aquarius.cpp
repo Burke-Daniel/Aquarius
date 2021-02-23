@@ -3,6 +3,8 @@
 #include "Aquarius.h"
 #include "Aquarius/Core/Log.h"
 #include "Aquarius/Core/Window.h"
+#include "Aquarius/Core/Assert.h"
+
 
 namespace Aquarius {
 
