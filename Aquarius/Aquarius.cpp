@@ -2,7 +2,10 @@
 
 #include "Aquarius.h"
 #include "Aquarius/Core/Log.h"
+<<<<<<< HEAD
 #include "Aquarius/Core/Window.h"
+=======
+>>>>>>> fbc90d4 (Update testMain to include example assertions)
 #include "Aquarius/Core/Assert.h"
 
 
