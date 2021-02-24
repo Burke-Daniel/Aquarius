@@ -1,9 +1,12 @@
+#include "Sandbox.h"
+
 #include <Aquarius.h>
 
-int main()
-{
-    Aquarius::Test test;
-    test.testMain();
+Sandbox::Sandbox()
+	: Aquarius::Application("Sandbox")
+{}
 
-    return 0;
+Aquarius::Application::ApplicationPtr createApplication()
+{
+	return std::make_unique<Sandbox>();
 }

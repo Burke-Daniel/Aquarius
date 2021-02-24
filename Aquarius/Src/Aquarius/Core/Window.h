@@ -9,9 +9,9 @@ namespace Aquarius {
     // GLFW Window
     class Window
     {
+    public:
         using WindowPtr = std::unique_ptr<Window>;
 
-    public:
         // Creation
         Window(uint32_t width, uint32_t height, std::string&& name, bool vsync = false);
         static WindowPtr Create(uint32_t width, uint32_t height, std::string&& name, bool vsync = false);
