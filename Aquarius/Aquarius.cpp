@@ -1,5 +1,8 @@
 #include "Aquarius.h"
 #include "Aquarius/Core/Log.h"
+#include "Aquarius/Events/Keyboard.h"
+#include "Aquarius/Events/Mouse.h"
+#include "Aquarius/Events/Window.h"
 
 namespace Aquarius {
 
@@ -26,6 +29,16 @@ int Test::testMain()
     }
 
     AQ_INFO("Window created successfully!");
+
+    //TODO Bring in neccesary set methods for window events.
+    glfwSetKeyCallback(window, KeyboardEvent::Callback);
+    glfwSetCursorPosCallback(window, MouseEvent::cursorPositionCallback);
+    glfwSetCursorEnterCallback(window, MouseEvent::cursorInWindowCallback);
+    glfwSetMouseButtonCallback(window, MouseEvent::mouseButtonCallback);
+    glfwSetScrollCallback(window, MouseEvent::mouseScrollCallback);
+
+    glfwSetInputMode(window, GLFW_STICKY_MOUSE_BUTTONS, 1);
+    glfwSetInputMode(window, GLFW_STICKY_KEYS,1);
 
     AQ_INFO("Testing %v %v", "client", "logger");
     AQ_CORE_INFO("Testing %v %v", "core", "logger");
