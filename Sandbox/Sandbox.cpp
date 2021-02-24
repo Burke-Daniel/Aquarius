@@ -5,3 +5,8 @@
 Sandbox::Sandbox()
 	: Aquarius::Application("Sandbox")
 {}
+
+Aquarius::Application::ApplicationPtr createApplication()
+{
+	return std::make_unique<Sandbox>();
+}

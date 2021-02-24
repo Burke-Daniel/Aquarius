@@ -8,7 +8,4 @@ public:
 	Sandbox();
 };
 
-Aquarius::Application::ApplicationPtr createApplication()
-{
-	return std::make_unique<Sandbox>();
-}
+Aquarius::Application::ApplicationPtr createApplication();
