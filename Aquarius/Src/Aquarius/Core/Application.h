@@ -9,10 +9,10 @@ namespace Aquarius {
 	class Application
 	{
 	public:
+		using ApplicationPtr = std::unique_ptr<Application>;
+
 		Application() = delete;
 		Application(const Application&) = delete;
-
-		using ApplicationPtr = std::unique_ptr<Application>;
 
 		virtual ~Application() {};
 
@@ -24,8 +24,8 @@ namespace Aquarius {
 	protected:
 		Application(std::string&& windowName = "Application");
 	private:
-		static Application* s_application;
-		Window::WindowPtr m_window;
+		static Application* s_Application;
+		Window::WindowPtr m_Window;
 	};
 
 } // namespace Aquarius

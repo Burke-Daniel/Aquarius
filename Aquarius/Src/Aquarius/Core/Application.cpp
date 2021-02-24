@@ -4,20 +4,20 @@
 
 namespace Aquarius {
 
-	Application* Application::s_application = nullptr;
+	Application* Application::s_Application = nullptr;
 
-	Application* Application::get() { return s_application; }
+	Application* Application::get() { return s_Application; }
 
-	Window* Application::getWindow() { return m_window.get(); }
+	Window* Application::getWindow() { return m_Window.get(); }
 
 	Application::Application(std::string&& windowName)
-		: m_window(Window::Create(800, 600, std::move(windowName)))
+		: m_Window(Window::Create(800, 600, std::move(windowName)))
 	{
-		s_application = this;
+		s_Application = this;
 
 		Log::initLoggers();
 
-		m_window->Initialize();
+		m_Window->Initialize();
 
 		AQ_CORE_INFO("Window Initialized Sucessfully");
 	}
@@ -28,7 +28,7 @@ namespace Aquarius {
 		{
 			glClearColor(0.2f, 0.3f, 0.3f, 1.0f);
 			glClear(GL_COLOR_BUFFER_BIT);
-			m_window->OnUpdate();
+			m_Window->OnUpdate();
 		}
 	}
 
