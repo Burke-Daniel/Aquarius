@@ -20,13 +20,6 @@ namespace Aquarius {
         if (!gladLoadGLLoader((GLADloadproc)glfwGetProcAddress))
         {
             AQ_CORE_FATAL("Failed to initialize GLAD" );
-
-            // Set GLFW error callback
-            glfwSetErrorCallback([](int error_code, const char* description)
-            {
-                AQ_CORE_ERROR("GLFW Error Occurred:");
-                AQ_CORE_ERROR(description);
-            });
         }
         else
         {

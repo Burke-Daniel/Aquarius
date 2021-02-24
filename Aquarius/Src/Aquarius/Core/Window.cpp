@@ -15,6 +15,13 @@ namespace Aquarius {
 
     void Window::Initialize()
     {
+        // Set GLFW error callback
+        glfwSetErrorCallback([](int error_code, const char* description)
+                             {
+                                 AQ_CORE_ERROR("GLFW Error Occurred:");
+                                 AQ_CORE_ERROR(description);
+                             });
+
         // Initialize GLFW
         int initSuccess = glfwInit();
         if (!initSuccess)
