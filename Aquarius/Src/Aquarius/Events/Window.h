@@ -4,7 +4,9 @@
 #include "Aquarius/Core/Log.h"
 
 namespace Aquarius {
-    class WindowEvent {
+
+    class WindowEvent
+            {
     public:
 
         static void windowCloseCallback(GLFWwindow* window)
@@ -52,4 +54,4 @@ namespace Aquarius {
             //TODO Implement
         }
     };
-}
+} // namespace Aquarius
