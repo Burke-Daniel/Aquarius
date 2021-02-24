@@ -1,9 +1,7 @@
+#include "Sandbox.h"
+
 #include <Aquarius.h>
 
-int main()
-{
-    Aquarius::Test test;
-    test.testMain();
-
-    return 0;
-}
+Sandbox::Sandbox()
+	: Aquarius::Application("Sandbox")
+{}

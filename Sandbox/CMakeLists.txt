@@ -5,7 +5,7 @@ project(Sandbox)
 set(CMAKE_CXX_STANDARD 14)
 set(CMAKE_CXX_STANDARD_REQUIRED True)
 
-set(sources Sandbox.cpp)
+file(GLOB_RECURSE sources *.h *.cpp)
 
 add_executable(Sandbox ${sources})
 
