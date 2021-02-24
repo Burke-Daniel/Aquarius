@@ -26,7 +26,7 @@ namespace Aquarius {
         uint32_t getWidth() const;
         uint32_t getHeight() const;
         const std::string& getName() const;
-        bool getVsync() const;
+        bool isVsyncEnabled() const;
         void setVsync(bool enabled);
 
         // Destruction

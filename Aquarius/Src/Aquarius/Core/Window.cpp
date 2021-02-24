@@ -73,7 +73,7 @@ namespace Aquarius {
         return m_Name;
     }
 
-    bool Window::getVsync() const
+    bool Window::isVsyncEnabled() const
     {
         return m_VsyncEnabled;
     }
