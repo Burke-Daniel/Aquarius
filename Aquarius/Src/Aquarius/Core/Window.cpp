@@ -1,8 +1,6 @@
 #include "Window.h"
 #include "Log.h"
 #include <assert.h>
-#include "Aquarius/Events/Keyboard.h"
-#include "Aquarius/Events/Mouse.h"
 
 namespace Aquarius {
 
@@ -62,15 +60,7 @@ namespace Aquarius {
         glViewport(0, 0, m_Width, m_Height);
         setVsync(m_VsyncEnabled);
 
-        // Register Window Callbacks
-        glfwSetKeyCallback(m_Window, KeyboardEvent::Callback);
-        glfwSetCursorPosCallback(m_Window, MouseEvent::cursorPositionCallback);
-        glfwSetCursorEnterCallback(m_Window, MouseEvent::cursorInWindowCallback);
-        glfwSetMouseButtonCallback(m_Window, MouseEvent::mouseButtonCallback);
-        glfwSetScrollCallback(m_Window, MouseEvent::mouseScrollCallback);
-
-        glfwSetInputMode(m_Window, GLFW_STICKY_MOUSE_BUTTONS, 1);
-        glfwSetInputMode(m_Window, GLFW_STICKY_KEYS,1);
+        // Register Window Callbacks here
     }
 
     uint32_t Window::getWidth() const
