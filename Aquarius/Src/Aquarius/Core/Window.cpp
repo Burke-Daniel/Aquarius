@@ -44,9 +44,8 @@ namespace Aquarius {
         m_Window = glfwCreateWindow(m_Width, m_Height, m_Name.c_str(), NULL, NULL);
         if (m_Window == nullptr)
         {
-            AQ_CORE_FATAL("Failed to create a glfw window");
             glfwTerminate();
-            assert(false);
+            AQ_CORE_FATAL("Failed to create a glfw window");
         }
 
         // Generate context
