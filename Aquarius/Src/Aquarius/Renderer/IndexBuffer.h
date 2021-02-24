@@ -7,6 +7,7 @@ namespace Aquarius {
     {
     public:
         IndexBuffer(uint32_t* data, size_t count);
+        IndexBuffer(uint16_t* data, size_t count);
         ~IndexBuffer();
 
         void Bind() const;
