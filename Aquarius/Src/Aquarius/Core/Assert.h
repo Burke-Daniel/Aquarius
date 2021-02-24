@@ -24,7 +24,7 @@ inline void aqCoreAssert(bool expression, Msg message, Ts ... args)
 	if (!expression)
 	{
 		std::string errorMessage = "Assertion failed: " + std::string(message);
-		AQ_ERROR(errorMessage.c_str(), args...);
+		AQ_CORE_ERROR(errorMessage.c_str(), args...);
 		std::abort();
 	}
 	#endif
