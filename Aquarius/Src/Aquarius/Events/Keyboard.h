@@ -4,7 +4,9 @@
 #include "Aquarius/Core/Log.h"
 
 namespace Aquarius {
-    class KeyboardEvent {
+
+    class KeyboardEvent
+            {
     public:
         static void Callback(GLFWwindow* window, int key, int scanCode, int action, int modifications)
         {
@@ -21,7 +23,7 @@ namespace Aquarius {
                     break;
 
                 case GLFW_REPEAT:
-                    AQ_INFO("key %v is being pressed repeatedly. ", key);
+                    AQ_INFO("key %v is being pressed repeatedly.", key);
                     break;
 
                 default:
@@ -29,4 +31,4 @@ namespace Aquarius {
             }
         }
     };
-}
+} // namespace Aquarius

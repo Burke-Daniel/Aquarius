@@ -4,7 +4,9 @@
 #include "Aquarius/Core/Log.h"
 
 namespace Aquarius {
-    class MouseEvent {
+
+    class MouseEvent
+            {
     public:
         static void cursorPositionCallback(GLFWwindow* window, double xPosition, double yPosition)
         {
@@ -52,4 +54,4 @@ namespace Aquarius {
             AQ_INFO("y offset: %v", yOffset);
         }
     };
-}
+} // namespace Aquarius
