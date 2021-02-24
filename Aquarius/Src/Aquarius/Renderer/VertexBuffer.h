@@ -6,7 +6,8 @@ namespace Aquarius {
     class VertexBuffer
     {
     public:
-        VertexBuffer(void* data, size_t size);
+        VertexBuffer(float* data, size_t size);
+        VertexBuffer(double* data, size_t size);
         ~VertexBuffer();
 
         void Bind() const;
