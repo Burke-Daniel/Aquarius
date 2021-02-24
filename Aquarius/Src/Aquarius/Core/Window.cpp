@@ -5,7 +5,12 @@
 namespace Aquarius {
 
     Window::Window(uint32_t width, uint32_t height, std::string &&name, bool vsync)
-        : m_Width(width), m_Height(height), m_Name(std::move(name)), m_VsyncEnabled(vsync), m_Window(nullptr), m_Context(nullptr)
+        : m_Width(width),
+          m_Height(height),
+          m_Name(std::move(name)),
+          m_VsyncEnabled(vsync),
+          m_Window(nullptr),
+          m_Context(nullptr)
     {}
 
     Window::WindowPtr Window::Create(uint32_t width, uint32_t height, std::string &&name, bool vsync)
@@ -106,7 +111,7 @@ namespace Aquarius {
         }
         else
         {
-            glfwSwapInterval(1);
+            glfwSwapInterval(0);
             AQ_CORE_INFO("Vsync disabled");
         }
         m_VsyncEnabled = enabled;
