@@ -1,6 +1,7 @@
 
 #include "Application.h"
 #include "Aquarius/Core/Log.h"
+#include "Aquarius/Core/Input.h"
 
 namespace Aquarius {
 
@@ -24,7 +25,7 @@ namespace Aquarius {
 
 	void Application::run()
 	{
-		while (true)
+		while (!glfwWindowShouldClose(m_Window->get()))
 		{
 			glClearColor(0.2f, 0.3f, 0.3f, 1.0f);
 			glClear(GL_COLOR_BUFFER_BIT);
