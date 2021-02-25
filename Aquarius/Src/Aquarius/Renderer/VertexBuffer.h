@@ -1,4 +1,5 @@
 #pragma once
+
 #include <cstdint>
 #include <stddef.h>
 
@@ -17,4 +18,5 @@ namespace Aquarius {
     private:
         uint32_t m_ID;
     };
+
 } // namespace Aquarius

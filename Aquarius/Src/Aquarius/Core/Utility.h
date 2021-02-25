@@ -2,6 +2,7 @@
 
 #include <memory>
 
+
 namespace Aquarius {
 
     template<typename T>

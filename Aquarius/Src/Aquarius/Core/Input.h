@@ -1,10 +1,11 @@
-#include <cstdint>
-
 #include "Window.h"
 
-namespace Aquarius {
-	namespace Input {
+#include <cstdint>
 
+
+namespace Aquarius {
+
+	namespace Input {
 
 		enum class KeyState : int
 		{
@@ -167,5 +168,7 @@ namespace Aquarius {
 		bool isKeyPressed(KeyCode key);
 		bool isMouseButtonPressed(MouseButtonCode button);
 		MousePosition getMousePosition();
+
 	} // namespace Input
+
 } // namespace Aquarius

@@ -46,4 +46,5 @@ namespace Aquarius {
         // Deallocate window resources
         void Deallocate();
     };
+
 } // namespace Aquarius

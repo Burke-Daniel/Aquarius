@@ -2,6 +2,7 @@
 
 #include "easylogging++.h"
 
+
 // Note: for printf-like formatting, use only %v instead of type specific identifiers within log string
 
 // Core log macros
@@ -51,4 +52,5 @@ namespace Aquarius {
 		static el::Configurations s_clientConfig;
 		static el::Configurations s_coreConfig;
 	};
+
 } // namespace Aquarius

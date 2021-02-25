@@ -22,4 +22,5 @@ namespace Aquarius {
     private:
         GLFWwindow* m_Window;
     };
+
 } // namespace Aquarius
