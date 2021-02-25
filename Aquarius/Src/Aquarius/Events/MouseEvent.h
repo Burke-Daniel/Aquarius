@@ -1,6 +1,7 @@
 #pragma once
 
 #include "Aquarius/Core/Log.h"
+#include "Aquarius/Events/MouseCode.h"
 
 #include <GLFW/glfw3.h>
 
@@ -8,7 +9,7 @@
 namespace Aquarius {
 
     class MouseEvent
-            {
+    {
     public:
         static void cursorPositionCallback(GLFWwindow* window, double xPosition, double yPosition)
         {
