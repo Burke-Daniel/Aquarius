@@ -35,5 +35,5 @@ namespace Aquarius {
     {
         glfwSwapBuffers(m_Window);
     }
-    
+
 } // namespace Aquarius

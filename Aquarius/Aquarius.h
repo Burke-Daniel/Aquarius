@@ -15,12 +15,12 @@
 #include "Aquarius/Events/Mouse.h"
 #include "Aquarius/Events/Window.h"
 
-#include <iostream>
+#include <easylogging++.h>
 #include <glad/glad.h>
 #include <GLFW/glfw3.h>
-#include <easylogging++.h>
-#include <stb_image.h>
 #include <glm/glm.hpp>
+#include <iostream>
+#include <stb_image.h>
 
 
 namespace Aquarius {
