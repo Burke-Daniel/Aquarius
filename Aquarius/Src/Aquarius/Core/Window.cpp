@@ -3,7 +3,6 @@
 #include <assert.h>
 #include "Aquarius/Events/KeyboardEvent.h"
 #include "Aquarius/Events/MouseEvent.h"
-#include "Aquarius/Core/Input.h"
 
 namespace Aquarius {
 
@@ -89,11 +88,6 @@ namespace Aquarius {
         return m_Name;
     }
 
-    GLFWwindow* Window::get() const
-    {
-        return m_Window;
-    }
-
     bool Window::isVsyncEnabled() const
     {
         return m_VsyncEnabled;
@@ -101,10 +95,6 @@ namespace Aquarius {
 
     void Window::OnUpdate()
     {
-        if (Input::isKeyPressed(Input::KeyCode::Key_escape))
-        {
-            glfwSetWindowShouldClose(m_Window, true);
-        }
         m_Context->SwapBuffers();
         glfwPollEvents();
     }
