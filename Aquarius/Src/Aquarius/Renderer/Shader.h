@@ -10,6 +10,8 @@ namespace Aquarius {
     class Shader
     {
     public:
+        Shader() = delete;
+
         // Path to vertex and fragment shader source code
         Shader(const std::string& vertexPath, const std::string& fragmentPath);
         ~Shader();
