@@ -1,11 +1,11 @@
 #pragma once
 
-#include "Aquarius/Renderer/RenderingContext.h"
 #include "Aquarius/Core/Utility.h"
+#include "Aquarius/Renderer/RenderingContext.h"
 
-#include <string>
 #include <memory>
 #include <GLFW/glfw3.h>
+#include <string>
 
 
 namespace Aquarius {

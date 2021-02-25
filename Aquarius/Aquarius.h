@@ -1,11 +1,3 @@
-
-#include <iostream>
-#include <glad/glad.h>
-#include <GLFW/glfw3.h>
-#include <easylogging++.h>
-#include <stb_image.h>
-#include <glm/glm.hpp>
-
 // -- Core
 #include "Aquarius/Core/Utility.h"
 #include "Aquarius/Core/Application.h"
@@ -22,6 +14,14 @@
 #include "Aquarius/Events/Keyboard.h"
 #include "Aquarius/Events/Mouse.h"
 #include "Aquarius/Events/Window.h"
+
+#include <iostream>
+#include <glad/glad.h>
+#include <GLFW/glfw3.h>
+#include <easylogging++.h>
+#include <stb_image.h>
+#include <glm/glm.hpp>
+
 
 namespace Aquarius {
     class Test

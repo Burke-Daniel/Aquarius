@@ -1,7 +1,7 @@
 #pragma once
 
-#include "Aquarius/Core/Window.h"
 #include "Aquarius/Core/Utility.h"
+#include "Aquarius/Core/Window.h"
 
 #include <memory>
 

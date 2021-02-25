@@ -1,6 +1,6 @@
 #pragma once
 
-#include "Aquarius/Core/Application.h"
+#include <Aquarius.h>
 
 class Sandbox : public Aquarius::Application
 {
