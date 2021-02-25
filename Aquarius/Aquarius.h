@@ -28,6 +28,6 @@ namespace Aquarius {
     {
     public:
         int testMain();
-        int triangleTest();
+        static int triangleTest();
     };
 }
