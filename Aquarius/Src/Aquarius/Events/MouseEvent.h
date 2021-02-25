@@ -1,7 +1,6 @@
 #pragma once
 
 #include "Aquarius/Core/Log.h"
-#include "Aquarius/Events/MouseCode.h"
 
 #include <GLFW/glfw3.h>
 
