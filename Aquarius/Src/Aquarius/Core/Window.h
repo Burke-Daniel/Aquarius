@@ -1,20 +1,21 @@
 #pragma once
+
+#include "Aquarius/Renderer/RenderingContext.h"
+#include "Aquarius/Core/Utility.h"
+
 #include <string>
 #include <memory>
-#include <Aquarius/Renderer/RenderingContext.h>
 #include <GLFW/glfw3.h>
+
 
 namespace Aquarius {
 
-    // GLFW Window
     class Window
     {
     public:
-        using WindowPtr = std::unique_ptr<Window>;
-
         // Creation
         Window(uint32_t width, uint32_t height, std::string&& name, bool vsync = false);
-        static WindowPtr Create(uint32_t width, uint32_t height, std::string&& name, bool vsync = false);
+        static uniquePtr<Window> Create(uint32_t width, uint32_t height, std::string&& name, bool vsync = false);
 
         // Initialize GLFW
         void Initialize();

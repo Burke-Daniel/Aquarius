@@ -16,7 +16,7 @@ namespace Aquarius {
           m_Context(nullptr)
     {}
 
-    Window::WindowPtr Window::Create(uint32_t width, uint32_t height, std::string &&name, bool vsync)
+    uniquePtr<Window> Window::Create(uint32_t width, uint32_t height, std::string &&name, bool vsync)
     {
         return std::make_unique<Window>(width, height, std::move(name));
     }

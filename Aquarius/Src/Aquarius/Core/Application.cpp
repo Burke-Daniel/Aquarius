@@ -1,7 +1,7 @@
-
 #include "Application.h"
-#include "Aquarius/Core/Log.h"
 #include "Aquarius/Core/Input.h"
+#include "Aquarius/Core/Log.h"
+
 
 namespace Aquarius {
 
@@ -35,7 +35,7 @@ namespace Aquarius {
 
 } // namespace Aquarius
 
-extern Aquarius::Application::ApplicationPtr createApplication();
+extern Aquarius::uniquePtr<Aquarius::Application> createApplication();
 
 int main(int argc, char* argv[])
 {

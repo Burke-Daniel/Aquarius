@@ -1,8 +1,10 @@
 #pragma once
 
 #include "Aquarius/Core/Window.h"
+#include "Aquarius/Core/Utility.h"
 
 #include <memory>
+
 
 namespace Aquarius {
 
@@ -25,7 +27,7 @@ namespace Aquarius {
 		Application(std::string&& windowName = "Application");
 	private:
 		static Application* s_Application;
-		Window::WindowPtr m_Window;
+		uniquePtr<Window> m_Window;
 	};
 
 } // namespace Aquarius

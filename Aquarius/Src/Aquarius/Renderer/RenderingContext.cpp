@@ -8,7 +8,7 @@ namespace Aquarius {
     :   m_Window(window)
     {}
 
-    RenderingContext::ContextPtr RenderingContext::Create(GLFWwindow *window)
+    uniquePtr<RenderingContext> RenderingContext::Create(GLFWwindow *window)
     {
         return std::make_unique<RenderingContext>(window);
     }
