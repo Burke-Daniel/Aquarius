@@ -2,11 +2,12 @@
 
 #include <GLFW/glfw3.h>
 #include "Aquarius/Core/Log.h"
+#include "Aquarius/Events/KeyCode.h"
 
 namespace Aquarius {
 
     class KeyboardEvent
-            {
+    {
     public:
         static void Callback(GLFWwindow* window, int key, int scanCode, int action, int modifications)
         {
@@ -31,4 +32,6 @@ namespace Aquarius {
             }
         }
     };
+
+
 } // namespace Aquarius
