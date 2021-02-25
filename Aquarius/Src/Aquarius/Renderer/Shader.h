@@ -4,6 +4,7 @@
 #include <glm/glm.hpp>
 #include <unordered_map>
 
+
 namespace Aquarius {
 
     class Shader
@@ -35,11 +36,8 @@ namespace Aquarius {
             FRAGMENT_SHADER
         };
 
-        std::unordered_map<ShaderType, std::string> shaderTypeToString =
-        {
-            {ShaderType::VERTEX_SHADER, "VERTEX_SHADER"},
-            {ShaderType::FRAGMENT_SHADER, "FRAGMENT_SHADER"}
-        };
+        static const std::unordered_map<ShaderType, std::string> shaderTypeToString;
+
 
     private:
         void compile(uint32_t shaderID, const char* shaderCode, ShaderType shaderType);

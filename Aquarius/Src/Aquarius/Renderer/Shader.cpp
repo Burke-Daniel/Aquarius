@@ -1,13 +1,18 @@
+#include "Shader.h"
+#include "Aquarius/Core/Log.h"
+
 #include <fstream>
 #include <glad/glad.h>
 #include <glm/gtc/type_ptr.hpp>
 
-#include "Shader.h"
-#include "Aquarius/Core/Log.h"
-
-
 
 namespace Aquarius {
+
+    const std::unordered_map<Shader::ShaderType, std::string> Shader::shaderTypeToString =
+    {
+        {Shader::ShaderType::VERTEX_SHADER, "VERTEX_SHADER"},
+        {Shader::ShaderType::FRAGMENT_SHADER, "FRAGMENT_SHADER"}
+    };
 
     Shader::Shader(const std::string& vertexPath, const std::string& fragmentPath)
     {
@@ -149,7 +154,7 @@ namespace Aquarius {
         {
             char compileLog[512];
             glGetShaderInfoLog(shaderID, 512, NULL, compileLog);
-            AQ_CORE_ERROR("Error compiling shader of type:  %v", shaderTypeToString[shaderType]);
+            AQ_CORE_ERROR("Error compiling shader of type:  %v", shaderTypeToString.at(shaderType));
             AQ_CORE_ERROR("Compiler Status Message: %v", compileLog);
         }
     }
@@ -174,4 +179,5 @@ namespace Aquarius {
             AQ_CORE_ERROR("Linking error: %v", linkLog);
         }
     }
+
 } // namespace Aquarius
