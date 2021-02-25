@@ -6,7 +6,7 @@
 namespace Aquarius {
 
     class WindowEvent
-            {
+    {
     public:
 
         static void windowCloseCallback(GLFWwindow* window)
