@@ -101,7 +101,7 @@ namespace Aquarius {
 
     void Window::OnUpdate()
     {
-        if (isKeyPressed(KeyCode::Key_escape))
+        if (Input::isKeyPressed(Input::KeyCode::Key_escape))
         {
             glfwSetWindowShouldClose(m_Window, true);
         }
