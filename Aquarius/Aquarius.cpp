@@ -39,8 +39,9 @@ namespace Aquarius {
         Window->Initialize();
 
         // Create shader
-        Shader shaderProgram = Shader("Shaders/vertexShader.glsl",
+        auto shaderProgram = Shader("Shaders/vertexShader.glsl",
                                       "Shaders/fragmentShader.glsl");
+
 
         // Bind shader
         shaderProgram.activate();
