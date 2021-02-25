@@ -1,9 +1,9 @@
 #include "Window.h"
+#include "Log.h"
+#include <assert.h>
+#include "Aquarius/Events/KeyboardEvent.h"
+#include "Aquarius/Events/MouseEvent.h"
 #include "Aquarius/Core/Input.h"
-#include "Aquarius/Events/Keyboard.h"
-#include "Aquarius/Core/Log.h"
-#include "Aquarius/Events/Mouse.h"
-
 
 namespace Aquarius {
 
@@ -16,7 +16,7 @@ namespace Aquarius {
           m_Context(nullptr)
     {}
 
-    uniquePtr<Window> Window::Create(uint32_t width, uint32_t height, std::string &&name, bool vsync)
+    Window::WindowPtr Window::Create(uint32_t width, uint32_t height, std::string &&name, bool vsync)
     {
         return std::make_unique<Window>(width, height, std::move(name));
     }
