@@ -40,14 +40,10 @@ namespace Aquarius {
 
         static const std::unordered_map<ShaderType, std::string> shaderTypeToString;
 
-
     private:
         void compile(uint32_t shaderID, const char* shaderCode, ShaderType shaderType);
         void link(uint32_t vertexID, uint32_t fragmentID);
         uint32_t m_ID;
     };
+
 } // namespace Aquarius
-
-
-
-
