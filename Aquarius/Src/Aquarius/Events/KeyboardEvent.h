@@ -2,7 +2,6 @@
 
 #include <GLFW/glfw3.h>
 #include "Aquarius/Core/Log.h"
-#include "Aquarius/Events/KeyCode.h"
 
 namespace Aquarius {
 
