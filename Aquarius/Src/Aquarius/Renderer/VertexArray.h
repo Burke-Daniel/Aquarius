@@ -1,5 +1,6 @@
 #pragma once
 
+#include "Aquarius/Core/Utility.h"
 #include "Aquarius/Renderer/IndexBuffer.h"
 #include "Aquarius/Renderer/VertexBuffer.h"
 
@@ -93,26 +94,26 @@ namespace Aquarius {
     {
     public:
         VertexArray();
-        VertexArray(std::shared_ptr<VertexBuffer> vertexBuffer,
-                    std::shared_ptr<IndexBuffer> IndexBuffer,
+        VertexArray(sharedPtr<VertexBuffer> vertexBuffer,
+                    sharedPtr<IndexBuffer> IndexBuffer,
                     const BufferLayout& bufferLayout);
         ~VertexArray();
 
         void activate();
         void deactivate();
 
-        void setVertexBuffer(std::shared_ptr<VertexBuffer> vertexBuffer);
-        void setVertexBuffer(std::shared_ptr<VertexBuffer> vertexBuffer, const BufferLayout& bufferLayout);
-        void setIndexBuffer(std::shared_ptr<IndexBuffer> IndexBuffer);
+        void setVertexBuffer(sharedPtr<VertexBuffer> vertexBuffer);
+        void setVertexBuffer(sharedPtr<VertexBuffer> vertexBuffer, const BufferLayout& bufferLayout);
+        void setIndexBuffer(sharedPtr<IndexBuffer> IndexBuffer);
         void setBufferLayout(const BufferLayout& bufferLayout);
 
-        std::shared_ptr<VertexBuffer> getVertexBuffer() const;
-        std::shared_ptr<IndexBuffer> getIndexBuffer() const;
+        sharedPtr<VertexBuffer> getVertexBuffer() const;
+        sharedPtr<IndexBuffer> getIndexBuffer() const;
 
     private:
         uint32_t m_ID;
-        std::shared_ptr<VertexBuffer> m_VertexBuffer;
-        std::shared_ptr<IndexBuffer> m_IndexBuffer;
+        sharedPtr<VertexBuffer> m_VertexBuffer;
+        sharedPtr<IndexBuffer> m_IndexBuffer;
     };
 
 } // namespace Aquarius
