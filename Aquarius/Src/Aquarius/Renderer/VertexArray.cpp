@@ -5,8 +5,8 @@
 
 namespace Aquarius {
 
-    VertexArray::VertexArray(const std::shared_ptr<VertexBuffer>& vertexBuffer,
-                             const std::shared_ptr<IndexBuffer>& indexBuffer,
+    VertexArray::VertexArray(std::shared_ptr<VertexBuffer> vertexBuffer,
+                             std::shared_ptr<IndexBuffer> indexBuffer,
                              const BufferLayout& bufferLayout)
             : m_VertexBuffer(vertexBuffer), m_IndexBuffer(indexBuffer)
     {
@@ -35,7 +35,7 @@ namespace Aquarius {
         glBindVertexArray(0);
     }
 
-    void VertexArray::setVertexBuffer(const std::shared_ptr<VertexBuffer>& vertexBuffer, const BufferLayout& bufferLayout)
+    void VertexArray::setVertexBuffer(std::shared_ptr<VertexBuffer> vertexBuffer, const BufferLayout& bufferLayout)
     {
         activate();
         vertexBuffer->Bind();
@@ -43,14 +43,14 @@ namespace Aquarius {
         setBufferLayout(bufferLayout);
     }
 
-    void VertexArray::setVertexBuffer(const std::shared_ptr<VertexBuffer>& vertexBuffer)
+    void VertexArray::setVertexBuffer(std::shared_ptr<VertexBuffer> vertexBuffer)
     {
         activate();
         vertexBuffer->Bind();
         m_VertexBuffer = vertexBuffer;
     }
 
-    void VertexArray::setIndexBuffer(const std::shared_ptr<IndexBuffer>& indexBuffer)
+    void VertexArray::setIndexBuffer(std::shared_ptr<IndexBuffer> indexBuffer)
     {
         activate();
         indexBuffer->Bind();

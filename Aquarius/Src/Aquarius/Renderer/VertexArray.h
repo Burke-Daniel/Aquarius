@@ -93,17 +93,17 @@ namespace Aquarius {
     {
     public:
         VertexArray();
-        VertexArray(const std::shared_ptr<VertexBuffer>& vertexBuffer,
-                    const std::shared_ptr<IndexBuffer>& IndexBuffer,
+        VertexArray(std::shared_ptr<VertexBuffer> vertexBuffer,
+                    std::shared_ptr<IndexBuffer> IndexBuffer,
                     const BufferLayout& bufferLayout);
         ~VertexArray();
 
         void activate();
         void deactivate();
 
-        void setVertexBuffer(const std::shared_ptr<VertexBuffer>& vertexBuffer);
-        void setVertexBuffer(const std::shared_ptr<VertexBuffer>& vertexBuffer, const BufferLayout& bufferLayout);
-        void setIndexBuffer(const std::shared_ptr<IndexBuffer>& IndexBuffer);
+        void setVertexBuffer(std::shared_ptr<VertexBuffer> vertexBuffer);
+        void setVertexBuffer(std::shared_ptr<VertexBuffer> vertexBuffer, const BufferLayout& bufferLayout);
+        void setIndexBuffer(std::shared_ptr<IndexBuffer> IndexBuffer);
         void setBufferLayout(const BufferLayout& bufferLayout);
 
         std::shared_ptr<VertexBuffer> getVertexBuffer() const;
