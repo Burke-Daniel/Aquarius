@@ -5,6 +5,7 @@
 #include "Aquarius/Core/Application.h"
 #include "Aquarius/Core/Assert.h"
 #include "Aquarius/Core/Input.h"
+#include "Aquarius/Core/Layer.h"
 #include "Aquarius/Core/Log.h"
 #include "Aquarius/Core/Window.h"
 
