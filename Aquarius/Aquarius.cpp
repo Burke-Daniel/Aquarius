@@ -41,14 +41,14 @@ namespace Aquarius {
         // Bind shader
         shaderProgram.activate();
 
-        // Single Triangle Vertices (NDC - Just Pos)
+        // Single Triangle Vertices (NDC)
         std::vector<float> data =
         {
-                // position
-              -0.5f, 0.0f,
-               0.0f, 0.5f,
-               0.5f, 0.0f,
-               0.0f, -0.5f
+                // Position     // Color
+              -0.5f, 0.0f,      0.5f, 0.5f, 0.5f,
+               0.0f, 0.5f,      0.5f, 0.5f, 0.5f,
+               0.5f, 0.0f,      0.5f, 0.5f, 0.5f,
+               0.0f, -0.5f,     0.5f, 0.5f, 0.5f,
         };
 
         // Rectangle Indices
@@ -58,33 +58,27 @@ namespace Aquarius {
             0, 2, 3     // Triangle 2
         };
 
-        // TODO - Create vertex array abstraction
-        uint32_t VA0;
-        glGenVertexArrays(1, &VA0);
-        glBindVertexArray(VA0);
+        auto VB0 = std::make_shared<VertexBuffer>(data.data(), data.size() * sizeof(float));
+        auto IB0 = std::make_shared<IndexBuffer>(indices.data(), indices.size());
+        auto layout = BufferLayout(
+        {
+                VertexElement(ShaderType::Float, 2, false),
+                VertexElement(ShaderType::Float, 3, false)
+        });
 
-        // Create and bind vertex buffer
-        VertexBuffer VB0 = VertexBuffer(data.data(), data.size() * sizeof(float));
-        VB0.Bind();
-
-        // Create and bind index buffer
-        IndexBuffer IB0 = IndexBuffer(indices.data(), indices.size());
-        IB0.Bind();
-
-        glVertexAttribPointer(0, 2, GL_FLOAT, GL_FALSE, 2 * sizeof(float), (void*)0);
-        glEnableVertexAttribArray(0);
+        auto VA0 = VertexArray(VB0, IB0, layout);
+        VA0.activate();
 
         // Render loop
         while (1)
         {
             glClearColor(0.2f, 0.3f, 0.3f, 1.0f);
             glClear(GL_COLOR_BUFFER_BIT);
-            shaderProgram.setFloat4("color", {1.0f, 1.0f, 1.0f, 1.0f});
             glDrawElements(GL_TRIANGLES, 6, GL_UNSIGNED_INT, (void*)0);
             Window->OnUpdate();
         }
 
         return 0;
     }
-} // namespace Aquarius
 
+} // namespace Aquarius
