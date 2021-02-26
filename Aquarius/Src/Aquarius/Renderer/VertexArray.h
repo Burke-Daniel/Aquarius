@@ -21,20 +21,18 @@ namespace Aquarius {
         Double,
     };
 
-    static const std::unordered_map<ShaderType, GLenum> ShaderTypeToGLEnum =
+    static struct ShaderTypeInfo
     {
-        {ShaderType::Int, GL_INT},
-        {ShaderType::UInt, GL_UNSIGNED_INT},
-        {ShaderType::Float, GL_FLOAT},
-        {ShaderType::Double, GL_DOUBLE}
+        GLenum glType;
+        uint32_t size;
     };
 
-    static const std::unordered_map<ShaderType, uint32_t>  ShaderTypeSizeBytes =
+    static const std::unordered_map<ShaderType, ShaderTypeInfo> ShaderTypeInfoMap =
     {
-            {ShaderType::Int, 4},
-            {ShaderType::UInt, 4},
-            {ShaderType::Float, 4},
-            {ShaderType::Double, 8}
+        {ShaderType::Int, {GL_INT, 4}},
+        {ShaderType::UInt, {GL_UNSIGNED_INT, 4}},
+        {ShaderType::Float, {GL_FLOAT, 4}},
+        {ShaderType::Double, {GL_DOUBLE, 8}}
     };
 
     class VertexElement
@@ -42,9 +40,9 @@ namespace Aquarius {
     public:
         VertexElement(ShaderType shaderType, uint32_t count, bool normalize)
         {
-            m_Type = ShaderTypeToGLEnum.at(shaderType);
+            m_Type = ShaderTypeInfoMap.at(shaderType).glType;
             m_Count = count;
-            m_Size = m_Count * ShaderTypeSizeBytes.at(shaderType);
+            m_Size = m_Count * ShaderTypeInfoMap.at(shaderType).size;
             m_Normalize = normalize;
             m_Offset = 0;
         }
