@@ -75,14 +75,14 @@ namespace Aquarius {
         }
     }
 
-    sharedPtr<VertexBuffer> VertexArray::getVertexBuffer() const
+    VertexBuffer* VertexArray::getVertexBuffer() const
     {
-        return m_VertexBuffer;
+        return m_VertexBuffer.get();
     }
 
-    sharedPtr<IndexBuffer> VertexArray::getIndexBuffer() const
+    IndexBuffer* VertexArray::getIndexBuffer() const
     {
-        return m_IndexBuffer;
+        return m_IndexBuffer.get();
     }
 
 } // namespace Aquarius
