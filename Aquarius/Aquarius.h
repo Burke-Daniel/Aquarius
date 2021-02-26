@@ -9,6 +9,8 @@
 // -- Renderer
 #include "Aquarius/Renderer/IndexBuffer.h"
 #include "Aquarius/Renderer/VertexBuffer.h"
+#include "Aquarius/Renderer/VertexArray.h"
+#include "Aquarius/Renderer/Shader.h"
 
 // -- Events
 #include "Aquarius/Events/Keyboard.h"
