@@ -21,7 +21,7 @@ namespace Aquarius {
         Double,
     };
 
-    static struct ShaderTypeInfo
+    struct ShaderTypeInfo
     {
         GLenum glType;
         uint32_t size;
@@ -68,14 +68,14 @@ namespace Aquarius {
     public:
         BufferLayout() = delete;
         ~BufferLayout() = default;
-        BufferLayout(std::initializer_list<VertexElement> vertexElements)
+        BufferLayout(const std::initializer_list<VertexElement>& vertexElements)
         {
             // Calculate offset for each element
             uint32_t Offset = 0;
             for (auto elem : vertexElements)
             {
                 elem.setOffset(Offset);
-                m_Elements.push_back(elem);
+                m_Elements.push_back(std::move(elem));
                 Offset += elem.getSize();
             }
 
