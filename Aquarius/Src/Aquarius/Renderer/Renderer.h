@@ -13,7 +13,7 @@ namespace Aquarius {
     {
     public:
         Renderer() = delete;
-        ~Renderer() = delete;
+        ~Renderer() = default;
 
         static void Init();
         static void Shutdown();
