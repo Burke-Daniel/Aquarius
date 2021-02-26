@@ -5,7 +5,6 @@
 
 namespace Aquarius {
 
-    // TODO - What style to use here
     VertexArray::VertexArray(const std::shared_ptr<VertexBuffer>& vertexBuffer,
                              const std::shared_ptr<IndexBuffer>& indexBuffer,
                              const BufferLayout& bufferLayout)
@@ -13,8 +12,7 @@ namespace Aquarius {
     {
         glGenVertexArrays(1, &m_ID);
         setIndexBuffer(indexBuffer);
-        setVertexBuffer(vertexBuffer);
-        setBufferLayout(bufferLayout);
+        setVertexBuffer(vertexBuffer, bufferLayout);
     }
 
     VertexArray::VertexArray()
@@ -37,32 +35,40 @@ namespace Aquarius {
         glBindVertexArray(0);
     }
 
+    void VertexArray::setVertexBuffer(const std::shared_ptr<VertexBuffer>& vertexBuffer, const BufferLayout& bufferLayout)
+    {
+        activate();
+        vertexBuffer->Bind();
+        m_VertexBuffer = vertexBuffer;
+        setBufferLayout(bufferLayout);
+    }
+
     void VertexArray::setVertexBuffer(const std::shared_ptr<VertexBuffer>& vertexBuffer)
     {
-        m_VertexBuffer = vertexBuffer;
         activate();
-        m_VertexBuffer->Bind();
+        vertexBuffer->Bind();
+        m_VertexBuffer = vertexBuffer;
     }
 
     void VertexArray::setIndexBuffer(const std::shared_ptr<IndexBuffer>& indexBuffer)
     {
-        m_IndexBuffer = indexBuffer;
         activate();
-        m_IndexBuffer->Bind();
+        indexBuffer->Bind();
+        m_IndexBuffer = indexBuffer;
     }
 
     void VertexArray::setBufferLayout(const BufferLayout& bufferLayout)
     {
         activate();
 
-        size_t vertexAttribIndex = 0;
+        uint32_t vertexAttribIndex = 0;
         for (auto elem : bufferLayout.getElements())
         {
             glEnableVertexAttribArray(vertexAttribIndex);
             glVertexAttribPointer(vertexAttribIndex,
                                   elem.getCount(),
                                   elem.getType(),
-                                  elem.getNormalize(),
+                                  elem.getNormalize() ? GL_TRUE : GL_FALSE,
                                   bufferLayout.getStride(),
                                   (void*)elem.getOffset());
             vertexAttribIndex++;
