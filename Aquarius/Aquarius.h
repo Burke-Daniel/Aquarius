@@ -1,3 +1,5 @@
+#pragma once
+
 // -- Core
 #include "Aquarius/Core/Utility.h"
 #include "Aquarius/Core/Application.h"
