@@ -1,5 +1,5 @@
 #include "RenderingContext.h"
-#include <Aquarius/Core/Log.h>
+#include "Aquarius/Core/Log.h"
 
 
 namespace Aquarius {
@@ -8,7 +8,7 @@ namespace Aquarius {
     :   m_Window(window)
     {}
 
-    RenderingContext::ContextPtr RenderingContext::Create(GLFWwindow *window)
+    uniquePtr<RenderingContext> RenderingContext::Create(GLFWwindow *window)
     {
         return std::make_unique<RenderingContext>(window);
     }
@@ -35,4 +35,5 @@ namespace Aquarius {
     {
         glfwSwapBuffers(m_Window);
     }
+
 } // namespace Aquarius

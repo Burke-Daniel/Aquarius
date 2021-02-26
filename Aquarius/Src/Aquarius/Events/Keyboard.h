@@ -1,7 +1,9 @@
 #pragma once
 
-#include <GLFW/glfw3.h>
 #include "Aquarius/Core/Log.h"
+
+#include <GLFW/glfw3.h>
+
 
 namespace Aquarius {
 
@@ -31,4 +33,5 @@ namespace Aquarius {
             }
         }
     };
+
 } // namespace Aquarius

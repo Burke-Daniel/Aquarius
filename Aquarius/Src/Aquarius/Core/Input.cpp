@@ -1,10 +1,9 @@
 #include "Input.h"
+#include "Aquarius/Core/Application.h"
 
-#include "Application.h"
-
-#include <GLFW/glfw3.h>
 
 namespace Aquarius {
+
 	namespace Input {
 
 		KeyState getKeyState(KeyCode key)
@@ -37,5 +36,7 @@ namespace Aquarius {
 
 			return position;
 		}
+
 	} // namespace Input
+
 } // namespace Aquarius

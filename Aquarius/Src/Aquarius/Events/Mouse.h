@@ -1,7 +1,9 @@
 #pragma once
 
-#include <GLFW/glfw3.h>
 #include "Aquarius/Core/Log.h"
+
+#include <GLFW/glfw3.h>
+
 
 namespace Aquarius {
 
@@ -54,4 +56,5 @@ namespace Aquarius {
             AQ_INFO("y offset: %v", yOffset);
         }
     };
+
 } // namespace Aquarius

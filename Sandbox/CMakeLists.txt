@@ -4,6 +4,7 @@ project(Sandbox)
 
 set(CMAKE_CXX_STANDARD 14)
 set(CMAKE_CXX_STANDARD_REQUIRED True)
+add_definitions(-DGLFW_INCLUDE_NONE)
 
 file(GLOB_RECURSE sources *.h *.cpp)
 

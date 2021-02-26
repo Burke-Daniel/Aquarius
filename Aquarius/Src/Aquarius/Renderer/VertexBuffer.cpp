@@ -1,5 +1,7 @@
 #include "VertexBuffer.h"
+
 #include <glad/glad.h>
+
 
 namespace Aquarius {
 
@@ -31,4 +33,5 @@ namespace Aquarius {
     {
         glBindBuffer(GL_ARRAY_BUFFER, 0);
     }
+
 } // namespace Aquarius

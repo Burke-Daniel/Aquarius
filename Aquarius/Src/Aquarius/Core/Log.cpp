@@ -1,5 +1,6 @@
 #include "Log.h"
 
+
 INITIALIZE_EASYLOGGINGPP
 
 namespace Aquarius {

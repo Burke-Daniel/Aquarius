@@ -4,6 +4,7 @@ project(Aquarius-Engine)
 
 set(CMAKE_CXX_STANDARD 17)
 set(CMAKE_CXX_STANDARD_REQUIRED True)
+add_definitions(-DGLFW_INCLUDE_NONE)
 
 file(GLOB_RECURSE Sources "Src/*.cpp" "Src/*.h")
 

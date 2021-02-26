@@ -1,5 +1,7 @@
 #include "IndexBuffer.h"
+
 #include <glad/glad.h>
+
 
 namespace Aquarius {
 
@@ -38,4 +40,5 @@ namespace Aquarius {
     {
         return m_Count;
     }
+
 } // namespace Aquarius

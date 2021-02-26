@@ -1,12 +1,14 @@
 #pragma once
 
-#include <GLFW/glfw3.h>
 #include "Aquarius/Core/Log.h"
+
+#include <GLFW/glfw3.h>
+
 
 namespace Aquarius {
 
     class WindowEvent
-            {
+    {
     public:
 
         static void windowCloseCallback(GLFWwindow* window)
@@ -54,4 +56,5 @@ namespace Aquarius {
             //TODO Implement
         }
     };
+
 } // namespace Aquarius
