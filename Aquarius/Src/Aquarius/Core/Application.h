@@ -1,10 +1,10 @@
 #pragma once
 
+#include "Aquarius/Core/Layer.h"
 #include "Aquarius/Core/Utility.h"
 #include "Aquarius/Core/Window.h"
 
 #include <memory>
-
 
 namespace Aquarius {
 
@@ -25,9 +25,11 @@ namespace Aquarius {
 		void run();
 	protected:
 		Application(std::string&& windowName = "Application");
+		void PushLayer(uniquePtr<Layer> layer);
 	private:
 		static Application* s_Application;
 		uniquePtr<Window> m_Window;
+		LayerStack m_layerStack;
 	};
 
 } // namespace Aquarius
