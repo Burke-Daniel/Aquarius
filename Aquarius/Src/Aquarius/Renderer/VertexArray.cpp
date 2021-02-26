@@ -62,7 +62,7 @@ namespace Aquarius {
         activate();
 
         uint32_t vertexAttribIndex = 0;
-        for (auto elem : bufferLayout.getElements())
+        for (const auto& elem : bufferLayout.getElements())
         {
             glEnableVertexAttribArray(vertexAttribIndex);
             glVertexAttribPointer(vertexAttribIndex,
