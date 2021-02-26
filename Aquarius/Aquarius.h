@@ -9,6 +9,7 @@
 #include "Aquarius/Core/Window.h"
 
 // -- Renderer
+#include "Aquarius/Renderer/Renderer.h"
 #include "Aquarius/Renderer/IndexBuffer.h"
 #include "Aquarius/Renderer/VertexBuffer.h"
 #include "Aquarius/Renderer/VertexArray.h"
