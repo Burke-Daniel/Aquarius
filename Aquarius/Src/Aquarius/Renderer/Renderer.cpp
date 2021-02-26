@@ -33,4 +33,4 @@ namespace Aquarius {
         glDrawElements(GL_TRIANGLES, vertexArray->getIndexBuffer()->getCount(), GL_UNSIGNED_INT, (void*)0);
     }
 
-}
+} // namespace Aquarius 

@@ -24,4 +24,4 @@ namespace Aquarius {
         static void Submit(VertexArray* vertexArray, Shader* shader);
     };
 
-}
+} // namespace Aquarius
