@@ -1,8 +1,7 @@
 #include "Sandbox.h"
 
 SandboxLayer::SandboxLayer(const std::string& vertexShader, const std::string& fragmentShader)
-	: Aquarius::Layer("Sandbox"),
-	  m_ShaderProgram(std::make_shared<Aquarius::Shader>(vertexShader, fragmentShader))
+	: m_ShaderProgram(std::make_shared<Aquarius::Shader>(vertexShader, fragmentShader))
 {}
 
 void SandboxLayer::onCreation()

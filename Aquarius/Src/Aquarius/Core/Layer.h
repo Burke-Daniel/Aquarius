@@ -23,15 +23,7 @@ namespace Aquarius {
 		virtual void updateAndRender(timeDelta_t time) {};
 		virtual void onDestruction() {};
 
-		const std::string& getLayerName() const { return m_layerName; }
-
-	protected:
-		Layer(const std::string& layerName)
-			: m_layerName(layerName)
-		{}
-
-	private:
-		const std::string m_layerName;
+		virtual const std::string& getLayerName() const = 0;
 	};
 
 }
