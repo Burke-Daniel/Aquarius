@@ -10,7 +10,7 @@ file(GLOB_RECURSE Sources "Src/*.cpp" "Src/*.h")
 
 include_directories(Src/)
 
-add_library(Aquarius-Engine STATIC ${Sources} Aquarius.cpp Aquarius.h)
+add_library(Aquarius-Engine STATIC ${Sources} Aquarius.h)
 
 target_link_libraries(Aquarius-Engine glad)
 target_link_libraries(Aquarius-Engine glfw ${GLFW_LIBRARIES})
