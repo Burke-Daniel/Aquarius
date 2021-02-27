@@ -5,7 +5,7 @@
 
 namespace Aquarius {
 
-    IndexBuffer::IndexBuffer(uint32_t* data, size_t count)
+    IndexBuffer::IndexBuffer(uint32_t* data, uint32_t count)
         : m_Count(count)
     {
         glGenBuffers(1, &m_ID);
@@ -13,7 +13,7 @@ namespace Aquarius {
         glBufferData(GL_ELEMENT_ARRAY_BUFFER, count * sizeof(uint32_t), data, GL_STATIC_DRAW);
     }
 
-    IndexBuffer::IndexBuffer(uint16_t* data, size_t count)
+    IndexBuffer::IndexBuffer(uint16_t* data, uint32_t count)
             : m_Count(count)
     {
         glGenBuffers(1, &m_ID);
@@ -36,7 +36,7 @@ namespace Aquarius {
         glBindBuffer(GL_ELEMENT_ARRAY_BUFFER, 0);
     }
 
-    size_t IndexBuffer::getCount()
+    uint32_t IndexBuffer::getCount()
     {
         return m_Count;
     }
