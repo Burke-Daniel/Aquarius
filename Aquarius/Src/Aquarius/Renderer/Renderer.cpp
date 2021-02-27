@@ -87,6 +87,33 @@ namespace Aquarius {
                 glDrawElements(GL_TRIANGLES, vertexArray->getIndexBuffer()->getCount(), GL_UNSIGNED_INT, (void*)0);
             }
 
+            void DrawQuad(const glm::vec2& pos, const glm::vec2& size, float rotationDegrees = 0.0, const glm::vec4& color = s_QuadData.defaultColor)
+            {
+                // Configure model matrix
+                glm::mat4 model = glm::mat4(1.0f);
+
+                // Translate to the correct position
+                model = glm::translate(model, {pos.x, pos.y, 0.0f});
+
+                // Translate to center of quad, rotate, shift back
+                model = glm::translate(model, {size.x/2.0, size.y/2.0, 0.0f});
+                model = glm::rotate(model, glm::radians(rotationDegrees), {0.0f,0.0f,1.0f});
+                model = glm::translate(model, {-size.x/2, -size.y/2, 0.0f});
+
+                // Scale
+                model = glm::scale(model, {size.x, size.y, 1.0f});
+
+                s_QuadData.vertexArray->activate();
+                s_QuadData.shader->activate();
+                s_QuadData.shader->setMat4("u_model", false, model);
+                s_QuadData.shader->setMat4("u_view", false, s_SceneData.view);
+                s_QuadData.shader->setMat4("u_model", false, s_SceneData.projection);
+                s_QuadData.shader->setFloat4("u_color", color);
+
+                // Finally draw the quad
+                glDrawElements(GL_TRIANGLES, s_QuadData.vertexArray->getIndexBuffer()->getCount(), GL_UNSIGNED_INT, (void*)0);
+            }
+
         } // namespace Renderer
 
 } // namespace Aquarius
