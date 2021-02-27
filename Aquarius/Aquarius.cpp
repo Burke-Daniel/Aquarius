@@ -72,9 +72,9 @@ namespace Aquarius {
         // Render loop
         while (1)
         {
-            glClearColor(0.2f, 0.3f, 0.3f, 1.0f);
-            glClear(GL_COLOR_BUFFER_BIT);
-            glDrawElements(GL_TRIANGLES, 6, GL_UNSIGNED_INT, (void*)0);
+            Renderer::ClearColor({0.2, 0.3, 0.7});
+            Renderer::Clear();
+            Renderer::Submit(&VA0, &shaderProgram);
             Window->OnUpdate();
         }
 

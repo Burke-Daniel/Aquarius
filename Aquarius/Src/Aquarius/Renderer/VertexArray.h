@@ -107,8 +107,8 @@ namespace Aquarius {
         void setIndexBuffer(sharedPtr<IndexBuffer> IndexBuffer);
         void setBufferLayout(const BufferLayout& bufferLayout);
 
-        sharedPtr<VertexBuffer> getVertexBuffer() const;
-        sharedPtr<IndexBuffer> getIndexBuffer() const;
+        VertexBuffer* getVertexBuffer() const;
+        IndexBuffer* getIndexBuffer() const;
 
     private:
         uint32_t m_ID;
