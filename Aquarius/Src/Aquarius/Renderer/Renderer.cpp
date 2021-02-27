@@ -60,6 +60,16 @@ namespace Aquarius {
                 // Nothing to put here just yet
             }
 
+            void setProjection(const glm::mat4& projection)
+            {
+                s_SceneData.projection = projection;
+            }
+
+            void setView(const glm::mat4& view)
+            {
+                s_SceneData.projection = view;
+            }
+
             void Clear()
             {
                 glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT);
