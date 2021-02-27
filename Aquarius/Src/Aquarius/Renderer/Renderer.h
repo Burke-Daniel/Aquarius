@@ -9,19 +9,16 @@
 
 namespace Aquarius {
 
-    class Renderer
-    {
-    public:
-        Renderer() = delete;
-        ~Renderer() = default;
+    namespace Renderer {
 
-        static void Init();
-        static void Shutdown();
+        void Init();
+        void Shutdown();
 
-        static void Clear();
-        static void ClearColor(glm::vec3 color);
+        void Clear();
+        void ClearColor(glm::vec3 color);
 
-        static void Submit(VertexArray* vertexArray, Shader* shader);
-    };
+        void Submit(VertexArray* vertexArray, Shader* shader);
+
+    } // namespace Renderer
 
 } // namespace Aquarius
