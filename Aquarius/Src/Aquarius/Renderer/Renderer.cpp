@@ -60,12 +60,12 @@ namespace Aquarius {
                 // Nothing to put here just yet
             }
 
-            void setProjection(const glm::mat4& projection)
+            void SetProjection(const glm::mat4& projection)
             {
                 s_SceneData.projection = projection;
             }
 
-            void setView(const glm::mat4& view)
+            void SetView(const glm::mat4& view)
             {
                 s_SceneData.projection = view;
             }
