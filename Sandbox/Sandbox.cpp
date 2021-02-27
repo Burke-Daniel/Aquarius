@@ -23,16 +23,12 @@ void SandboxLayer::onCreation()
 	m_vertexArray->activate();
 }
 
-void SandboxLayer::onEvent(Aquarius::Event& event) {}
-
-void SandboxLayer::updateAndRender(Aquarius::timeDelta_t time)
+void SandboxLayer::updateAndRender(Aquarius::timeDelta_t)
 {
-	glClearColor(0.2f, 0.3f, 0.3f, 1.0f);
-	glClear(GL_COLOR_BUFFER_BIT);
-	glDrawElements(GL_TRIANGLES, 6, GL_UNSIGNED_INT, (void*)0);
+	Aquarius::Renderer::ClearColor({ 0.2, 0.3, 0.7 });
+	Aquarius::Renderer::Clear();
+	Aquarius::Renderer::Submit(m_vertexArray.get(), m_ShaderProgram.get());
 }
-
-void SandboxLayer::onDestruction(){}
 
 Sandbox::Sandbox()
 	: Aquarius::Application("Sandbox")

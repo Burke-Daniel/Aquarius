@@ -10,9 +10,8 @@ public:
 	SandboxLayer(const std::string& vertexShader, const std::string& fragmentShader);
 
 	virtual void onCreation() override;
-	virtual void onEvent(Aquarius::Event& event) override;
 	virtual void updateAndRender(Aquarius::timeDelta_t time) override;
-	virtual void onDestruction() override;
+
 private:
 	Aquarius::sharedPtr<Aquarius::Shader> m_ShaderProgram;
 	Aquarius::sharedPtr<Aquarius::VertexBuffer> m_vertexBuffer;
