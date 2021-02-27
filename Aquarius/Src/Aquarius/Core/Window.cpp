@@ -1,8 +1,7 @@
 #include "Window.h"
 #include "Log.h"
 #include <assert.h>
-#include "Aquarius/Events/KeyboardEvent.h"
-#include "Aquarius/Events/MouseEvent.h"
+#include "Aquarius/Events/Callbacks.h"
 #include "Aquarius/Core/Input.h"
 
 namespace Aquarius {
