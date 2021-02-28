@@ -1,7 +1,8 @@
 #include "Sandbox.h"
 
 SandboxLayer::SandboxLayer(const std::string& vertexShader, const std::string& fragmentShader)
-	: m_ShaderProgram(std::make_shared<Aquarius::Shader>(vertexShader, fragmentShader))
+	: Layer("Sandbox"),
+	m_ShaderProgram(std::make_shared<Aquarius::Shader>(vertexShader, fragmentShader))
 {}
 
 void SandboxLayer::onCreation()
@@ -22,7 +23,7 @@ void SandboxLayer::onCreation()
 	m_vertexArray->activate();
 }
 
-void SandboxLayer::updateAndRender(Aquarius::timeDelta_t)
+void SandboxLayer::onUpdate(Aquarius::timeDelta_t)
 {
 	Aquarius::Renderer::ClearColor({ 0.2, 0.3, 0.7 });
 	Aquarius::Renderer::Clear();

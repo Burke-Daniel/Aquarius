@@ -10,9 +10,7 @@ public:
 	SandboxLayer(const std::string& vertexShader, const std::string& fragmentShader);
 
 	void onCreation() override;
-	void updateAndRender(Aquarius::timeDelta_t time) override;
-
-	const std::string& getLayerName() const override { return "Sandbox"; }
+	void onUpdate(Aquarius::timeDelta_t time) override;
 
 private:
 	Aquarius::sharedPtr<Aquarius::Shader> m_ShaderProgram;
