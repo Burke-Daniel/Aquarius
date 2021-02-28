@@ -4,36 +4,23 @@
 
 #include <GLFW/glfw3.h>
 
+#define CREATE_WINDOW_EVENT(event) \
+    class event : public Event<WindowEvents> \
+    { \
+    public: \
+        event() : Event<WindowEvents>(WindowEvents::event) {} \
+    }
 
 namespace Aquarius {
 
     enum class WindowEvents
     {
-        WindowClosedEvent, WindowResizedEvent, WindowFocusedEvent, WindowMovedEvent
+        WindowClosed, WindowResized, WindowFocused, WindowMoved
     };
 
-    class WindowClosed : public Event<WindowEvents>
-    {
-    public:
-        WindowClosed() : Event<WindowEvents>(WindowEvents::WindowClosedEvent) {};
-    };
-
-    class WindowResized : public Event<WindowEvents>
-    {
-    public:
-        WindowResized() : Event<WindowEvents>(WindowEvents::WindowResizedEvent) {};
-    };
-
-    class WindowFocused : public Event<WindowEvents>
-    {
-    public:
-        WindowFocused() : Event<WindowEvents>(WindowEvents::WindowFocusedEvent) {};
-    };
-
-    class WindowMoved : public Event<WindowEvents>
-    {
-    public:
-        WindowMoved() : Event<WindowEvents>(WindowEvents::WindowMovedEvent) {};
-    };
+    CREATE_WINDOW_EVENT(WindowClosed);
+    CREATE_WINDOW_EVENT(WindowResized);
+    CREATE_WINDOW_EVENT(WindowFocused);
+    CREATE_WINDOW_EVENT(WindowMoved);
 
 } // namespace Aquarius

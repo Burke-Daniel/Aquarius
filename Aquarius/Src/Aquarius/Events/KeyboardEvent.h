@@ -4,30 +4,22 @@
 
 #include <GLFW/glfw3.h>
 
+#define CREATE_KEYBOARD_EVENT(event) \
+    class event : public Event<KeyboardEvents> \
+    { \
+    public: \
+        event() : Event<KeyboardEvents>(KeyboardEvents::event) {} \
+    }
 
 namespace Aquarius {
 
     enum class KeyboardEvents
     {
-        KeyPressedEvent, KeyRepeatedEvent, KeyReleasedEvent,
+        KeyPressed, KeyRepeated, KeyReleased,
     };
 
-    class KeyPressed : public Event<KeyboardEvents>
-    {
-    public:
-        KeyPressed() : Event<KeyboardEvents>(KeyboardEvents::KeyPressedEvent) {};
-    };
-
-    class KeyRepeated : public Event<KeyboardEvents>
-    {
-    public:
-        KeyRepeated() : Event<KeyboardEvents>(KeyboardEvents::KeyRepeatedEvent) {};
-    };
-
-    class KeyReleased : public Event<KeyboardEvents>
-    {
-    public:
-        KeyReleased() : Event<KeyboardEvents>(KeyboardEvents::KeyReleasedEvent) {};
-    };
+    CREATE_KEYBOARD_EVENT(KeyPressed);
+    CREATE_KEYBOARD_EVENT(KeyRepeated);
+    CREATE_KEYBOARD_EVENT(KeyReleased);
 
 } // namespace Aquarius
