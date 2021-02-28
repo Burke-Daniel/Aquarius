@@ -30,13 +30,13 @@ namespace Aquarius {
 		auto time = std::chrono::high_resolution_clock::now();
 		while (!glfwWindowShouldClose(m_Window->get()))
 		{
-			auto timeDelta = std::chrono::high_resolution_clock::now() - time;
-			time = std::chrono::high_resolution_clock::now();
+			auto now = std::chrono::high_resolution_clock::now();
+			auto timeDelta = now - time;
+			time = now;
 			for (const auto& layer : m_layerStack)
 			{
 				layer->updateAndRender(std::chrono::duration_cast<std::chrono::microseconds>(timeDelta).count() / 1000.0);
 			}
-			time = std::chrono::high_resolution_clock::now();
 			m_Window->OnUpdate();
 		}
 	}
