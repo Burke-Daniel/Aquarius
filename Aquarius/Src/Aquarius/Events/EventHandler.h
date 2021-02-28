@@ -13,6 +13,10 @@ namespace Aquarius {
     template <typename T>
     class EventHandler
     {
+    private:
+        using functionType = std::function<void(const Event<T>&)>;
+        std::map<T, std::vector<functionType>> subscribers;
+
     public:
         void subscribe(T Type, const functionType& function)
         {
@@ -34,10 +38,6 @@ namespace Aquarius {
                 }
             }
         }
-
-    private:
-        using functionType = std::function<void(const Event<T>&)>;
-        std::map<T, std::vector<functionType> function> subscribers;
     };
 
 } // namespace Aquarius

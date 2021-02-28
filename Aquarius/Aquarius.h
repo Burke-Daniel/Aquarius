@@ -16,9 +16,12 @@
 #include "Aquarius/Renderer/Shader.h"
 
 // -- Events
-#include "Aquarius/Events/Keyboard.h"
-#include "Aquarius/Events/Mouse.h"
-#include "Aquarius/Events/Window.h"
+#include "Aquarius/Events/Callbacks.h"
+#include "Aquarius/Events/Event.h"
+#include "Aquarius/Events/EventHandler.h"
+#include "Aquarius/Events/KeyboardEvent.h"
+#include "Aquarius/Events/MouseEvent.h"
+#include "Aquarius/Events/WindowEvent.h"
 
 #include <easylogging++.h>
 #include <glad/glad.h>
