@@ -1,39 +1,57 @@
 #pragma once
 
-#include "Event.h"
-
 #include <GLFW/glfw3.h>
-
+#include "Aquarius/Core/Log.h"
 
 namespace Aquarius {
 
-    enum class WindowEvents
-            {
-        WindowClosedEvent, WindowResizedEvent, WindowFocusedEvent, WindowMovedEvent
-            };
-
-    class WindowClosed : public Event<WindowEvents>
+    class WindowEvent
     {
     public:
-        WindowClosed() : Event<WindowEvents>(WindowEvents::WindowClosedEvent) {};
-    };
 
-    class WindowResized : public Event<WindowEvents>
-    {
-    public:
-        WindowResized() : Event<WindowEvents>(WindowEvents::WindowResizedEvent) {};
-    };
+        static void windowCloseCallback(GLFWwindow* window)
+        {
+            //TODO Implement
+        }
 
-    class WindowFocused : public Event<WindowEvents>
-    {
-    public:
-        WindowFocused() : Event<WindowEvents>(WindowEvents::WindowFocusedEvent) {};
-    };
+        static void windowSizeCallback(GLFWwindow* window, int width, int height)
+        {
+            //TODO Implement
+        }
 
-    class WindowMoved : public Event<WindowEvents>
-    {
-    public:
-        WindowMoved() : Event<WindowEvents>(WindowEvents::WindowMovedEvent) {};
-    };
+        static void framebufferSizeCallback(GLFWwindow* window, int width, int height)
+        {
+            //TODO Implement
+        }
 
+        static void windowContentScaleCallBack(GLFWwindow* window, float xscale, float yscale)
+        {
+            //TODO Implement
+        }
+
+        static void windowPositionChangedCallback(GLFWwindow* window, int xposition, int yposition)
+        {
+            //TODO Implement
+        }
+
+        static void windowIconifyCallBack(GLFWwindow* window, int iconified)
+        {
+            //TODO Implement
+        }
+
+        static void windowMaximizedCallBack(GLFWwindow* window, int maximized)
+        {
+            //TODO Implement
+        }
+
+        static void windowFocusedCallBack(GLFWwindow*, int focused)
+        {
+            //TODO Implement
+        }
+
+        static void windowRefreshRequiredCallback(GLFWwindow*)
+        {
+            //TODO Implement
+        }
+    };
 } // namespace Aquarius

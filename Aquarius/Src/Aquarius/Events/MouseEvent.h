@@ -1,45 +1,57 @@
 #pragma once
 
-#include "Event.h"
-
 #include <GLFW/glfw3.h>
-
+#include "Aquarius/Core/Log.h"
 
 namespace Aquarius {
 
-    enum class MouseEvents
+    class MouseEvent
+    {
+    public:
+        static void cursorPositionCallback(GLFWwindow* window, double xPosition, double yPosition)
+        {
+            // TODO: Discuss if we want to only keep track of cursor position when the cursor is on
+            //  the Application window, if so can combine this callback method and the one below.
+            AQ_INFO("x position: %v", xPosition);
+            AQ_INFO("y position: %v", yPosition);
+        }
+
+        static void cursorInWindowCallback(GLFWwindow* window, int inWindow)
+        {
+            if (inWindow)
             {
-        MouseButtonPressedEvent, MouseButtonReleasedEvent, MouseMovedEvent, MouseScrolledEvent, MouseInWindowEvent
-    };
+                AQ_INFO("Cursor has entered application window.");
+            }
 
-    class MouseButtonPressed : public Event<MouseEvents>
-    {
-    public:
-        MouseButtonPressed() : Event<MouseEvents>(MouseEvents::MouseButtonPressedEvent) {};
-    };
+            else
+            {
+                AQ_INFO("Cursor has left application window.");
+            }
+        }
 
-    class MouseButtonReleased : public Event<MouseEvents>
-    {
-    public:
-        MouseButtonReleased() : Event<MouseEvents>(MouseEvents::MouseButtonReleasedEvent) {};
-    };
+        static void mouseButtonCallback(GLFWwindow* window, int button, int action, int modifications)
+        {
+            switch (action)
+            {
+                //TODO: Get it so mouse button name is printed rather then number, this is not critical but would be
+                // nice to have.
+                case GLFW_PRESS:
+                    AQ_INFO("mouse button %v is pressed.", button);
+                    break;
 
-    class MouseMoved : public Event<MouseEvents>
-    {
-    public:
-        MouseMoved() : Event<MouseEvents>(MouseEvents::MouseMovedEvent) {};
-    };
+                case GLFW_RELEASE:
+                    AQ_INFO("mouse button %v has been released.", button);
+                    break;
 
-    class MouseScrolled : public Event<MouseEvents>
-    {
-    public:
-        MouseScrolled() : Event<MouseEvents>(MouseEvents::MouseScrolledEvent) {};
-    };
+                default:
+                    break;
+            }
+        }
 
-    class MouseInWindow : public Event<MouseEvents>
-    {
-    public:
-        MouseInWindow() : Event<MouseEvents>(MouseEvents::MouseInWindowEvent) {};
+        static void mouseScrollCallback(GLFWwindow* window, double xOffSet, double yOffset)
+        {
+            AQ_INFO("x offset: %v", xOffSet);
+            AQ_INFO("y offset: %v", yOffset);
+        }
     };
-
 } // namespace Aquarius
