@@ -7,7 +7,7 @@
 
 namespace Aquarius {
 
-    /*class KeyboardEvent
+    class KeyboardEvent
     {
     public:
         static void Callback(GLFWwindow* window, int key, int scanCode, int action, int modifications)
@@ -30,7 +30,7 @@ namespace Aquarius {
                     break;
             }
         }
-    }; */
+    };
 
     class MouseEvent
     {
