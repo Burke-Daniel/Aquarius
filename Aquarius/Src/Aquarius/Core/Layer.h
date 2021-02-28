@@ -1,8 +1,10 @@
 #pragma once
+
 #include "Aquarius/Core/Utility.h"
 
 #include <deque>
 #include <string>
+
 
 namespace Aquarius {
 
@@ -26,4 +28,4 @@ namespace Aquarius {
 		virtual const std::string& getLayerName() const = 0;
 	};
 
-}
+} // namespace Aquarius

@@ -6,6 +6,7 @@
 
 #include <memory>
 
+
 namespace Aquarius {
 
 	class Application
