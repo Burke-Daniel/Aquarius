@@ -35,7 +35,7 @@ namespace Aquarius {
 			time = now;
 			for (const auto& layer : m_layerStack)
 			{
-				layer->updateAndRender(std::chrono::duration_cast<std::chrono::microseconds>(timeDelta).count() / 1000.0);
+				layer->onUpdate(std::chrono::duration_cast<std::chrono::microseconds>(timeDelta).count() / 1000.0);
 			}
 			m_Window->OnUpdate();
 		}

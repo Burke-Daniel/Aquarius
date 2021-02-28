@@ -17,12 +17,15 @@ namespace Aquarius {
 	class Layer
 	{
 	public:
+		Layer() = delete;
 		virtual ~Layer() { onDestruction(); };
 
 		virtual void onCreation() {};
 		virtual void onEvent(Event& event) {};
 		virtual void onUpdate(timeDelta_t time) {};
 		virtual void onDestruction() {};
+
+		const std::string& getLayerName() const { return m_layerName; }
 
 	protected:
 		Layer(const std::string& layerName)
