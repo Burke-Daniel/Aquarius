@@ -1,7 +1,6 @@
 #pragma once
 
 #include "Event.h"
-#include "Aquarius/Core/Log.h"
 
 #include <GLFW/glfw3.h>
 
