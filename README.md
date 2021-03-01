@@ -12,6 +12,14 @@ Subsystem for Linux (WSL)**
 **For ease of building and running a sample Aquarius application scripts were developed to automate the building and 
 running. Please see the below instructions based on your operating system.**
 
+## Cloning
+The Aquarius repositories uses git submodules where possible for handling third party libraries. 
+To init and update all submodules, execute the following command:
+
+```
+git submodule update --init --recursive
+```
+
 ## Building and Running a Sample Aquarius Application Automatically on Mac & Linux
 1. Navigate in a command-line interface to the project folder
 2. In your command-line execute the following command `sh build-run-sample-app.sh`
