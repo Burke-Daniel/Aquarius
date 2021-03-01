@@ -2,6 +2,8 @@
 #include "Aquarius/Core/Input.h"
 #include "Aquarius/Core/Log.h"
 
+#include <chrono>
+
 
 namespace Aquarius {
 
@@ -25,12 +27,24 @@ namespace Aquarius {
 
 	void Application::run()
 	{
+		auto time = std::chrono::high_resolution_clock::now();
 		while (!glfwWindowShouldClose(m_Window->get()))
 		{
-			glClearColor(0.2f, 0.3f, 0.3f, 1.0f);
-			glClear(GL_COLOR_BUFFER_BIT);
+			auto now = std::chrono::high_resolution_clock::now();
+			auto timeDelta = now - time;
+			time = now;
+			for (const auto& layer : m_layerStack)
+			{
+				layer->onUpdate(std::chrono::duration_cast<std::chrono::microseconds>(timeDelta).count() / 1000.0);
+			}
 			m_Window->OnUpdate();
 		}
+	}
+
+	void Application::PushLayer(uniquePtr<Layer> layer)
+	{
+		m_layerStack.push_back(std::move(layer));
+		m_layerStack.back()->onCreation();
 	}
 
 } // namespace Aquarius
