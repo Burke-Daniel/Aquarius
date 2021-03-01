@@ -12,34 +12,34 @@ namespace Aquarius {
         MouseButtonPressedEvent, MouseButtonReleasedEvent, MouseMovedEvent, MouseScrolledEvent, MouseInWindowEvent
     };
 
-    class MouseButtonPressed : public Event<MouseEvents>
+    class MouseButtonPressedEvent : public Event<MouseEvents>
     {
     public:
-        MouseButtonPressed() : Event<MouseEvents>(MouseEvents::MouseButtonPressedEvent) {};
+        MouseButtonPressedEvent() : Event<MouseEvents>(MouseEvents::MouseButtonPressedEvent, m_Code, 0, 0) {};
     };
 
-    class MouseButtonReleased : public Event<MouseEvents>
+    class MouseButtonReleasedEvent : public Event<MouseEvents>
     {
     public:
-        MouseButtonReleased() : Event<MouseEvents>(MouseEvents::MouseButtonReleasedEvent) {};
+        MouseButtonReleasedEvent() : Event<MouseEvents>(MouseEvents::MouseButtonReleasedEvent, m_Code, 0, 0) {};
     };
 
-    class MouseMoved : public Event<MouseEvents>
+    class MouseMovedEvent : public Event<MouseEvents>
     {
     public:
-        MouseMoved() : Event<MouseEvents>(MouseEvents::MouseMovedEvent) {};
+        MouseMovedEvent() : Event<MouseEvents>(MouseEvents::MouseMovedEvent, 0, m_xAxis, m_yAxis) {};
     };
 
-    class MouseScrolled : public Event<MouseEvents>
+    class MouseScrolledEvent : public Event<MouseEvents>
     {
     public:
-        MouseScrolled() : Event<MouseEvents>(MouseEvents::MouseScrolledEvent) {};
+        MouseScrolledEvent() : Event<MouseEvents>(MouseEvents::MouseScrolledEvent, 0, m_xAxis, m_yAxis) {};
     };
 
-    class MouseInWindow : public Event<MouseEvents>
+    class MouseInWindowEvent : public Event<MouseEvents>
     {
     public:
-        MouseInWindow() : Event<MouseEvents>(MouseEvents::MouseInWindowEvent) {};
+        MouseInWindowEvent() : Event<MouseEvents>(MouseEvents::MouseInWindowEvent, m_Code, 0, 0) {};
     };
 
 } // namespace Aquarius

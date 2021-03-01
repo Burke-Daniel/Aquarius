@@ -1,8 +1,8 @@
 #include "Window.h"
-#include "Log.h"
-#include <assert.h>
 #include "Aquarius/Events/Callbacks.h"
 #include "Aquarius/Core/Input.h"
+#include "Aquarius/Core/Log.h"
+
 
 namespace Aquarius {
 
@@ -63,11 +63,11 @@ namespace Aquarius {
         setVsync(m_VsyncEnabled);
 
         // Register Window Callbacks
-        glfwSetKeyCallback(m_Window, KeyboardEvent::Callback);
-        glfwSetCursorPosCallback(m_Window, MouseEvent::cursorPositionCallback);
-        glfwSetCursorEnterCallback(m_Window, MouseEvent::cursorInWindowCallback);
-        glfwSetMouseButtonCallback(m_Window, MouseEvent::mouseButtonCallback);
-        glfwSetScrollCallback(m_Window, MouseEvent::mouseScrollCallback);
+        glfwSetKeyCallback(m_Window, keyboardCallback);
+        glfwSetCursorPosCallback(m_Window, mouseCursorPositionCallback);
+        glfwSetCursorEnterCallback(m_Window, mouseCursorInWindowCallback);
+        glfwSetMouseButtonCallback(m_Window, mouseButtonCallback);
+        glfwSetScrollCallback(m_Window, mouseScrollCallback);
 
         glfwSetInputMode(m_Window, GLFW_STICKY_MOUSE_BUTTONS, 1);
         glfwSetInputMode(m_Window, GLFW_STICKY_KEYS,1);

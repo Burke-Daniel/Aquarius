@@ -12,22 +12,22 @@ namespace Aquarius {
         KeyPressedEvent, KeyRepeatedEvent, KeyReleasedEvent,
     };
 
-    class KeyPressed : public Event<KeyboardEvents>
+    class KeyPressedEvent : public Event<KeyboardEvents>
     {
     public:
-        KeyPressed() : Event<KeyboardEvents>(KeyboardEvents::KeyPressedEvent) {};
+        KeyPressedEvent() : Event<KeyboardEvents>(KeyboardEvents::KeyPressedEvent, m_Code, 0,0) {};
     };
 
-    class KeyRepeated : public Event<KeyboardEvents>
+    class KeyRepeatedEvent : public Event<KeyboardEvents>
     {
     public:
-        KeyRepeated() : Event<KeyboardEvents>(KeyboardEvents::KeyRepeatedEvent) {};
+        KeyRepeatedEvent() : Event<KeyboardEvents>(KeyboardEvents::KeyRepeatedEvent, m_Code, 0, 0) {};
     };
 
-    class KeyReleased : public Event<KeyboardEvents>
+    class KeyReleasedEvent : public Event<KeyboardEvents>
     {
     public:
-        KeyReleased() : Event<KeyboardEvents>(KeyboardEvents::KeyReleasedEvent) {};
+        KeyReleasedEvent() : Event<KeyboardEvents>(KeyboardEvents::KeyReleasedEvent, m_Code, 0, 0) {};
     };
 
 } // namespace Aquarius
