@@ -101,9 +101,9 @@ namespace Aquarius {
                 model = glm::translate(model, {pos.x, pos.y, 0.0f});
 
                 // Translate to center of quad, rotate, shift back
-                model = glm::translate(model, {size.x/2.0, size.y/2.0, 0.0f});
-                model = glm::rotate(model, glm::radians(rotationDegrees), {0.0f,0.0f,1.0f});
-                model = glm::translate(model, {-size.x/2, -size.y/2, 0.0f});
+                model = glm::translate(model, {size.x / 2.0f, size.y / 2.0f, 0.0f});
+                model = glm::rotate(model, glm::radians(rotationDegrees), {0.0f, 0.0f, 1.0f});
+                model = glm::translate(model, {-size.x / 2.0f, -size.y / 2.0f, 0.0f});
 
                 // Scale
                 model = glm::scale(model, {size.x, size.y, 1.0f});
