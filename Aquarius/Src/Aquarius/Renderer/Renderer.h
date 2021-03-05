@@ -11,11 +11,6 @@ namespace Aquarius {
 
     namespace Renderer {
 
-        struct SceneInfo {
-            glm::mat4 view;
-            glm::mat4 projection;
-        };
-
         void Init();
         void Shutdown();
 

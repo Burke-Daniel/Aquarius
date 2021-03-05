@@ -13,11 +13,16 @@ namespace Aquarius {
 
         namespace Renderer {
 
+            struct SceneInfo {
+                glm::mat4 view;
+                glm::mat4 projection;
+            };
+
             struct quadRendererInfo
             {
                 sharedPtr<VertexArray> vertexArray;
                 sharedPtr<Shader> shader;
-                glm::vec4 defaultColor = {1,1,1,1};
+                glm::vec4 defaultColor = {1, 1, 1, 1};
             };
 
             static SceneInfo s_SceneData =
@@ -45,7 +50,7 @@ namespace Aquarius {
                 };
 
                 // TODO - gross
-                auto vertexBuffer = std::make_shared<VertexBuffer>(quadVertices.data(),quadVertices.size() * sizeof(quadVertices[0]));
+                auto vertexBuffer = std::make_shared<VertexBuffer>(quadVertices.data(), quadVertices.size() * sizeof(quadVertices[0]));
                 auto indexBuffer = std::make_shared<IndexBuffer>(quadIndices.data(), quadIndices.size());
                 auto bufferLayout = BufferLayout({
                     VertexElement(ShaderType::Float, 2, false)
