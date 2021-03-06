@@ -50,10 +50,13 @@ namespace Aquarius {
                         0, 1, 2,
                         2, 3, 0
                 };
+                
+                auto vertexBuffer = std::make_shared<VertexBuffer>(quadVertices.data(), 
+                                                                   quadVertices.size() * sizeof(quadVertices[0]));
 
-                // TODO - gross
-                auto vertexBuffer = std::make_shared<VertexBuffer>(quadVertices.data(), quadVertices.size() * sizeof(quadVertices[0]));
-                auto indexBuffer = std::make_shared<IndexBuffer>(quadIndices.data(), quadIndices.size());
+                auto indexBuffer = std::make_shared<IndexBuffer>(quadIndices.data(), 
+                                                                 quadIndices.size());
+                
                 auto bufferLayout = BufferLayout({
                     VertexElement(ShaderType::Float, 2, false)
                 });
