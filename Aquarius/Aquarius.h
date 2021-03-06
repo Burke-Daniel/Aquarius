@@ -28,13 +28,3 @@
 #include <glm/glm.hpp>
 #include <iostream>
 #include <stb_image.h>
-
-
-namespace Aquarius {
-    class Test
-    {
-    public:
-        int testMain();
-        static int triangleTest();
-    };
-}
