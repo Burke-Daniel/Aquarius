@@ -137,7 +137,7 @@ namespace Aquarius {
     void Shader::setMat4(const std::string& name, bool transpose, const glm::mat4& value) const
     {
         int location = glGetUniformLocation(m_ID, name.c_str());
-        glUniformMatrix4fv(location, 1, transpose, glm::value_ptr(value));
+        glUniformMatrix4fv(location, 1, transpose ? GL_TRUE : GL_FALSE, glm::value_ptr(value));
     }
 
     void Shader::compile(uint32_t shaderID, const char* shaderCode, ShaderType shaderType)
