@@ -22,7 +22,6 @@ namespace Aquarius {
             {
                 sharedPtr<VertexArray> vertexArray;
                 sharedPtr<Shader> shader;
-                glm::vec4 defaultColor = {1, 1, 1, 1};
             };
 
             static SceneInfo s_SceneData =
@@ -57,7 +56,7 @@ namespace Aquarius {
                 });
 
                 s_QuadData.vertexArray = std::make_shared<VertexArray>(vertexBuffer, indexBuffer, bufferLayout);
-                s_QuadData.shader = std::make_unique<Shader>("Shaders/vertexShader.glsl", "Shaders/fragmentShader.glsl");
+                s_QuadData.shader = std::make_shared<Shader>("Shaders/vertexShader.glsl", "Shaders/fragmentShader.glsl");
             }
 
             void Shutdown()
@@ -92,7 +91,7 @@ namespace Aquarius {
                 glDrawElements(GL_TRIANGLES, vertexArray->getIndexBuffer()->getCount(), GL_UNSIGNED_INT, (void*)0);
             }
 
-            void DrawQuad(const glm::vec2& pos, const glm::vec2& size, float rotationDegrees = 0.0, const glm::vec4& color = s_QuadData.defaultColor)
+            void DrawQuad(const glm::vec2& pos, const glm::vec2& size, float rotationDegrees, const glm::vec4& color)
             {
                 // Configure model matrix
                 glm::mat4 model = glm::mat4(1.0f);
@@ -101,9 +100,9 @@ namespace Aquarius {
                 model = glm::translate(model, {pos.x, pos.y, 0.0f});
 
                 // Translate to center of quad, rotate, shift back
-                model = glm::translate(model, {size.x / 2.0f, size.y / 2.0f, 0.0f});
-                model = glm::rotate(model, glm::radians(rotationDegrees), {0.0f, 0.0f, 1.0f});
-                model = glm::translate(model, {-size.x / 2.0f, -size.y / 2.0f, 0.0f});
+                model = glm::translate(model, {size.x * 0.5f, size.y * 0.5f, 0.0f});
+                model = glm::rotate(model, glm::radians(rotationDegrees), { 0.0f, 0.0f, 1.0f });
+                model = glm::translate(model, {-size.x * 0.5f, -size.y * 0.5f, 0.0f});
 
                 // Scale
                 model = glm::scale(model, {size.x, size.y, 1.0f});
@@ -112,7 +111,7 @@ namespace Aquarius {
                 s_QuadData.shader->activate();
                 s_QuadData.shader->setMat4("u_model", false, model);
                 s_QuadData.shader->setMat4("u_view", false, s_SceneData.view);
-                s_QuadData.shader->setMat4("u_model", false, s_SceneData.projection);
+                s_QuadData.shader->setMat4("u_projection", false, s_SceneData.projection);
                 s_QuadData.shader->setFloat4("u_color", color);
 
                 // Finally draw the quad
