@@ -21,6 +21,7 @@ void SandboxLayer::onCreation()
 
 	m_vertexArray = std::make_shared<Aquarius::VertexArray>(m_vertexBuffer, m_indexBuffer, *m_bufferLayout);
 	m_vertexArray->activate();
+	Aquarius::Renderer::Init();
 
 	m_texture = std::make_shared<Aquarius::Texture>("Assets/container.jpg");
 	m_texture->bind();
