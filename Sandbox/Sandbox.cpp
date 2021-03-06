@@ -21,6 +21,9 @@ void SandboxLayer::onCreation()
 
 	m_vertexArray = std::make_shared<Aquarius::VertexArray>(m_vertexBuffer, m_indexBuffer, *m_bufferLayout);
 	m_vertexArray->activate();
+
+	m_texture = std::make_shared<Aquarius::Texture>("Assets/container.jpg");
+	m_texture->bind();
 	Aquarius::Renderer::Init();
 	m_texture = std::make_shared<Aquarius::Texture>("Assets/container.jpg");
 	m_texture->bind(0);
@@ -37,9 +40,16 @@ void SandboxLayer::onUpdate(Aquarius::timeDelta_t)
 		45,
 		{0, 0, 0 ,1}
 	);
+<<<<<<< HEAD
 	m_texture->bind(0);
 	Aquarius::Renderer::Submit(m_vertexArray.get(), m_ShaderProgram.get());
 
+=======
+
+	m_texture->bind();
+
+	Aquarius::Renderer::Submit(m_vertexArray.get(), m_ShaderProgram.get());
+>>>>>>> f69b753 (Modify Sandbox to render container image in rectangle)
 }
 
 Sandbox::Sandbox()
