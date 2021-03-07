@@ -1,6 +1,6 @@
 #version 410 core
 
-// Basic Fragment Shader
+// Modifiable Fragment Shader
 out vec4 FragColor;
 in vec3 fColor;
 in vec2 fTexCoord;
