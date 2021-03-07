@@ -40,16 +40,9 @@ void SandboxLayer::onUpdate(Aquarius::timeDelta_t)
 		45,
 		{0, 0, 0 ,1}
 	);
-<<<<<<< HEAD
+
 	m_texture->bind(0);
 	Aquarius::Renderer::Submit(m_vertexArray.get(), m_ShaderProgram.get());
-
-=======
-
-	m_texture->bind();
-
-	Aquarius::Renderer::Submit(m_vertexArray.get(), m_ShaderProgram.get());
->>>>>>> f69b753 (Modify Sandbox to render container image in rectangle)
 }
 
 Sandbox::Sandbox()
