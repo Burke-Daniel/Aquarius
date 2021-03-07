@@ -39,7 +39,7 @@ namespace Aquarius {
 
 		bool generateTexture(const std::string& texture, bool hasAlpha = false);
 
-		void bind() const;
+		void bind(uint32_t textureSlot) const;
 		void unbind() const;
 
 		int getWidth() const { return m_Width; }
@@ -49,8 +49,6 @@ namespace Aquarius {
 		void setConfiguration(const TextureConfiguration& configuration) { m_Configuration = configuration; }
 
 	private:
-		static uint8_t s_NextTextureUnitNum;
-		int m_TextureUnitNum;
 		uint32_t m_ID = 0;
 		int m_Width = 0;
 		int m_Height = 0;
