@@ -12,7 +12,6 @@ namespace Aquarius {
 	class Layer;
 
 	using LayerStack = std::deque<uniquePtr<Layer>>;
-	using timeDelta_t = float;
 
 	class Layer
 	{

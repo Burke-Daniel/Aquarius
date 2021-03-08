@@ -4,6 +4,8 @@
 
 
 namespace Aquarius {
+    
+    using timeDelta_t = float;
 
     template<typename T>
     using uniquePtr = std::unique_ptr<T>;
