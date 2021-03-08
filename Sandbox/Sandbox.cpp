@@ -25,7 +25,6 @@ void SandboxLayer::onCreation()
 	m_texture = std::make_shared<Aquarius::Texture>("Assets/container.jpg");
 	m_texture->bind();
 	Aquarius::Renderer::Init();
-	m_texture = std::make_shared<Aquarius::Texture>("Assets/container.jpg");
 	m_texture->bind(0);
 }
 
@@ -42,6 +41,7 @@ void SandboxLayer::onUpdate(Aquarius::timeDelta_t)
 	);
 
 	m_texture->bind(0);
+
 	Aquarius::Renderer::Submit(m_vertexArray.get(), m_ShaderProgram.get());
 }
 

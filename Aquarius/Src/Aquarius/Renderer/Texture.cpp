@@ -9,7 +9,6 @@ namespace Aquarius {
 		generateTexture(texture, hasAlpha);
 	}
 
-<<<<<<< HEAD
 	Texture::~Texture()
 	{
 		glDeleteTextures(1, &m_ID);
@@ -51,7 +50,11 @@ namespace Aquarius {
 
 	void Texture::bind(uint32_t textureSlot) const
 	{
-		glActiveTexture(textureSlot);
+		if (textureSlot > 16)
+		{
+			AQ_CORE_WARNING("Texture Slots greater than 16 may not exist on some GPUs");
+		}
+		glActiveTexture(GL_TEXTURE0 + textureSlot);
 		glBindTexture(GL_TEXTURE_2D, m_ID);
 	}
 
