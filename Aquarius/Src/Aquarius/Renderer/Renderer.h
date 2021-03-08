@@ -1,6 +1,7 @@
 #pragma once
 
 #include "Aquarius/Renderer/VertexArray.h"
+#include "Aquarius/Renderer/OrthographicCamera.h"
 #include "Aquarius/Renderer/IndexBuffer.h"
 #include "Aquarius/Renderer/Shader.h"
 
@@ -12,6 +13,7 @@ namespace Aquarius {
     namespace Renderer {
 
         void Init();
+        void BeginScene(OrthographicCamera* camera);
         void Shutdown();
 
         void Clear();

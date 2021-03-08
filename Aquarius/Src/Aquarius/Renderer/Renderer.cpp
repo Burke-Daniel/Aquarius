@@ -66,6 +66,13 @@ namespace Aquarius {
                                                              "Aquarius/Src/Aquarius/Renderer/Shaders/fragmentShader.glsl");
             }
 
+            void BeginScene(OrthographicCamera* camera)
+            {
+                // Initialize scene
+                s_SceneData.view = camera->getView();
+                s_SceneData.projection = camera->getProjection();
+            }
+
             void Shutdown()
             {
                 // Nothing to put here just yet
@@ -78,7 +85,7 @@ namespace Aquarius {
 
             void SetView(const glm::mat4& view)
             {
-                s_SceneData.projection = view;
+                s_SceneData.view = view;
             }
 
             void Clear()
