@@ -24,7 +24,7 @@ void SandboxLayer::onCreation()
 	m_vertexArray->activate();
 
 	m_texture = std::make_shared<Aquarius::Texture>("Assets/container.jpg");
-	m_texture->bind(GL_TEXTURE0);
+	m_texture->bind(0);
 }
 
 void SandboxLayer::onUpdate(Aquarius::timeDelta_t)
@@ -32,7 +32,7 @@ void SandboxLayer::onUpdate(Aquarius::timeDelta_t)
 	Aquarius::Renderer::ClearColor({ 0.2, 0.3, 0.7 });
 	Aquarius::Renderer::Clear();
 
-	m_texture->bind(GL_TEXTURE0);
+	m_texture->bind(0);
 
 	Aquarius::Renderer::Submit(m_vertexArray.get(), m_ShaderProgram.get());
 }
