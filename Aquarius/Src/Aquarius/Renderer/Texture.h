@@ -36,6 +36,7 @@ namespace Aquarius {
 	{
 	public:
 		Texture(const std::string& texture, TextureConfiguration configuration = {}, bool hasAlpha = false);
+		~Texture();
 
 		bool generateTexture(const std::string& texture, bool hasAlpha = false);
 
