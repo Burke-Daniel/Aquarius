@@ -21,6 +21,15 @@ void SandboxLayer::onCreation()
 
 	m_vertexArray = std::make_shared<Aquarius::VertexArray>(m_vertexBuffer, m_indexBuffer, *m_bufferLayout);
 	m_vertexArray->activate();
+
+	Aquarius::Application* app = Aquarius::Application::get();
+	Aquarius::Window* window = app->getWindow();
+
+	int height = window->getHeight();
+	int width = window->getWidth();
+
+	// TODO: Create camera and start scene with it
+	m_Camera = std::make_shared<Aquarius::OrthographicCamera>(0.1, 0, width, height, 0);
 	Aquarius::Renderer::Init();
 
 	m_texture = std::make_shared<Aquarius::Texture>("Assets/container.jpg");
@@ -29,16 +38,29 @@ void SandboxLayer::onCreation()
 	m_texture->bind(0);
 }
 
-void SandboxLayer::onUpdate(Aquarius::timeDelta_t)
+void SandboxLayer::onUpdate(Aquarius::timeDelta_t ts)
 {
+	m_Camera->onUpdate(ts);
+	glm::vec3 cameraPos = m_Camera->getPosition();
+	m_quadPosition = glm::vec2(cameraPos.x, cameraPos.y);
+	AQ_INFO("\ncamera X: %v\n camera Y: %v", cameraPos.x, cameraPos.y);
+
+	Aquarius::Renderer::BeginScene(m_Camera.get());
 	Aquarius::Renderer::ClearColor({ 0.2, 0.3, 0.7 });
 	Aquarius::Renderer::Clear();
-	Aquarius::Renderer::SetProjection(glm::ortho(0.0f, 800.0f, 600.0f, 0.0f, -1.0f, 1.0f));
+
+	//Aquarius::Renderer::DrawQuad(
+	//	m_quadPosition,
+	//	{ 150, 150 },
+	//	0,
+	//	{ 0, 1, 1 ,1 }
+	//);
+
 	Aquarius::Renderer::DrawQuad(
-		{300, 200},
-		{150, 150},
-		45,
-		{0, 0, 0 ,1}
+		{400-5, 300-5},
+		{10, 10},
+		0,
+		{ 1, 0.5, 1 ,1 }
 	);
 
 	m_texture->bind(0);
