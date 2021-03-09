@@ -62,7 +62,8 @@ namespace Aquarius {
                 });
 
                 s_QuadData.vertexArray = std::make_shared<VertexArray>(vertexBuffer, indexBuffer, bufferLayout);
-                s_QuadData.shader = std::make_shared<Shader>("Shaders/vertexShader.glsl", "Shaders/fragmentShader.glsl");
+                s_QuadData.shader = std::make_shared<Shader>("Aquarius/Src/Aquarius/Renderer/Shaders/vertexShader.glsl", 
+                                                             "Aquarius/Src/Aquarius/Renderer/Shaders/fragmentShader.glsl");
             }
 
             void Shutdown()
