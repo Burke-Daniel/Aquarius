@@ -19,7 +19,6 @@ private:
 	Aquarius::sharedPtr<Aquarius::BufferLayout> m_bufferLayout;
 	Aquarius::sharedPtr<Aquarius::VertexArray> m_vertexArray;
 	Aquarius::sharedPtr<Aquarius::OrthographicCamera> m_Camera;
-	glm::vec2 m_quadPosition = {500, 300};
 	Aquarius::sharedPtr<Aquarius::Texture> m_texture;
 
 	std::array<float, 7 * 4> m_triangleVertices =
