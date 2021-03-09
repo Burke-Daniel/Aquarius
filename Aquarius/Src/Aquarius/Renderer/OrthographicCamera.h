@@ -93,7 +93,7 @@ namespace Aquarius {
 		const glm::mat4& getView() const { return m_View; };
 		const glm::mat4& getProjection() const { return m_Projection; }
 		const glm::vec3& getPosition() const { return m_Position; }
-		void setPosition(const glm::vec3& pos) { m_Position = pos; }
+		void setPosition(const glm::vec3& pos) { m_Position = pos; updateView(); }
 
 	private:
 		glm::vec3 m_Up;
