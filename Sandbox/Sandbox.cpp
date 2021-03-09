@@ -28,7 +28,7 @@ void SandboxLayer::onCreation()
 	int height = window->getHeight();
 	int width = window->getWidth();
 
-	m_Camera = std::make_shared<Aquarius::OrthographicCamera>(1, 0, width, height, 0);
+	m_Camera = std::make_shared<Aquarius::OrthographicCamera>(1, 0.01, height, width);
 
 	Aquarius::Renderer::Init();
 
