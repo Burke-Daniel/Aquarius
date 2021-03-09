@@ -7,7 +7,7 @@
 class SandboxLayer : public Aquarius::Layer
 {
 public:
-	SandboxLayer(const std::string& vertexShader, const std::string& fragmentShader);
+	SandboxLayer();
 
 	void onCreation() override;
 	void onUpdate(Aquarius::timeDelta_t time) override;

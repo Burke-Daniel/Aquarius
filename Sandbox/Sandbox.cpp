@@ -1,14 +1,13 @@
 #include "Sandbox.h"
 
-SandboxLayer::SandboxLayer(const std::string& vertexShader, const std::string& fragmentShader)
-	: Layer("Sandbox"),
-	m_ShaderProgram(std::make_shared<Aquarius::Shader>(vertexShader, fragmentShader))
+#include <glm/gtc/matrix_transform.hpp>
+
+SandboxLayer::SandboxLayer()
+	: Layer("Sandbox")
 {}
 
 void SandboxLayer::onCreation()
 {
-	m_ShaderProgram->activate();
-
 	m_vertexBuffer = std::make_shared<Aquarius::VertexBuffer>(
 		m_triangleVertices.data(), m_triangleVertices.size() * sizeof(float));
 
@@ -22,7 +21,7 @@ void SandboxLayer::onCreation()
 
 	m_vertexArray = std::make_shared<Aquarius::VertexArray>(m_vertexBuffer, m_indexBuffer, *m_bufferLayout);
 	m_vertexArray->activate();
-
+	Aquarius::Renderer::Init();
 	m_texture = std::make_shared<Aquarius::Texture>("Assets/container.jpg");
 	m_texture->bind(0);
 }
@@ -31,16 +30,22 @@ void SandboxLayer::onUpdate(Aquarius::timeDelta_t)
 {
 	Aquarius::Renderer::ClearColor({ 0.2, 0.3, 0.7 });
 	Aquarius::Renderer::Clear();
-
+	Aquarius::Renderer::SetProjection(glm::ortho(0.0f, 800.0f, 600.0f, 0.0f, -1.0f, 1.0f));
+	Aquarius::Renderer::DrawQuad(
+		{300, 200},
+		{150, 150},
+		45,
+		{0, 0, 0 ,1}
+	);
 	m_texture->bind(0);
-
 	Aquarius::Renderer::Submit(m_vertexArray.get(), m_ShaderProgram.get());
+
 }
 
 Sandbox::Sandbox()
 	: Aquarius::Application("Sandbox")
 {
-	PushLayer(std::make_unique<SandboxLayer>("Shaders/modifiableVertexShader.glsl", "Shaders/modifiableFragmentShader.glsl"));
+	PushLayer(std::make_unique<SandboxLayer>());
 }
 
 Aquarius::uniquePtr<Aquarius::Application> createApplication()
