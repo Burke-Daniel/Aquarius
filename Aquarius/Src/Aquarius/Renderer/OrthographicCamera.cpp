@@ -46,10 +46,10 @@ namespace Aquarius {
 			m_Position.x += dx;
 		}
 
-		// TODO - figure out zoom (this should scale the view matrix ?) 
+		// Zoom 
 		if (Input::isKeyPressed(Input::KeyCode::Key_down))
 		{
-			m_Zoom = m_Zoom > 0.1 ? m_Zoom - dzoom : m_Zoom;
+			m_Zoom = m_Zoom - dzoom;
 		}
 
 		if (Input::isKeyPressed(Input::KeyCode::Key_up))
@@ -57,6 +57,8 @@ namespace Aquarius {
 			m_Zoom += dzoom;
 		}
 
+		// Clamp zoom > 0.1
+		m_Zoom = m_Zoom > 0.1 ? m_Zoom : 0.1;
 
 		updateView();
 		updateProjection();
