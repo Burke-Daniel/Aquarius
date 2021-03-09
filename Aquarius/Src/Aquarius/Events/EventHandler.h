@@ -2,24 +2,34 @@
 
 #include "Event.h"
 
-#include <GLFW/glfw3.h>
+#include <functional>
 #include <unordered_map>
 #include <vector>
 
 
 namespace Aquarius {
 
-    template <typename T>
     class EventHandler
     {
     public:
-        using functionType = std::function<void(const Event<T>&)>;
-        void subscribe(T Type, const functionType& function)
+        using functionType = std::function<void(const Event&)>;
+
+        EventHandler(Event& event) : m_event(event)
         {
-            subscribers[Type].push_back(function);
+            logCreation();
         }
 
-        void notify(Event<T>& event)
+        void logCreation()
+        {
+            AQ_CORE_INFO("EventHandler Invoked Successfully.");
+        }
+
+        void subscribe(eventType type, const functionType& function)
+        {
+            subscribers[type].push_back(function);
+        }
+
+        void notify(Event& event)
         {
             // Check to see if there are any subscribers of event type
             if((subscribers.find(event.getEventType())) == subscribers.end())
@@ -35,8 +45,11 @@ namespace Aquarius {
             }
         }
 
+        virtual ~EventHandler() = default;
+
     private:
-        std::unordered_map<T, std::vector<functionType>> subscribers;
+        std::unordered_map<eventType, std::vector<functionType>> subscribers;
+        Event& m_event;
     };
 
 } // namespace Aquarius

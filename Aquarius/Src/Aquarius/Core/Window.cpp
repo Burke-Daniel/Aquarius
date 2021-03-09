@@ -1,7 +1,7 @@
 #include "Window.h"
-#include "Aquarius/Events/Callbacks.h"
 #include "Aquarius/Core/Input.h"
 #include "Aquarius/Core/Log.h"
+#include "Aquarius/Events/Callbacks.h"
 
 
 namespace Aquarius {

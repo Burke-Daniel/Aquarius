@@ -6,12 +6,12 @@
 
 
 namespace Aquarius {
-
+/*
     enum class WindowEvents
     {
         WindowClosedEvent, WindowResizedEvent, WindowFocusedEvent, WindowMovedEvent
     };
 
     // Events will be added here as they are needed.
-
+*/
 } // namespace Aquarius

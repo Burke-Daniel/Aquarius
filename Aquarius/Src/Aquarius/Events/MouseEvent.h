@@ -7,39 +7,129 @@
 
 namespace Aquarius {
 
-    enum class MouseEvents
-    {
-        MouseButtonPressedEvent, MouseButtonReleasedEvent, MouseMovedEvent, MouseScrolledEvent, MouseInWindowEvent
-    };
-
-    class MouseButtonPressedEvent : public Event<MouseEvents>
+    class MouseMovedEvent : public Event
     {
     public:
-        MouseButtonPressedEvent() : Event<MouseEvents>(MouseEvents::MouseButtonPressedEvent, m_Code, 0, 0) {};
+        MouseMovedEvent(float xCoordinate, float yCoordinate)
+                : m_XCoordinate(xCoordinate), m_YCoordinate(yCoordinate) {}
+
+        EVENT_TYPE(MouseMovedEvent)
+
+        void logEvent()
+        {
+            AQ_CORE_TRACE("MouseMovedEvent: %v, %v", m_XCoordinate, m_YCoordinate);
+        }
+
+        float getXCoordinate()
+        {
+            return m_XCoordinate;
+        }
+
+        float getYCoordinate()
+        {
+            return m_YCoordinate;
+        }
+
+    private:
+        float m_XCoordinate;
+        float m_YCoordinate;
     };
 
-    class MouseButtonReleasedEvent : public Event<MouseEvents>
+    class MouseScrolledEvent : public Event
     {
     public:
-        MouseButtonReleasedEvent() : Event<MouseEvents>(MouseEvents::MouseButtonReleasedEvent, m_Code, 0, 0) {};
+        MouseScrolledEvent(float xCoordinate, float yCoordinate)
+                : m_XCoordinate(xCoordinate), m_YCoordinate(yCoordinate) {}
+
+        EVENT_TYPE(MouseScrolledEvent)
+
+        void logEvent()
+        {
+            AQ_CORE_TRACE("MouseScrolledEvent: %v, %v", m_XCoordinate, m_YCoordinate);
+        }
+
+        float getXCoordinate()
+        {
+            return m_XCoordinate;
+        }
+
+        float getYCoordinate()
+        {
+            return m_YCoordinate;
+        }
+
+    private:
+        float m_XCoordinate;
+        float m_YCoordinate;
     };
 
-    class MouseMovedEvent : public Event<MouseEvents>
+    class MouseButtonEvent : public Event
     {
     public:
-        MouseMovedEvent() : Event<MouseEvents>(MouseEvents::MouseMovedEvent, 0, m_xAxis, m_yAxis) {};
+        int getCode()
+        {
+            return m_buttonCode;
+        }
+
+    protected:
+        int m_buttonCode;
+
+        MouseButtonEvent(int buttonCode) : m_buttonCode(buttonCode) {}
     };
 
-    class MouseScrolledEvent : public Event<MouseEvents>
+    class MouseButtonPressedEvent : public MouseButtonEvent
     {
     public:
-        MouseScrolledEvent() : Event<MouseEvents>(MouseEvents::MouseScrolledEvent, 0, m_xAxis, m_yAxis) {};
+        MouseButtonPressedEvent(int buttonCode) : MouseButtonEvent(buttonCode) {}
+
+        EVENT_TYPE(MouseButtonPressedEvent)
+
+        void logEvent()
+        {
+            AQ_CORE_TRACE("MouseButtonPressedEvent: %v", m_buttonCode);
+        }
     };
 
-    class MouseInWindowEvent : public Event<MouseEvents>
+    class MouseButtonReleasedEvent : public MouseButtonEvent
     {
     public:
-        MouseInWindowEvent() : Event<MouseEvents>(MouseEvents::MouseInWindowEvent, m_Code, 0, 0) {};
+        MouseButtonReleasedEvent(int buttonCode) : MouseButtonEvent(buttonCode) {}
+
+        EVENT_TYPE(MouseButtonReleasedEvent)
+
+        void logEvent()
+        {
+            AQ_CORE_TRACE("MouseButtonReleasedEvent: %v", m_buttonCode);
+        }
+    };
+
+    class MouseInWindowEvent : public Event
+    {
+    public:
+        MouseInWindowEvent(int inWindow) : m_inWindow(inWindow) {}
+
+        EVENT_TYPE(MouseInWindowEvent)
+
+        void logEvent()
+        {
+            if (inWindow() == 1)
+            {
+                AQ_CORE_TRACE("Cursor is in the window.");
+            }
+
+            else
+            {
+                AQ_CORE_TRACE("Cursor is not in the window.");
+            }
+        }
+
+        int inWindow()
+        {
+            return m_inWindow;
+        }
+
+    private:
+        int m_inWindow;
     };
 
 } // namespace Aquarius

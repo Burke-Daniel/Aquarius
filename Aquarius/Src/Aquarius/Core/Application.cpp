@@ -1,7 +1,9 @@
 #include "Application.h"
 #include "Aquarius/Core/Input.h"
 #include "Aquarius/Core/Log.h"
-
+#include "Aquarius/Events/EventHandler.h"
+#include "Aquarius/Events/KeyboardEvent.h"
+#include "Aquarius/Events/MouseEvent.h"
 
 namespace Aquarius {
 
@@ -17,10 +19,9 @@ namespace Aquarius {
 		s_Application = this;
 
 		Log::initLoggers();
-
 		m_Window->Initialize();
 
-		AQ_CORE_INFO("Window Initialized Sucessfully");
+		AQ_CORE_INFO("Window Initialized Successfully");
 	}
 
 	void Application::run()
@@ -31,6 +32,11 @@ namespace Aquarius {
 			glClear(GL_COLOR_BUFFER_BIT);
 			m_Window->OnUpdate();
 		}
+	}
+
+	void Application::onEvent(Event &event)
+	{
+	    EventHandler handler(event);
 	}
 
 } // namespace Aquarius

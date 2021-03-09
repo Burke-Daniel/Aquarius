@@ -23,6 +23,8 @@ namespace Aquarius {
 		Window* getWindow();
 
 		void run();
+
+		void onEvent(Event& event);
 	protected:
 		Application(std::string&& windowName = "Application");
 	private:

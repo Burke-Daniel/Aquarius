@@ -2,6 +2,7 @@
 
 #include "Aquarius/Core/Utility.h"
 #include "Aquarius/Renderer/RenderingContext.h"
+#include "Aquarius/Events/Event.h"
 
 #include <memory>
 #include <GLFW/glfw3.h>
@@ -42,6 +43,7 @@ namespace Aquarius {
         bool m_VsyncEnabled;
         GLFWwindow* m_Window;
         std::unique_ptr<RenderingContext> m_Context;
+
 
         // Deallocate window resources
         void Deallocate();

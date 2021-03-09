@@ -7,27 +7,61 @@
 
 namespace Aquarius {
 
-    enum class KeyboardEvents
-    {
-        KeyPressedEvent, KeyRepeatedEvent, KeyReleasedEvent,
-    };
-
-    class KeyPressedEvent : public Event<KeyboardEvents>
+    class KeyEvent : public Event
     {
     public:
-        KeyPressedEvent() : Event<KeyboardEvents>(KeyboardEvents::KeyPressedEvent, m_Code, 0,0) {};
+
+        int getCode()
+        {
+            return m_keyCode;
+        }
+
+    protected:
+        int m_keyCode;
+
+        KeyEvent(int keyCode) : m_keyCode(keyCode) {}
     };
 
-    class KeyRepeatedEvent : public Event<KeyboardEvents>
+    class KeyPressedEvent : public KeyEvent
     {
     public:
-        KeyRepeatedEvent() : Event<KeyboardEvents>(KeyboardEvents::KeyRepeatedEvent, m_Code, 0, 0) {};
+        KeyPressedEvent(int keyCode) : KeyEvent(keyCode) {}
+
+        EVENT_TYPE(KeyPressedEvent)
+
+        void logEvent()
+        {
+            AQ_CORE_TRACE("KeyPressedEvent: %v",m_keyCode);
+        }
     };
 
-    class KeyReleasedEvent : public Event<KeyboardEvents>
+    class KeyRepeatedEvent : public KeyEvent
     {
     public:
-        KeyReleasedEvent() : Event<KeyboardEvents>(KeyboardEvents::KeyReleasedEvent, m_Code, 0, 0) {};
+        KeyRepeatedEvent(int keyCode, int repeatCount) : KeyEvent(keyCode), m_repeatCount(repeatCount) {}
+
+        EVENT_TYPE(KeyRepeatedEvent)
+
+        void logEvent()
+        {
+            AQ_CORE_TRACE("KeyRepeatedEvent: %v", m_keyCode);
+        }
+
+    protected:
+        int m_repeatCount;
+    };
+
+    class KeyReleasedEvent : public KeyEvent
+    {
+    public:
+        KeyReleasedEvent(int keyCode) : KeyEvent(keyCode) {}
+
+        EVENT_TYPE(KeyReleasedEvent)
+
+        void logEvent()
+        {
+            AQ_CORE_TRACE("KeyReleasedEvent: %v",m_keyCode);
+        }
     };
 
 } // namespace Aquarius
