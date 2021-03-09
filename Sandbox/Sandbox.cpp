@@ -28,8 +28,8 @@ void SandboxLayer::onCreation()
 	int height = window->getHeight();
 	int width = window->getWidth();
 
-	// TODO: Create camera and start scene with it
-	m_Camera = std::make_shared<Aquarius::OrthographicCamera>(0.1, 0, width, height, 0);
+	m_Camera = std::make_shared<Aquarius::OrthographicCamera>(1, 0, width, height, 0);
+
 	Aquarius::Renderer::Init();
 
 	m_texture = std::make_shared<Aquarius::Texture>("Assets/container.jpg");
@@ -40,27 +40,27 @@ void SandboxLayer::onCreation()
 
 void SandboxLayer::onUpdate(Aquarius::timeDelta_t ts)
 {
-	m_Camera->onUpdate(ts);
+	m_Camera->onUpdate(ts);	
 	glm::vec3 cameraPos = m_Camera->getPosition();
-	m_quadPosition = glm::vec2(cameraPos.x, cameraPos.y);
-	AQ_INFO("\ncamera X: %v\n camera Y: %v", cameraPos.x, cameraPos.y);
 
 	Aquarius::Renderer::BeginScene(m_Camera.get());
 	Aquarius::Renderer::ClearColor({ 0.2, 0.3, 0.7 });
 	Aquarius::Renderer::Clear();
 
-	//Aquarius::Renderer::DrawQuad(
-	//	m_quadPosition,
-	//	{ 150, 150 },
-	//	0,
-	//	{ 0, 1, 1 ,1 }
-	//);
+	// Draw quad in center and follow camera
+	// In the future, camera should probably follow quad
+	Aquarius::Renderer::DrawQuad(
+		{cameraPos.x + 350, cameraPos.y + 250},
+		{100, 100},
+		 0,
+		{1, 0.5, 1, 1}
+	);
 
 	Aquarius::Renderer::DrawQuad(
-		{400-5, 300-5},
-		{10, 10},
-		0,
-		{ 1, 0.5, 1 ,1 }
+		{100, 150},
+		{100, 100},
+		 0,
+		{1, 1, 1, 1}
 	);
 
 	m_texture->bind(0);
