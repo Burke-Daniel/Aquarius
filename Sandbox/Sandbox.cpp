@@ -15,12 +15,15 @@ void SandboxLayer::onCreation()
 
 	m_bufferLayout = std::make_shared<Aquarius::BufferLayout>(std::initializer_list<Aquarius::VertexElement>{
 		Aquarius::VertexElement(Aquarius::ShaderType::Float, 2, false),
-		Aquarius::VertexElement(Aquarius::ShaderType::Float, 3, false)
+		Aquarius::VertexElement(Aquarius::ShaderType::Float, 3, false),
+		Aquarius::VertexElement(Aquarius::ShaderType::Float, 2, false)
 	});
 
 	m_vertexArray = std::make_shared<Aquarius::VertexArray>(m_vertexBuffer, m_indexBuffer, *m_bufferLayout);
 	m_vertexArray->activate();
 	Aquarius::Renderer::Init();
+	m_texture = std::make_shared<Aquarius::Texture>("Assets/container.jpg");
+	m_texture->bind(0);
 }
 
 void SandboxLayer::onUpdate(Aquarius::timeDelta_t)
@@ -28,13 +31,15 @@ void SandboxLayer::onUpdate(Aquarius::timeDelta_t)
 	Aquarius::Renderer::ClearColor({ 0.2, 0.3, 0.7 });
 	Aquarius::Renderer::Clear();
 	Aquarius::Renderer::SetProjection(glm::ortho(0.0f, 800.0f, 600.0f, 0.0f, -1.0f, 1.0f));
-	
 	Aquarius::Renderer::DrawQuad(
 		{300, 200},
 		{150, 150},
 		45,
 		{0, 0, 0 ,1}
 	);
+	m_texture->bind(0);
+	Aquarius::Renderer::Submit(m_vertexArray.get(), m_ShaderProgram.get());
+
 }
 
 Sandbox::Sandbox()

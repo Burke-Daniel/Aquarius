@@ -18,14 +18,15 @@ private:
 	Aquarius::sharedPtr<Aquarius::IndexBuffer> m_indexBuffer;
 	Aquarius::sharedPtr<Aquarius::BufferLayout> m_bufferLayout;
 	Aquarius::sharedPtr<Aquarius::VertexArray> m_vertexArray;
+	Aquarius::sharedPtr<Aquarius::Texture> m_texture;
 
-	std::array<float, 5 * 4> m_triangleVertices =
+	std::array<float, 7 * 4> m_triangleVertices =
 	{
-		// Position     // Color
-	  -0.5f, 0.0f,      0.5f, 0.5f, 0.5f,
-	   0.0f, 0.5f,      0.5f, 0.5f, 0.5f,
-	   0.5f, 0.0f,      0.5f, 0.5f, 0.5f,
-	   0.0f, -0.5f,     0.5f, 0.5f, 0.5f,
+		// Position     // Color			// Texture Coords
+	   0.5f, 0.5f,      0.5f, 0.5f, 0.5f,	1.0f, 1.0f,
+	   0.5f, -0.5f,     0.5f, 0.5f, 0.5f,	1.0f, 0.0f,
+	   -0.5f, -0.5f,    0.5f, 0.5f, 0.5f,	0.0f, 0.0f,
+	   -0.5f, 0.5f,     0.5f, 0.5f, 0.5f,	0.0f, 1.0f
 	};
 
 	std::array<uint32_t, 3 * 2> m_indices =

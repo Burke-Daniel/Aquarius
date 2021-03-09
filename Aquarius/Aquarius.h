@@ -15,6 +15,7 @@
 #include "Aquarius/Renderer/VertexBuffer.h"
 #include "Aquarius/Renderer/VertexArray.h"
 #include "Aquarius/Renderer/Shader.h"
+#include "Aquarius/Renderer/Texture.h"
 
 // -- Events
 #include "Aquarius/Events/Keyboard.h"
