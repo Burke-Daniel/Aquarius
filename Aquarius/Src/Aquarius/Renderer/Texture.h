@@ -1,10 +1,7 @@
 #pragma once
 
-#include "stb_image.h"
-
-#include "Aquarius.h"
-
 #include <cstdint>
+#include <glad/glad.h>
 #include <string>
 
 

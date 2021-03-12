@@ -1,5 +1,9 @@
 #include "Texture.h"
 
+#include "Aquarius/Core/Log.h"
+
+#include "stb_image.h"
+
 
 namespace Aquarius {
 
