@@ -2,6 +2,7 @@
 
 #include "Aquarius/Core/Utility.h"
 #include "Aquarius/Core/Window.h"
+#include "Aquarius/Events/EventHandler.h"
 
 #include <memory>
 
@@ -30,6 +31,7 @@ namespace Aquarius {
 	private:
 		static Application* s_Application;
 		uniquePtr<Window> m_Window;
-	};
+		EventHandler m_EventHandler;
+    };
 
 } // namespace Aquarius

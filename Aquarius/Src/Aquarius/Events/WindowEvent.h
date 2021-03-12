@@ -2,16 +2,34 @@
 
 #include "Event.h"
 
-#include <GLFW/glfw3.h>
-
 
 namespace Aquarius {
-/*
-    enum class WindowEvents
+
+    class WindowResizedEvent : public Event
     {
-        WindowClosedEvent, WindowResizedEvent, WindowFocusedEvent, WindowMovedEvent
+    public:
+        WindowResizedEvent(int width, int height) : m_Width(width), m_Height(height) {}
+
+        EVENT_TYPE(WindowResizedEvent)
+
+        void logEvent() override
+        {
+            AQ_CORE_TRACE("WindowResizedEvent %v, %v", m_Width, m_Height);
+        }
+
+        int getWidth()
+        {
+            return m_Width;
+        }
+
+        int getHeight()
+        {
+            return m_Height;
+        }
+
+    private:
+        int m_Width;
+        int m_Height;
     };
 
-    // Events will be added here as they are needed.
-*/
 } // namespace Aquarius

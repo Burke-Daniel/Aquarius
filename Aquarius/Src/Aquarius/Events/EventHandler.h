@@ -14,16 +14,6 @@ namespace Aquarius {
     public:
         using functionType = std::function<void(const Event&)>;
 
-        EventHandler(Event& event) : m_event(event)
-        {
-            logCreation();
-        }
-
-        void logCreation()
-        {
-            AQ_CORE_INFO("EventHandler Invoked Successfully.");
-        }
-
         void subscribe(eventType type, const functionType& function)
         {
             subscribers[type].push_back(function);
@@ -45,11 +35,8 @@ namespace Aquarius {
             }
         }
 
-        virtual ~EventHandler() = default;
-
     private:
         std::unordered_map<eventType, std::vector<functionType>> subscribers;
-        Event& m_event;
     };
 
 } // namespace Aquarius

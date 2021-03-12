@@ -2,8 +2,6 @@
 
 #include "Event.h"
 
-#include <GLFW/glfw3.h>
-
 
 namespace Aquarius {
 
@@ -11,15 +9,15 @@ namespace Aquarius {
     {
     public:
 
-        int getCode()
+        Input::KeyCode getCode()
         {
             return m_keyCode;
         }
 
     protected:
-        int m_keyCode;
+        Input::KeyCode m_keyCode;
 
-        KeyEvent(int keyCode) : m_keyCode(keyCode) {}
+        KeyEvent(int keyCode) : m_keyCode(static_cast<Input::KeyCode>(keyCode)) {}
     };
 
     class KeyPressedEvent : public KeyEvent
@@ -29,9 +27,9 @@ namespace Aquarius {
 
         EVENT_TYPE(KeyPressedEvent)
 
-        void logEvent()
+        void logEvent () override
         {
-            AQ_CORE_TRACE("KeyPressedEvent: %v",m_keyCode);
+            AQ_CORE_TRACE("KeyPressedEvent: %v",static_cast<int>(m_keyCode));
         }
     };
 
@@ -42,9 +40,9 @@ namespace Aquarius {
 
         EVENT_TYPE(KeyRepeatedEvent)
 
-        void logEvent()
+        void logEvent() override
         {
-            AQ_CORE_TRACE("KeyRepeatedEvent: %v", m_keyCode);
+            AQ_CORE_TRACE("KeyRepeatedEvent: %v", static_cast<int>(m_keyCode));
         }
 
     protected:
@@ -58,9 +56,9 @@ namespace Aquarius {
 
         EVENT_TYPE(KeyReleasedEvent)
 
-        void logEvent()
+        void logEvent() override
         {
-            AQ_CORE_TRACE("KeyReleasedEvent: %v",m_keyCode);
+            AQ_CORE_TRACE("KeyReleasedEvent: %v",static_cast<int>(m_keyCode));
         }
     };
 

@@ -7,25 +7,29 @@ namespace Aquarius {
     {
         None = 0,
         KeyPressedEvent, KeyRepeatedEvent, KeyReleasedEvent,
-        MouseButtonPressedEvent, MouseButtonReleasedEvent, MouseMovedEvent, MouseScrolledEvent, MouseInWindowEvent
+        MouseButtonPressedEvent, MouseButtonReleasedEvent, MouseMovedEvent, MouseScrolledEvent, MouseInWindowEvent,
+        WindowResizedEvent
     };
 
 #define EVENT_TYPE(type) static eventType getStaticType() { return eventType::type; }\
                                                             virtual eventType getEventType() const override { return getStaticType(); }\
-                                                            virtual const char* getName() const override { return #type; }
+                                                            virtual std::string getName() const override { return #type; }
 
     class Event
     {
     public:
         virtual eventType getEventType() const = 0;
-        virtual const char* getName() const = 0;
-        bool m_Handled = false;
+        virtual std::string getName() const = 0;
+        virtual void logEvent() {}
         virtual ~Event() = default;
 
         bool isHandled()
         {
             return m_Handled;
         };
+
+    private:
+        bool m_Handled = false;
     };
 
 } // namespace Aquarius

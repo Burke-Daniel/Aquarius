@@ -36,7 +36,7 @@ namespace Aquarius {
 
 	void Application::onEvent(Event &event)
 	{
-	    EventHandler handler(event);
+	    m_EventHandler.notify(event);
 	}
 
 } // namespace Aquarius

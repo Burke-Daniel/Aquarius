@@ -1,21 +1,25 @@
 #pragma once
 
+#include "Aquarius/Core/Application.h"
 #include "Aquarius/Core/Log.h"
 #include "Aquarius/Events/KeyboardEvent.h"
 #include "Aquarius/Events/MouseEvent.h"
+#include "Aquarius/Events/WindowEvent.h"
 
 #include <GLFW/glfw3.h>
 
 
 namespace Aquarius {
 
-    static void keyboardCallback(GLFWwindow *window, int key, int scanCode, int action, int modifications)
+    namespace Callbacks {
+        static void keyboardCallback(GLFWwindow *window, int key, int scanCode, int action, int modifications)
         {
             switch (action) {
                 case GLFW_PRESS:
                 {
                     KeyPressedEvent event(key);
                     event.logEvent();
+                    Application::get()->onEvent(event);
                     break;
                 }
 
@@ -23,6 +27,7 @@ namespace Aquarius {
                 {
                     KeyReleasedEvent event(key);
                     event.logEvent();
+                    Application::get()->onEvent(event);
                     break;
                 }
 
@@ -30,6 +35,7 @@ namespace Aquarius {
                 {
                     KeyRepeatedEvent event(key,1);
                     event.logEvent();
+                    Application::get()->onEvent(event);
                     break;
                 }
 
@@ -42,12 +48,14 @@ namespace Aquarius {
         {
             MouseMovedEvent event(xPosition, yPosition);
             event.logEvent();
+            Application::get()->onEvent(event);
         }
 
         static void mouseCursorInWindowCallback(GLFWwindow *window, int inWindow)
         {
             MouseInWindowEvent event(inWindow);
             event.logEvent();
+            Application::get()->onEvent(event);
         }
 
         static void mouseButtonCallback(GLFWwindow *window, int button, int action, int modifications)
@@ -57,6 +65,7 @@ namespace Aquarius {
                 {
                     MouseButtonPressedEvent event(button);
                     event.logEvent();
+                    Application::get()->onEvent(event);
                     break;
                 }
 
@@ -64,6 +73,7 @@ namespace Aquarius {
                 {
                     MouseButtonReleasedEvent event(button);
                     event.logEvent();
+                    Application::get()->onEvent(event);
                     break;
                 }
 
@@ -76,6 +86,16 @@ namespace Aquarius {
         {
             MouseScrolledEvent event(xOffSet, yOffset);
             event.logEvent();
+            Application::get()->onEvent(event);
         }
+
+        static void windowResizeCallback(GLFWwindow *window, int width, int height)
+        {
+            WindowResizedEvent event(width, height);
+            event.logEvent();
+            Application::get()->onEvent(event);
+        }
+
+    } // namespace Callbacks
 
 } // namespace Aquarius

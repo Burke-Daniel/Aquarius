@@ -2,79 +2,77 @@
 
 #include "Event.h"
 
-#include <GLFW/glfw3.h>
-
 
 namespace Aquarius {
 
     class MouseMovedEvent : public Event
     {
     public:
-        MouseMovedEvent(float xCoordinate, float yCoordinate)
-                : m_XCoordinate(xCoordinate), m_YCoordinate(yCoordinate) {}
+        MouseMovedEvent(float xPosition, float yPosition)
+                : m_XPosition(xPosition), m_YPosition(yPosition) {}
 
         EVENT_TYPE(MouseMovedEvent)
 
-        void logEvent()
+        void logEvent() override
         {
-            AQ_CORE_TRACE("MouseMovedEvent: %v, %v", m_XCoordinate, m_YCoordinate);
+            AQ_CORE_TRACE("MouseMovedEvent: %v, %v", m_XPosition, m_YPosition);
         }
 
         float getXCoordinate()
         {
-            return m_XCoordinate;
+            return m_XPosition;
         }
 
         float getYCoordinate()
         {
-            return m_YCoordinate;
+            return m_YPosition;
         }
 
     private:
-        float m_XCoordinate;
-        float m_YCoordinate;
+        float m_XPosition;
+        float m_YPosition;
     };
 
     class MouseScrolledEvent : public Event
     {
     public:
-        MouseScrolledEvent(float xCoordinate, float yCoordinate)
-                : m_XCoordinate(xCoordinate), m_YCoordinate(yCoordinate) {}
+        MouseScrolledEvent(float xOffset, float yOffset)
+                : m_XOffset(xOffset), m_YOffset(yOffset) {}
 
         EVENT_TYPE(MouseScrolledEvent)
 
-        void logEvent()
+        void logEvent() override
         {
-            AQ_CORE_TRACE("MouseScrolledEvent: %v, %v", m_XCoordinate, m_YCoordinate);
+            AQ_CORE_TRACE("MouseScrolledEvent: %v, %v", m_XOffset, m_YOffset);
         }
 
-        float getXCoordinate()
+        float getXOffset()
         {
-            return m_XCoordinate;
+            return m_XOffset;
         }
 
-        float getYCoordinate()
+        float getYOffset()
         {
-            return m_YCoordinate;
+            return m_YOffset;
         }
 
     private:
-        float m_XCoordinate;
-        float m_YCoordinate;
+        float m_XOffset;
+        float m_YOffset;
     };
 
     class MouseButtonEvent : public Event
     {
     public:
-        int getCode()
+        Input::MouseButtonCode getCode()
         {
             return m_buttonCode;
         }
 
     protected:
-        int m_buttonCode;
+        Input::MouseButtonCode m_buttonCode;
 
-        MouseButtonEvent(int buttonCode) : m_buttonCode(buttonCode) {}
+        MouseButtonEvent(int buttonCode) : m_buttonCode(static_cast<Input::MouseButtonCode>(buttonCode)) {}
     };
 
     class MouseButtonPressedEvent : public MouseButtonEvent
@@ -84,9 +82,9 @@ namespace Aquarius {
 
         EVENT_TYPE(MouseButtonPressedEvent)
 
-        void logEvent()
+        void logEvent() override
         {
-            AQ_CORE_TRACE("MouseButtonPressedEvent: %v", m_buttonCode);
+            AQ_CORE_TRACE("MouseButtonPressedEvent: %v", static_cast<int>(m_buttonCode));
         }
     };
 
@@ -97,22 +95,22 @@ namespace Aquarius {
 
         EVENT_TYPE(MouseButtonReleasedEvent)
 
-        void logEvent()
+        void logEvent() override
         {
-            AQ_CORE_TRACE("MouseButtonReleasedEvent: %v", m_buttonCode);
+            AQ_CORE_TRACE("MouseButtonReleasedEvent: %v", static_cast<int>(m_buttonCode));
         }
     };
 
     class MouseInWindowEvent : public Event
     {
     public:
-        MouseInWindowEvent(int inWindow) : m_inWindow(inWindow) {}
+        MouseInWindowEvent(int inWindow) : m_inWindow(static_cast<bool>(inWindow)) {}
 
         EVENT_TYPE(MouseInWindowEvent)
 
-        void logEvent()
+        void logEvent() override
         {
-            if (inWindow() == 1)
+            if (inWindow())
             {
                 AQ_CORE_TRACE("Cursor is in the window.");
             }
@@ -123,13 +121,13 @@ namespace Aquarius {
             }
         }
 
-        int inWindow()
+        bool inWindow()
         {
             return m_inWindow;
         }
 
     private:
-        int m_inWindow;
+        bool m_inWindow;
     };
 
 } // namespace Aquarius

@@ -63,11 +63,12 @@ namespace Aquarius {
         setVsync(m_VsyncEnabled);
 
         // Register Window Callbacks
-        glfwSetKeyCallback(m_Window, keyboardCallback);
-        glfwSetCursorPosCallback(m_Window, mouseCursorPositionCallback);
-        glfwSetCursorEnterCallback(m_Window, mouseCursorInWindowCallback);
-        glfwSetMouseButtonCallback(m_Window, mouseButtonCallback);
-        glfwSetScrollCallback(m_Window, mouseScrollCallback);
+        glfwSetKeyCallback(m_Window, Callbacks::keyboardCallback);
+        glfwSetCursorPosCallback(m_Window, Callbacks::mouseCursorPositionCallback);
+        glfwSetCursorEnterCallback(m_Window, Callbacks::mouseCursorInWindowCallback);
+        glfwSetMouseButtonCallback(m_Window, Callbacks::mouseButtonCallback);
+        glfwSetScrollCallback(m_Window, Callbacks::mouseScrollCallback);
+        glfwSetWindowSizeCallback(m_Window, Callbacks::windowResizeCallback);
 
         glfwSetInputMode(m_Window, GLFW_STICKY_MOUSE_BUTTONS, 1);
         glfwSetInputMode(m_Window, GLFW_STICKY_KEYS,1);
