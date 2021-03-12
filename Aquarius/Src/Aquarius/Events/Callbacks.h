@@ -82,7 +82,7 @@ namespace Aquarius {
             }
         }
 
-        static void mouseScrollCallback(GLFWwindow *window, double xOffSet, double yOffset)
+        static void mouseScrollCallback(GLFWwindow *window, double xOffset, double yOffset)
         {
             MouseScrolledEvent event(xOffset, yOffset);
             event.logEvent();
