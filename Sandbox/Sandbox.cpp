@@ -33,7 +33,17 @@ void SandboxLayer::onCreation()
 
     m_Camera = std::make_shared<Aquarius::OrthographicCamera>(1, 0.01, height, width);
 
-    m_texture = std::make_shared<Aquarius::Texture>("Sandbox/Assets/container.jpg");
+
+    
+    Aquarius::TextureConfiguration texConfig = {
+        Aquarius::TextureWrapOption::Repeat,
+        Aquarius::TextureWrapOption::Repeat,
+        Aquarius::TextureFilteringOption::Linear,
+        Aquarius::TextureFilteringOption::Linear
+    };
+
+
+    m_texture = std::make_shared<Aquarius::Texture>("Sandbox/Assets/greenguy.png", texConfig, true);
     m_texture->bind(0);
 
     Aquarius::Renderer::Init();
@@ -64,7 +74,13 @@ void SandboxLayer::onUpdate(Aquarius::timeDelta_t ts)
         {1, 1, 1, 1}
     );
 
-    /// Aquarius::Renderer::Submit(m_vertexArray.get(), m_ShaderProgram.get());
+    Aquarius::Renderer::DrawQuad(
+        { 200, 200},
+        { 300, 300},
+        m_texture.get(),
+        0.0f
+    );
+
 }
 
 Sandbox::Sandbox()
