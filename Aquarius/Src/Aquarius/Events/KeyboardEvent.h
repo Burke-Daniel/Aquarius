@@ -45,6 +45,11 @@ namespace Aquarius {
             AQ_CORE_TRACE("KeyRepeatedEvent: %v", static_cast<int>(m_keyCode));
         }
 
+        int getRepeatCount()
+        {
+            return m_repeatCount;
+        }
+
     private:
         int m_repeatCount;
     };

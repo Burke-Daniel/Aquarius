@@ -84,7 +84,7 @@ namespace Aquarius {
 
         static void mouseScrollCallback(GLFWwindow *window, double xOffSet, double yOffset)
         {
-            MouseScrolledEvent event(xOffSet, yOffset);
+            MouseScrolledEvent event(xOffset, yOffset);
             event.logEvent();
             Application::get()->onEvent(event);
         }
