@@ -12,17 +12,17 @@ namespace Aquarius {
 
         EVENT_TYPE(WindowResizedEvent)
 
-        void logEvent() override
+        void logEvent() const override
         {
             AQ_CORE_TRACE("WindowResizedEvent %v, %v", m_Width, m_Height);
         }
 
-        int getWidth()
+        int getWidth() const
         {
             return m_Width;
         }
 
-        int getHeight()
+        int getHeight() const
         {
             return m_Height;
         }

@@ -2,7 +2,6 @@
 
 #include "Aquarius/Core/Utility.h"
 #include "Aquarius/Renderer/RenderingContext.h"
-#include "Aquarius/Events/Event.h"
 
 #include <memory>
 #include <GLFW/glfw3.h>

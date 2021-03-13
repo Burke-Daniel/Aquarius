@@ -9,7 +9,7 @@ namespace Aquarius {
     {
     public:
 
-        Input::KeyCode getCode()
+        Input::KeyCode getCode() const
         {
             return m_keyCode;
         }
@@ -27,7 +27,7 @@ namespace Aquarius {
 
         EVENT_TYPE(KeyPressedEvent)
 
-        void logEvent () override
+        void logEvent () const override
         {
             AQ_CORE_TRACE("KeyPressedEvent: %v",static_cast<int>(m_keyCode));
         }
@@ -40,12 +40,12 @@ namespace Aquarius {
 
         EVENT_TYPE(KeyRepeatedEvent)
 
-        void logEvent() override
+        void logEvent() const override
         {
             AQ_CORE_TRACE("KeyRepeatedEvent: %v", static_cast<int>(m_keyCode));
         }
 
-        int getRepeatCount()
+        int getRepeatCount() const
         {
             return m_repeatCount;
         }
@@ -61,7 +61,7 @@ namespace Aquarius {
 
         EVENT_TYPE(KeyReleasedEvent)
 
-        void logEvent() override
+        void logEvent() const override
         {
             AQ_CORE_TRACE("KeyReleasedEvent: %v",static_cast<int>(m_keyCode));
         }

@@ -20,10 +20,10 @@ namespace Aquarius {
     public:
         virtual eventType getEventType() const = 0;
         virtual std::string getName() const = 0;
-        virtual void logEvent() {}
+        virtual void logEvent() const {}
         virtual ~Event() = default;
 
-        bool isHandled()
+        bool isHandled() const
         {
             return m_Handled;
         };

@@ -13,17 +13,17 @@ namespace Aquarius {
 
         EVENT_TYPE(MouseMovedEvent)
 
-        void logEvent() override
+        void logEvent() const override
         {
             AQ_CORE_TRACE("MouseMovedEvent: %v, %v", m_XPosition, m_YPosition);
         }
 
-        float getXCoordinate()
+        float getXPosition() const
         {
             return m_XPosition;
         }
 
-        float getYCoordinate()
+        float getYPosition() const
         {
             return m_YPosition;
         }
@@ -41,17 +41,17 @@ namespace Aquarius {
 
         EVENT_TYPE(MouseScrolledEvent)
 
-        void logEvent() override
+        void logEvent() const override
         {
             AQ_CORE_TRACE("MouseScrolledEvent: %v, %v", m_XOffset, m_YOffset);
         }
 
-        float getXOffset()
+        float getXOffset() const
         {
             return m_XOffset;
         }
 
-        float getYOffset()
+        float getYOffset() const
         {
             return m_YOffset;
         }
@@ -64,7 +64,7 @@ namespace Aquarius {
     class MouseButtonEvent : public Event
     {
     public:
-        Input::MouseButtonCode getCode()
+        Input::MouseButtonCode getCode() const
         {
             return m_buttonCode;
         }
@@ -82,7 +82,7 @@ namespace Aquarius {
 
         EVENT_TYPE(MouseButtonPressedEvent)
 
-        void logEvent() override
+        void logEvent() const override
         {
             AQ_CORE_TRACE("MouseButtonPressedEvent: %v", static_cast<int>(m_buttonCode));
         }
@@ -95,7 +95,7 @@ namespace Aquarius {
 
         EVENT_TYPE(MouseButtonReleasedEvent)
 
-        void logEvent() override
+        void logEvent() const override
         {
             AQ_CORE_TRACE("MouseButtonReleasedEvent: %v", static_cast<int>(m_buttonCode));
         }
@@ -108,7 +108,7 @@ namespace Aquarius {
 
         EVENT_TYPE(MouseInWindowEvent)
 
-        void logEvent() override
+        void logEvent() const override
         {
             if (inWindow())
             {
@@ -121,7 +121,7 @@ namespace Aquarius {
             }
         }
 
-        bool inWindow()
+        bool inWindow() const
         {
             return m_inWindow;
         }
