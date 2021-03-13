@@ -1,5 +1,6 @@
 #pragma once
 
+#include "Aquarius/Core/Layer.h"
 #include "Aquarius/Core/Utility.h"
 #include "Aquarius/Core/Window.h"
 #include "Aquarius/Events/EventHandler.h"
@@ -28,10 +29,12 @@ namespace Aquarius {
 		void onEvent(Event& event);
 	protected:
 		Application(std::string&& windowName = "Application");
+		void PushLayer(uniquePtr<Layer> layer);
 	private:
 		static Application* s_Application;
 		uniquePtr<Window> m_Window;
 		EventHandler m_EventHandler;
-    };
+    LayerStack m_layerStack;
+	};
 
 } // namespace Aquarius

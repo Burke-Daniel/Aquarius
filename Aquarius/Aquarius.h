@@ -5,6 +5,7 @@
 #include "Aquarius/Core/Application.h"
 #include "Aquarius/Core/Assert.h"
 #include "Aquarius/Core/Input.h"
+#include "Aquarius/Core/Layer.h"
 #include "Aquarius/Core/Log.h"
 #include "Aquarius/Core/Window.h"
 
@@ -14,6 +15,7 @@
 #include "Aquarius/Renderer/VertexBuffer.h"
 #include "Aquarius/Renderer/VertexArray.h"
 #include "Aquarius/Renderer/Shader.h"
+#include "Aquarius/Renderer/Texture.h"
 
 // -- Events
 #include "Aquarius/Events/Event.h"
