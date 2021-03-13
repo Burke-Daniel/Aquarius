@@ -34,7 +34,7 @@ namespace Aquarius {
 		static Application* s_Application;
 		uniquePtr<Window> m_Window;
 		EventHandler m_EventHandler;
-    LayerStack m_layerStack;
+        LayerStack m_layerStack;
 	};
 
 } // namespace Aquarius
