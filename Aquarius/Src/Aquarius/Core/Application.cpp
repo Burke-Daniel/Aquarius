@@ -19,10 +19,9 @@ namespace Aquarius {
 		s_Application = this;
 
 		Log::initLoggers();
-
 		m_Window->Initialize();
 
-		AQ_CORE_INFO("Window Initialized Sucessfully");
+		AQ_CORE_INFO("Window Initialized Successfully");
 	}
 
 	void Application::run()
@@ -40,6 +39,11 @@ namespace Aquarius {
 			m_Window->OnUpdate();
 		}
 	}
+
+	void Application::onEvent(Event &event)
+	{
+	    m_EventHandler.notify(event);
+  }
 
 	void Application::PushLayer(uniquePtr<Layer> layer)
 	{

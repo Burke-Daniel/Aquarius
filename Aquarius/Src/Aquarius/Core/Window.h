@@ -43,6 +43,7 @@ namespace Aquarius {
         GLFWwindow* m_Window;
         std::unique_ptr<RenderingContext> m_Context;
 
+
         // Deallocate window resources
         void Deallocate();
     };

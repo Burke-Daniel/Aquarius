@@ -1,8 +1,7 @@
 #include "Window.h"
 #include "Aquarius/Core/Input.h"
-#include "Aquarius/Events/Keyboard.h"
 #include "Aquarius/Core/Log.h"
-#include "Aquarius/Events/Mouse.h"
+#include "Aquarius/Events/Callbacks.h"
 
 
 namespace Aquarius {
@@ -64,11 +63,12 @@ namespace Aquarius {
         setVsync(m_VsyncEnabled);
 
         // Register Window Callbacks
-        glfwSetKeyCallback(m_Window, KeyboardEvent::Callback);
-        glfwSetCursorPosCallback(m_Window, MouseEvent::cursorPositionCallback);
-        glfwSetCursorEnterCallback(m_Window, MouseEvent::cursorInWindowCallback);
-        glfwSetMouseButtonCallback(m_Window, MouseEvent::mouseButtonCallback);
-        glfwSetScrollCallback(m_Window, MouseEvent::mouseScrollCallback);
+        glfwSetKeyCallback(m_Window, Callbacks::keyboardCallback);
+        glfwSetCursorPosCallback(m_Window, Callbacks::mouseCursorPositionCallback);
+        glfwSetCursorEnterCallback(m_Window, Callbacks::mouseCursorInWindowCallback);
+        glfwSetMouseButtonCallback(m_Window, Callbacks::mouseButtonCallback);
+        glfwSetScrollCallback(m_Window, Callbacks::mouseScrollCallback);
+        glfwSetWindowSizeCallback(m_Window, Callbacks::windowResizeCallback);
 
         glfwSetInputMode(m_Window, GLFW_STICKY_MOUSE_BUTTONS, 1);
         glfwSetInputMode(m_Window, GLFW_STICKY_KEYS,1);

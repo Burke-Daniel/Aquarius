@@ -3,6 +3,7 @@
 #include "Aquarius/Core/Layer.h"
 #include "Aquarius/Core/Utility.h"
 #include "Aquarius/Core/Window.h"
+#include "Aquarius/Events/EventHandler.h"
 
 #include <memory>
 
@@ -24,13 +25,16 @@ namespace Aquarius {
 		Window* getWindow();
 
 		void run();
+
+		void onEvent(Event& event);
 	protected:
 		Application(std::string&& windowName = "Application");
 		void PushLayer(uniquePtr<Layer> layer);
 	private:
 		static Application* s_Application;
 		uniquePtr<Window> m_Window;
-		LayerStack m_layerStack;
+		EventHandler m_EventHandler;
+        LayerStack m_layerStack;
 	};
 
 } // namespace Aquarius
