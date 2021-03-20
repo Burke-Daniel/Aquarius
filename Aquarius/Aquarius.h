@@ -10,12 +10,13 @@
 #include "Aquarius/Core/Window.h"
 
 // -- Renderer
-#include "Aquarius/Renderer/Renderer.h"
 #include "Aquarius/Renderer/IndexBuffer.h"
-#include "Aquarius/Renderer/VertexBuffer.h"
-#include "Aquarius/Renderer/VertexArray.h"
+#include "Aquarius/Renderer/OrthographicCamera.h"
+#include "Aquarius/Renderer/Renderer.h"
 #include "Aquarius/Renderer/Shader.h"
 #include "Aquarius/Renderer/Texture.h"
+#include "Aquarius/Renderer/VertexBuffer.h"
+#include "Aquarius/Renderer/VertexArray.h"
 
 // -- Events
 #include "Aquarius/Events/Event.h"
@@ -30,13 +31,3 @@
 #include <glm/glm.hpp>
 #include <iostream>
 #include <stb_image.h>
-
-
-namespace Aquarius {
-    class Test
-    {
-    public:
-        int testMain();
-        static int triangleTest();
-    };
-}

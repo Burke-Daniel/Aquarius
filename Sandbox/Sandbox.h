@@ -18,6 +18,7 @@ private:
 	Aquarius::sharedPtr<Aquarius::IndexBuffer> m_indexBuffer;
 	Aquarius::sharedPtr<Aquarius::BufferLayout> m_bufferLayout;
 	Aquarius::sharedPtr<Aquarius::VertexArray> m_vertexArray;
+	Aquarius::sharedPtr<Aquarius::OrthographicCamera> m_Camera;
 	Aquarius::sharedPtr<Aquarius::Texture> m_texture;
 
 	std::array<float, 7 * 4> m_triangleVertices =
