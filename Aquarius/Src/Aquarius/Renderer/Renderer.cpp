@@ -7,6 +7,7 @@
 #include <glm/glm.hpp>
 #include <glm/gtc/matrix_transform.hpp>
 #include <vector>
+#include <array>
 
 
 namespace Aquarius {
@@ -38,6 +39,10 @@ namespace Aquarius {
                 glBlendFunc(GL_SRC_ALPHA, GL_ONE_MINUS_SRC_ALPHA);
                 glEnable(GL_BLEND);
 
+                // TODO - Create a default white texture
+                // Use 1 vertex buffer
+                // Bind white texture in default draw quad method
+                
                 std::vector<float> quadVertices =
                 {
                         0.0f, 0.0f, // Bottom left
@@ -48,10 +53,10 @@ namespace Aquarius {
 
                 std::vector<float> texVertices =
                 {
-                        0.0f, 0.0f,  0.0f, 0.0f, // Bottom left 
-                        1.0f, 0.0f,  1.0f, 0.0f, // Bottom right
-                        1.0f, 1.0f,  1.0f, 1.0f, // Top right
-                        0.0f, 1.0f,  0.0f, 1.0f  // Top left
+                        0.0f, 0.0f,  0.0f, 1.0f, // Bottom left 
+                        1.0f, 0.0f,  1.0f, 1.0f, // Bottom right
+                        1.0f, 1.0f,  1.0f, 0.0f, // Top right
+                        0.0f, 1.0f,  0.0f, 0.0f  // Top left
                 };
 
                 std::vector<uint32_t> quadIndices =
@@ -182,7 +187,6 @@ namespace Aquarius {
                 // Finally draw the quad
                 glDrawElements(GL_TRIANGLES, s_QuadData.vertexArray->getIndexBuffer()->getCount(), GL_UNSIGNED_INT, (void*)0);
             }
-
 
         } // namespace Renderer
 
