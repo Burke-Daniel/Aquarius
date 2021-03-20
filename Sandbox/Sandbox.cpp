@@ -1,5 +1,7 @@
 #include "Sandbox.h"
 
+#include "PongLayer.h"
+
 #include <glm/gtc/matrix_transform.hpp>
 
 SandboxLayer::SandboxLayer()
@@ -8,23 +10,6 @@ SandboxLayer::SandboxLayer()
 
 void SandboxLayer::onCreation()
 {
-    m_ShaderProgram = std::make_shared<Aquarius::Shader>("Sandbox/Shaders/modifiableVertexShader.glsl", 
-                                                         "Sandbox/Shaders/modifiableFragmentShader.glsl");
-
-    m_vertexBuffer = std::make_shared<Aquarius::VertexBuffer>(
-        m_triangleVertices.data(), m_triangleVertices.size() * sizeof(float));
-
-    m_indexBuffer = std::make_shared<Aquarius::IndexBuffer>(m_indices.data(), m_indices.size());
-
-    m_bufferLayout = std::make_shared<Aquarius::BufferLayout>(std::initializer_list<Aquarius::VertexElement>{
-        Aquarius::VertexElement(Aquarius::ShaderType::Float, 2, false),
-        Aquarius::VertexElement(Aquarius::ShaderType::Float, 3, false),
-        Aquarius::VertexElement(Aquarius::ShaderType::Float, 2, false)
-    });
-
-    m_vertexArray = std::make_shared<Aquarius::VertexArray>(m_vertexBuffer, m_indexBuffer, *m_bufferLayout);
-    m_vertexArray->activate();
-
     Aquarius::Application* app = Aquarius::Application::get();
     Aquarius::Window* window = app->getWindow();
 
@@ -106,7 +91,7 @@ void SandboxLayer::onUpdate(Aquarius::timeDelta_t ts)
 Sandbox::Sandbox()
     : Aquarius::Application("Sandbox")
 {
-    PushLayer(std::make_unique<SandboxLayer>());
+    PushLayer(std::make_unique<PongLayer>());
 }
 
 Aquarius::uniquePtr<Aquarius::Application> createApplication()
