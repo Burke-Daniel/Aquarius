@@ -75,8 +75,29 @@ void SandboxLayer::onUpdate(Aquarius::timeDelta_t ts)
     );
 
     Aquarius::Renderer::DrawQuad(
-        { 200, 200},
-        { 300, 300},
+        { 25, 400},
+        { 50, 50},
+        m_texture.get(),
+        0.0f
+    );
+
+    Aquarius::Renderer::DrawQuad(
+        { 50, 200 },
+        { 50, 50},
+        m_texture.get(),
+        0.0f
+    );
+
+    Aquarius::Renderer::DrawQuad(
+        { 100, 200 },
+        { 50, 50},
+        m_texture.get(),
+        0.0f
+    );
+
+    Aquarius::Renderer::DrawQuad(
+        { 200, 200 },
+        { 50, 50},
         m_texture.get(),
         0.0f
     );
