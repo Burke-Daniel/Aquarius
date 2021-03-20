@@ -24,6 +24,8 @@ namespace Aquarius {
 
 		Window* getWindow();
 
+		EventHandler& getEventHandler();
+
 		void run();
 
 		void onEvent(Event& event);
