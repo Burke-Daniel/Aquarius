@@ -13,6 +13,40 @@ static constexpr auto x = 0;
 static constexpr auto y = 1;
 static constexpr auto pi = 3.14159265358979323846;
 
+PlayerPaddleController::PlayerPaddleController(Aquarius::Input::KeyCode upKey, Aquarius::Input::KeyCode downKey)
+	: m_UpKey(upKey), m_DownKey(downKey)
+{}
+
+void PlayerPaddleController::movePaddle(Aquarius::timeDelta_t dt, Paddle* paddle, Ball* ball)
+{
+	if (Aquarius::Input::isKeyPressed(m_UpKey))
+	{
+		moveUp(dt, paddle);
+	}
+
+	if (Aquarius::Input::isKeyPressed(m_DownKey))
+	{
+		moveDown(dt, paddle);
+	}
+}
+
+void PlayerPaddleController::moveUp(Aquarius::timeDelta_t dt, Paddle* paddle)
+{
+	if (paddle->position.y > 0)
+	{
+		auto dy = dt * paddle->speedY;
+		paddle->position.y -= dy;
+	}
+}
+
+void PlayerPaddleController::moveDown(Aquarius::timeDelta_t dt, Paddle* paddle)
+{
+	if (paddle->position.y < Aquarius::Application::get()->getWindow()->getHeight() - 80.0)
+	{
+		auto dy = dt * paddle->speedY;
+		paddle->position.y += dy;
+	}
+}
 
 void Paddle::Render() const 
 {
@@ -22,24 +56,6 @@ void Paddle::Render() const
 		0,
 		{ 1.0, 0.5, 1.0, 1.0 }
 	);
-}
-
-void Paddle::moveUp(Aquarius::timeDelta_t dt)
-{
-	if (position.y > 0)
-	{
-		auto dy = dt * speedY;
-		position.y -= dy;
-	}
-}
-
-void Paddle::moveDown(Aquarius::timeDelta_t dt)
-{
-	if (position.y < Aquarius::Application::get()->getWindow()->getHeight() - 80.0)
-	{
-		auto dy = dt * speedY;
-		position.y += dy;
-	}
 }
 
 void Ball::Render() const
@@ -94,6 +110,7 @@ void Ball::Reset(bool leftScored)
 	// TODO Randomize starting velocity
 	position = { (window->getWidth() / 2.0) - 5.0, (window->getHeight() / 2.0) - 5.0 };
 	velocity = { leftScored ? 0.2 : -0.2, yVelocity };
+	speed = { 0.2, 0.2 };
 }
 
 PongLayer::PongLayer()
@@ -102,17 +119,26 @@ PongLayer::PongLayer()
 
 void PongLayer::onCreation()
 {
-	// TODO just get a GD member variable to point to application
-
-
 	int height = window.getHeight();
 	int width = window.getWidth();
 
 	m_Camera = std::make_shared<Aquarius::OrthographicCamera>(1, 0.01, height, width);
 	Aquarius::Renderer::Init();
 
-	m_LeftPaddle = { { 20.0, (window.getHeight() / 2.0) - 40.0}, { 10.0, 80.0 }, 0.3 };
-	m_RightPaddle = { { window.getWidth() - 30.0, (window.getHeight() / 2.0) - 40.0 }, { 10.0, 80.0 }, 0.3 };
+	m_LeftPaddle = {
+		std::make_unique<PlayerPaddleController>(Aquarius::Input::KeyCode::Key_w, Aquarius::Input::KeyCode::Key_s),
+		{ 20.0, (window.getHeight() / 2.0) - 40.0},
+		{ 10.0, 80.0 },
+		0.3
+	};
+
+	m_RightPaddle = {
+		std::make_unique<PlayerPaddleController>(Aquarius::Input::KeyCode::Key_up, Aquarius::Input::KeyCode::Key_down),
+		{ window.getWidth() - 30.0, (window.getHeight() / 2.0) - 40.0 },
+		{ 10.0, 80.0 },
+		0.3
+	};
+
 	m_Ball = {
 		{ (window.getWidth() / 2.0) - 5.0, (window.getHeight() / 2.0) - 5.0 },
 		{ 10, 10 },
@@ -136,25 +162,8 @@ void PongLayer::onUpdate(Aquarius::timeDelta_t dt)
 
 	float dy = dt * m_LeftPaddle.speedY;
 
-	if (Aquarius::Input::isKeyPressed(Aquarius::Input::KeyCode::Key_w))
-	{
-		m_LeftPaddle.moveUp(dt);
-	}
-
-	if (Aquarius::Input::isKeyPressed(Aquarius::Input::KeyCode::Key_s))
-	{
-		m_LeftPaddle.moveDown(dt);
-	}
-
-	if (Aquarius::Input::isKeyPressed(Aquarius::Input::KeyCode::Key_up))
-	{
-		m_RightPaddle.moveUp(dt);
-	}
-
-	if (Aquarius::Input::isKeyPressed(Aquarius::Input::KeyCode::Key_down))
-	{
-		m_RightPaddle.moveDown(dt);
-	}
+	m_RightPaddle.controller->movePaddle(dt, &m_RightPaddle);
+	m_LeftPaddle.controller->movePaddle(dt, &m_LeftPaddle);
 
 	m_Ball.Update(dt);
 	checkPaddleCollision();

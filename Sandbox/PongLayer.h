@@ -2,12 +2,34 @@
 
 #include "Aquarius.h"
 
+struct Ball;
+struct Paddle;
+
+class PaddleController
+{
+public:
+	virtual ~PaddleController() {};
+	virtual void movePaddle(Aquarius::timeDelta_t dt, Paddle* paddle = nullptr, Ball* ball = nullptr) = 0;
+};
+
+class PlayerPaddleController : public PaddleController
+{
+public:
+	PlayerPaddleController(Aquarius::Input::KeyCode, Aquarius::Input::KeyCode);
+	void movePaddle(Aquarius::timeDelta_t dt, Paddle* paddle = nullptr, Ball* ball = nullptr) override;
+
+private:
+	void moveUp(Aquarius::timeDelta_t dt, Paddle* paddle);
+	void moveDown(Aquarius::timeDelta_t dt, Paddle* paddle);
+
+	Aquarius::Input::KeyCode m_UpKey;
+	Aquarius::Input::KeyCode m_DownKey;
+};
 
 struct Paddle
 {
 	void Render() const;
-	void moveUp(Aquarius::timeDelta_t dt);
-	void moveDown(Aquarius::timeDelta_t dt);
+	Aquarius::uniquePtr<PaddleController> controller;
 	glm::vec2 position;
 	glm::vec2 size;
 	double speedY;
