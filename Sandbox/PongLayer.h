@@ -2,67 +2,15 @@
 
 #include "Aquarius.h"
 
-struct Ball;
-struct Paddle;
+#include "Pong/Ball.h"
+#include "Pong/Paddle.h"
+#include "Pong/PaddleController.h"
 
-void moveUp(Aquarius::timeDelta_t dt, Paddle* paddle);
-void moveDown(Aquarius::timeDelta_t dt, Paddle* paddle);
-
-class PaddleController
-{
-public:
-	virtual ~PaddleController() {};
-	virtual void movePaddle(Aquarius::timeDelta_t dt, Paddle* paddle = nullptr, Ball* ball = nullptr) = 0;
-};
-
-class KeyboardPaddleController : public PaddleController
-{
-public:
-	KeyboardPaddleController(Aquarius::Input::KeyCode, Aquarius::Input::KeyCode);
-	void movePaddle(Aquarius::timeDelta_t dt, Paddle* paddle = nullptr, Ball* ball = nullptr) override;
-
-private:
-	Aquarius::Input::KeyCode m_UpKey;
-	Aquarius::Input::KeyCode m_DownKey;
-};
-
-class MousePaddleController : public PaddleController
-{
-public:
-	void movePaddle(Aquarius::timeDelta_t dt, Paddle* paddle = nullptr, Ball* ball = nullptr) override;
-};
-
-class AIPaddleController : public PaddleController
-{
-public:
-	void movePaddle(Aquarius::timeDelta_t dt, Paddle* paddle = nullptr, Ball* ball = nullptr) override;
-};
-
-struct Paddle
-{
-	void Render() const;
-	Aquarius::uniquePtr<PaddleController> controller;
-	glm::vec2 position;
-	glm::vec2 size;
-	double speedY;
-};
 
 struct Score
 {
 	uint8_t RightScore;
 	uint8_t LeftScore;
-};
-
-struct Ball
-{
-	void Render() const;
-	void Update(Aquarius::timeDelta_t dt);
-	void Reset(bool leftScored);
-	
-	glm::vec2 position;
-	glm::vec2 size;
-	glm::vec2 speed;
-	glm::vec2 velocity;
 };
 
 class PongLayer : public Aquarius::Layer
