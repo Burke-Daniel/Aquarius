@@ -81,10 +81,14 @@ private:
 	// Helper references
 	Aquarius::Application& app = *Aquarius::Application::get();
 	Aquarius::Window& window = *app.getWindow();
-	 
+	
+	// Pong specific stuff
 	Aquarius::sharedPtr<Aquarius::OrthographicCamera> m_Camera;
 	Paddle m_LeftPaddle;
 	Paddle m_RightPaddle;
 	Ball m_Ball;
 	Score score = { 0, 0 };
+
+	// State management
+	bool active = true;
 };

@@ -140,7 +140,13 @@ void Ball::Reset(bool leftScored)
 
 PongLayer::PongLayer()
 	: Layer("Pong"), m_LeftPaddle(), m_RightPaddle()
-{}
+{
+	app.getEventHandler().subscribe(Aquarius::eventType::KeyPressedEvent,
+		[&](const Aquarius::Event& event)
+		{
+			onEvent(event);
+		});
+}
 
 void PongLayer::onCreation()
 {
@@ -174,28 +180,40 @@ void PongLayer::onCreation()
 
 void PongLayer::onEvent(const Aquarius::Event& event)
 {
+	auto keyPressEvent = static_cast<const Aquarius::KeyPressedEvent&>(event);
+	switch (keyPressEvent.getCode())
+	{
+		case(Aquarius::Input::KeyCode::Key_escape):
+		{
+			active = !active;
+			break;
+		}
+	}
 }
 
 void PongLayer::onUpdate(Aquarius::timeDelta_t dt)
 {
-	Aquarius::Application* app = Aquarius::Application::get();
-	Aquarius::Window* window = app->getWindow();
+	if (active)
+	{
+		Aquarius::Application* app = Aquarius::Application::get();
+		Aquarius::Window* window = app->getWindow();
 
-	Aquarius::Renderer::BeginScene(m_Camera.get());
-	Aquarius::Renderer::ClearColor({ 0.2, 0.3, 0.7 });
-	Aquarius::Renderer::Clear();
+		Aquarius::Renderer::BeginScene(m_Camera.get());
+		Aquarius::Renderer::ClearColor({ 0.2, 0.3, 0.7 });
+		Aquarius::Renderer::Clear();
 
-	float dy = dt * m_LeftPaddle.speedY;
+		float dy = dt * m_LeftPaddle.speedY;
 
-	m_RightPaddle.controller->movePaddle(dt, &m_RightPaddle, &m_Ball);
-	m_LeftPaddle.controller->movePaddle(dt, &m_LeftPaddle, &m_Ball);
+		m_RightPaddle.controller->movePaddle(dt, &m_RightPaddle, &m_Ball);
+		m_LeftPaddle.controller->movePaddle(dt, &m_LeftPaddle, &m_Ball);
 
-	m_Ball.Update(dt);
-	checkPaddleCollision();
+		m_Ball.Update(dt);
+		checkPaddleCollision();
 
-	m_LeftPaddle.Render();
-	m_RightPaddle.Render();
-	m_Ball.Render();
+		m_LeftPaddle.Render();
+		m_RightPaddle.Render();
+		m_Ball.Render();
+	}
 }
 
 void PongLayer::checkPaddleCollision()
