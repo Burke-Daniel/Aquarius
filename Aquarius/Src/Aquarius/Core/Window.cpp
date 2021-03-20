@@ -101,10 +101,6 @@ namespace Aquarius {
 
     void Window::OnUpdate()
     {
-        if (Input::isKeyPressed(Input::KeyCode::Key_escape))
-        {
-            glfwSetWindowShouldClose(m_Window, true);
-        }
         m_Context->SwapBuffers();
         glfwPollEvents();
     }
