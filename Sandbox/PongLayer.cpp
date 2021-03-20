@@ -13,11 +13,29 @@ static constexpr auto x = 0;
 static constexpr auto y = 1;
 static constexpr auto pi = 3.14159265358979323846;
 
-PlayerPaddleController::PlayerPaddleController(Aquarius::Input::KeyCode upKey, Aquarius::Input::KeyCode downKey)
+void moveUp(Aquarius::timeDelta_t dt, Paddle* paddle)
+{
+	if (paddle->position.y > 0)
+	{
+		auto dy = dt * paddle->speedY;
+		paddle->position.y -= dy;
+	}
+}
+
+void moveDown(Aquarius::timeDelta_t dt, Paddle* paddle)
+{
+	if (paddle->position.y < Aquarius::Application::get()->getWindow()->getHeight() - 80.0)
+	{
+		auto dy = dt * paddle->speedY;
+		paddle->position.y += dy;
+	}
+}
+
+KeyboardPaddleController::KeyboardPaddleController(Aquarius::Input::KeyCode upKey, Aquarius::Input::KeyCode downKey)
 	: m_UpKey(upKey), m_DownKey(downKey)
 {}
 
-void PlayerPaddleController::movePaddle(Aquarius::timeDelta_t dt, Paddle* paddle, Ball* ball)
+void KeyboardPaddleController::movePaddle(Aquarius::timeDelta_t dt, Paddle* paddle, Ball* ball)
 {
 	if (Aquarius::Input::isKeyPressed(m_UpKey))
 	{
@@ -30,21 +48,28 @@ void PlayerPaddleController::movePaddle(Aquarius::timeDelta_t dt, Paddle* paddle
 	}
 }
 
-void PlayerPaddleController::moveUp(Aquarius::timeDelta_t dt, Paddle* paddle)
+void MousePaddleController::movePaddle(Aquarius::timeDelta_t dt, Paddle* paddle, Ball* ball)
 {
-	if (paddle->position.y > 0)
+	if (Aquarius::Input::getMousePosition().y > (paddle->position.y + (paddle->size.y / 2.0)))
 	{
-		auto dy = dt * paddle->speedY;
-		paddle->position.y -= dy;
+		moveDown(dt, paddle);
+	}
+
+	if (Aquarius::Input::getMousePosition().y < (paddle->position.y + (paddle->size.y / 2.0)))
+	{
+		moveUp(dt, paddle);
 	}
 }
 
-void PlayerPaddleController::moveDown(Aquarius::timeDelta_t dt, Paddle* paddle)
+void AIPaddleController::movePaddle(Aquarius::timeDelta_t dt, Paddle* paddle, Ball* ball)
 {
-	if (paddle->position.y < Aquarius::Application::get()->getWindow()->getHeight() - 80.0)
+	if (paddle->position.y + (paddle->size.y / 2.0) > ball->position.y + (ball->size.y / 2.0))
 	{
-		auto dy = dt * paddle->speedY;
-		paddle->position.y += dy;
+		moveUp(dt, paddle);
+	}
+	else if (paddle->position.y + (paddle->size.y / 2.0) < ball->position.y + (ball->size.y / 2.0))
+	{
+		moveDown(dt, paddle);
 	}
 }
 
@@ -110,7 +135,7 @@ void Ball::Reset(bool leftScored)
 	// TODO Randomize starting velocity
 	position = { (window->getWidth() / 2.0) - 5.0, (window->getHeight() / 2.0) - 5.0 };
 	velocity = { leftScored ? 0.2 : -0.2, yVelocity };
-	speed = { 0.2, 0.2 };
+	speed = { 0.4, 0.4 };
 }
 
 PongLayer::PongLayer()
@@ -126,23 +151,23 @@ void PongLayer::onCreation()
 	Aquarius::Renderer::Init();
 
 	m_LeftPaddle = {
-		std::make_unique<PlayerPaddleController>(Aquarius::Input::KeyCode::Key_w, Aquarius::Input::KeyCode::Key_s),
+		std::make_unique<KeyboardPaddleController>(Aquarius::Input::KeyCode::Key_w, Aquarius::Input::KeyCode::Key_s),
 		{ 20.0, (window.getHeight() / 2.0) - 40.0},
 		{ 10.0, 80.0 },
 		0.3
 	};
 
 	m_RightPaddle = {
-		std::make_unique<PlayerPaddleController>(Aquarius::Input::KeyCode::Key_up, Aquarius::Input::KeyCode::Key_down),
+		std::make_unique<AIPaddleController>(),
 		{ window.getWidth() - 30.0, (window.getHeight() / 2.0) - 40.0 },
 		{ 10.0, 80.0 },
-		0.3
+		0.2
 	};
 
 	m_Ball = {
 		{ (window.getWidth() / 2.0) - 5.0, (window.getHeight() / 2.0) - 5.0 },
 		{ 10, 10 },
-		{ 0.2, 0.2 },
+		{ 0.4, 0.4 },
 		{ -0.2, 0.0 }
 	};
 }
@@ -162,8 +187,8 @@ void PongLayer::onUpdate(Aquarius::timeDelta_t dt)
 
 	float dy = dt * m_LeftPaddle.speedY;
 
-	m_RightPaddle.controller->movePaddle(dt, &m_RightPaddle);
-	m_LeftPaddle.controller->movePaddle(dt, &m_LeftPaddle);
+	m_RightPaddle.controller->movePaddle(dt, &m_RightPaddle, &m_Ball);
+	m_LeftPaddle.controller->movePaddle(dt, &m_LeftPaddle, &m_Ball);
 
 	m_Ball.Update(dt);
 	checkPaddleCollision();
@@ -224,7 +249,7 @@ void PongLayer::handleCollision(bool isLeftPaddle)
 {
 	if (isLeftPaddle)
 	{
-		auto relativeIntersectY = (m_LeftPaddle.position.y + m_LeftPaddle.size.y / 2.0) - m_Ball.position.y;
+		auto relativeIntersectY = (m_LeftPaddle.position.y + (m_LeftPaddle.size.y / 2.0)) - (m_Ball.position.y + (m_Ball.size.y / 2.0));
 		auto normalizedIntersectY = relativeIntersectY / (m_LeftPaddle.size.y / 2.0);
 		
 		// TODO make departure angle configurable
@@ -235,7 +260,7 @@ void PongLayer::handleCollision(bool isLeftPaddle)
 
 	else
 	{
-		auto relativeIntersectY = (m_RightPaddle.position.y + m_RightPaddle.size.y / 2.0) - m_Ball.position.y;
+		auto relativeIntersectY = (m_RightPaddle.position.y + (m_RightPaddle.size.y / 2.0)) - (m_Ball.position.y + (m_Ball.size.y / 2.0));
 		auto normalizedIntersectY = relativeIntersectY / (m_RightPaddle.size.y / 2.0);
 
 		// TODO make departure angle configurable

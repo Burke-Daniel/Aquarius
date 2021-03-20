@@ -5,6 +5,9 @@
 struct Ball;
 struct Paddle;
 
+void moveUp(Aquarius::timeDelta_t dt, Paddle* paddle);
+void moveDown(Aquarius::timeDelta_t dt, Paddle* paddle);
+
 class PaddleController
 {
 public:
@@ -12,18 +15,27 @@ public:
 	virtual void movePaddle(Aquarius::timeDelta_t dt, Paddle* paddle = nullptr, Ball* ball = nullptr) = 0;
 };
 
-class PlayerPaddleController : public PaddleController
+class KeyboardPaddleController : public PaddleController
 {
 public:
-	PlayerPaddleController(Aquarius::Input::KeyCode, Aquarius::Input::KeyCode);
+	KeyboardPaddleController(Aquarius::Input::KeyCode, Aquarius::Input::KeyCode);
 	void movePaddle(Aquarius::timeDelta_t dt, Paddle* paddle = nullptr, Ball* ball = nullptr) override;
 
 private:
-	void moveUp(Aquarius::timeDelta_t dt, Paddle* paddle);
-	void moveDown(Aquarius::timeDelta_t dt, Paddle* paddle);
-
 	Aquarius::Input::KeyCode m_UpKey;
 	Aquarius::Input::KeyCode m_DownKey;
+};
+
+class MousePaddleController : public PaddleController
+{
+public:
+	void movePaddle(Aquarius::timeDelta_t dt, Paddle* paddle = nullptr, Ball* ball = nullptr) override;
+};
+
+class AIPaddleController : public PaddleController
+{
+public:
+	void movePaddle(Aquarius::timeDelta_t dt, Paddle* paddle = nullptr, Ball* ball = nullptr) override;
 };
 
 struct Paddle
