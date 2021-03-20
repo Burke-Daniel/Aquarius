@@ -33,10 +33,9 @@ void SandboxLayer::onCreation()
 
     m_Camera = std::make_shared<Aquarius::OrthographicCamera>(1, 0.01, height, width);
 
-    Aquarius::Renderer::Init();
-
     m_texture = std::make_shared<Aquarius::Texture>("Sandbox/Assets/container.jpg");
     m_texture->bind(0);
+
     Aquarius::Renderer::Init();
 }
 
