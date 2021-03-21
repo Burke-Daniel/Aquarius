@@ -21,6 +21,17 @@ private:
 	Aquarius::sharedPtr<Aquarius::OrthographicCamera> m_Camera;
 	Aquarius::sharedPtr<Aquarius::Texture> m_texture;
 
+	// Tex coords
+	Aquarius::QuadTexCoords m_uv = 
+	{
+		{
+			glm::vec2{0.5f, 0.5f},
+			glm::vec2{1.0f, 0.5f},
+			glm::vec2{1.0f, 1.0f},
+			glm::vec2{0.5f, 1.0f}
+		} 
+	};
+
 	std::array<float, 7 * 4> m_triangleVertices =
 	{
 		// Position     // Color			// Texture Coords
