@@ -12,7 +12,9 @@
 // -- Renderer
 #include "Aquarius/Renderer/IndexBuffer.h"
 #include "Aquarius/Renderer/OrthographicCamera.h"
+#include "Aquarius/Renderer/QuadTexCoords.h"
 #include "Aquarius/Renderer/Renderer.h"
+
 #include "Aquarius/Renderer/Shader.h"
 #include "Aquarius/Renderer/Texture.h"
 #include "Aquarius/Renderer/VertexBuffer.h"
