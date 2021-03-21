@@ -20,6 +20,7 @@ private:
 	Aquarius::sharedPtr<Aquarius::VertexArray> m_vertexArray;
 	Aquarius::sharedPtr<Aquarius::OrthographicCamera> m_Camera;
 	Aquarius::sharedPtr<Aquarius::Texture> m_texture;
+	Aquarius::sharedPtr<Aquarius::QuadTexCoords> m_uv;
 
 	// Tex coords
 	Aquarius::QuadTexCoords m_uv = 

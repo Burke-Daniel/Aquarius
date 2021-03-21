@@ -21,24 +21,15 @@ namespace Aquarius {
 
 	QuadTexCoords SpriteSheet::getSpriteCoords(uint32_t i, uint32_t j) const
 	{
-		auto bottomLeftX = i * ((float)m_SpriteWidth / (float)m_TotalWidth);
-		auto bottomLeftY = (j + 1) * ((float)m_SpriteHeight / (float)m_TotalHeight);
+		// Bottom Left Zero Indexed
+		glm::vec2 bottomLeft = { i * ((float)m_SpriteWidth / (float)m_TotalWidth), j * ((float)m_SpriteHeight / (float)m_TotalHeight) };
+		glm::vec2 bottomRight = { (i + 1) * ((float)m_SpriteWidth / (float)m_TotalWidth), j * ((float)m_SpriteHeight / (float)m_TotalHeight) };
+		glm::vec2 topRight = { (i + 1) * ((float)m_SpriteWidth / (float)m_TotalWidth), (j + 1) * ((float)m_SpriteHeight / (float)m_TotalHeight) };
+		glm::vec2 topLeft = { i * ((float)m_SpriteWidth / (float)m_TotalWidth), (j + 1) * ((float)m_SpriteHeight / (float)m_TotalHeight) };
 
-		auto bottomRightX = (i + 1) * ((float)m_SpriteWidth / (float)m_TotalWidth);
-		auto bottomRightY = (j + 1) * ((float)m_SpriteHeight / (float)m_TotalHeight);
+		std::array<glm::vec2, 4> texCoords = { bottomLeft, bottomRight, topRight, topLeft };
 
-		auto topRightX = (i + 1) * ((float)m_SpriteWidth / (float)m_TotalWidth);
-		auto topRightY = j * ((float)m_SpriteHeight / (float)m_TotalHeight);
-
-		auto topLeftX = i * ((float)m_SpriteWidth / (float)m_TotalWidth);
-		auto topLeftY = j * ((float)m_SpriteHeight / (float)m_TotalHeight);
-
-		return QuadTexCoords {
-			{ bottomLeftX, bottomLeftY },
-			{ bottomRightX, bottomRightY },
-			{ topRightX, topRightY },
-			{ topLeftX, topLeftY }
-		};
+		return texCoords;
 	}
 
 } // namespace Aquarius
