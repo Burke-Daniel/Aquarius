@@ -1,7 +1,9 @@
 #pragma once
 
+#include <array>
 #include <cstdint>
 #include <glad/glad.h>
+#include <glm/glm.hpp>
 #include <string>
 
 
@@ -33,9 +35,11 @@ namespace Aquarius {
 	{
 	public:
 		Texture(const std::string& texture, TextureConfiguration configuration = {}, bool hasAlpha = false);
+		Texture(TextureConfiguration configuration = {}) : m_Configuration(configuration) {}
 		~Texture();
 
 		bool generateTexture(const std::string& texture, bool hasAlpha = false);
+		bool generateSolidTexture(std::array<uint8_t, 4> color);
 
 		void bind(uint32_t textureSlot) const;
 		void unbind() const;
