@@ -42,11 +42,8 @@ void SandboxLayer::onCreation()
         Aquarius::TextureFilteringOption::Linear
     };
 
-
     m_texture = std::make_shared<Aquarius::Texture>("Sandbox/Assets/greenguy.png", texConfig, true);
     m_texture->bind(0);
-
-
 
     Aquarius::Renderer::Init();
 }
