@@ -34,6 +34,10 @@
 # Build folders
 build/
 cmake-build-debug/
+Aquarius/Testing/
+CMakeFiles/
+Aquarius/Aquarius/
+Aquarius/Sandbox/Makefile
 
 # IDE folders
 .idea/
