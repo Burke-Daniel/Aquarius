@@ -5,6 +5,7 @@
 #include "Aquarius/Renderer/IndexBuffer.h"
 #include "Aquarius/Renderer/Shader.h"
 #include "Aquarius/Renderer/Texture.h"
+#include "Aquarius/Renderer/QuadTexCoords.h"
 
 #include <glm/glm.hpp>
 
@@ -32,7 +33,8 @@ namespace Aquarius {
 
         void DrawQuad(const glm::vec2& pos, 
                       const glm::vec2& size, 
-                      Texture* texture, 
+                      Texture* texture,
+                      QuadTexCoords* uv = nullptr,
                       float rotationDegrees = 0.0f);
 
     } // namespace Renderer
