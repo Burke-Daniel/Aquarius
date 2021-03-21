@@ -43,7 +43,10 @@ void SandboxLayer::onCreation()
     m_texture = std::make_shared<Aquarius::Texture>("Sandbox/Assets/greenguy.png", texConfig, true);
     m_texture->bind(0);
 
+
+
     Aquarius::Renderer::Init();
+    Aquarius::Renderer::SetProjection(glm::ortho(0.0f, 800.0f, 600.0f, 0.0f, -1.0f, 1.0f));
 }
 
 void SandboxLayer::onUpdate(Aquarius::timeDelta_t ts)
@@ -91,12 +94,13 @@ void SandboxLayer::onUpdate(Aquarius::timeDelta_t ts)
     );
 
     Aquarius::Renderer::DrawQuad(
-        { 200, 200 },
+        { 50, 200 },
         { 50, 50},
         m_texture.get()
     );
 
-   //Aquarius::Renderer::Submit(m_vertexArray.get(), m_ShaderProgram.get());
+    AQ_INFO("Frametime: %v ms", ts);
+    AQ_INFO("FPS: %v", 1000 / ts);
 }
 
 Sandbox::Sandbox()
