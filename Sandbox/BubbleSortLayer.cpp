@@ -4,7 +4,7 @@
 #include <thread>
 
 BubbleSortLayer::BubbleSortLayer()
-        : Aquarius::Layer("Bubble Sort ") {}
+        : Aquarius::Layer("Bubble Sort") {}
 
 void BubbleSortLayer::onCreation()
 {
@@ -28,7 +28,6 @@ void BubbleSortLayer::onCreation()
 void BubbleSortLayer::onUpdate(Aquarius::timeDelta_t ts)
 {
     m_Camera->onUpdate(ts);
-    glm::vec3 cameraPos = m_Camera->getPosition();
 
     Aquarius::Renderer::BeginScene(m_Camera.get());
     Aquarius::Renderer::ClearColor({ 0.2, 0.3, 0.7 });
@@ -48,7 +47,7 @@ void BubbleSortLayer::onUpdate(Aquarius::timeDelta_t ts)
     }
 
     // This delay will allow for the changes occurring during the sort to be visible
-    std::this_thread::sleep_for(std::chrono::microseconds (500));
+    std::this_thread::sleep_for(std::chrono::microseconds(delay));
 }
 
 void BubbleSortLayer::renderBars(int size)
@@ -61,7 +60,7 @@ void BubbleSortLayer::renderBars(int size)
                 {position, 0},
                 {10, barHeights[i]},
                 0,
-                {1,1,1,1}
+                {barColors[0],barColors[1],barColors[2],barColors[3]}
         );
 
         position = position + 11;
