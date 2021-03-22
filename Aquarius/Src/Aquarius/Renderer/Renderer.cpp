@@ -75,7 +75,6 @@ namespace Aquarius {
 
                 s_QuadData.VA = std::make_shared<VertexArray>(vertexBuffer, indexBuffer, bufferLayout);
                 s_QuadData.textureVA = std::make_shared<VertexArray>(texVertexBuffer, indexBuffer, bufferLayout);
-                s_QuadData.texVertexArray = std::make_shared<VertexArray>(texBuffer, indexBuffer, texBufferLayout);
                 s_QuadData.shader = std::make_shared<Shader>("Aquarius/Src/Aquarius/Renderer/Shaders/vertexShader.glsl", 
                                                              "Aquarius/Src/Aquarius/Renderer/Shaders/fragmentShader.glsl");
             }
@@ -144,39 +143,6 @@ namespace Aquarius {
                 s_QuadData.shader->setFloat4("u_color", color);
 
                 // Finally draw the quad
-                glDrawElements(GL_TRIANGLES, s_QuadData.vertexArray->getIndexBuffer()->getCount(), GL_UNSIGNED_INT, (void*)0);
-            }
-
-            void DrawQuad(const glm::vec2& pos, const glm::vec2& size, Texture* texture, float rotationDegrees)
-            {
-                // Bind texture to TEXTURE_0 
-                texture->bind(0);
-
-                // Select TEXTURE_0 in shader
-                s_QuadData.shader->setInt("u_texture", 0);
-
-                // Configure model matrix
-                glm::mat4 model = glm::mat4(1.0f);
-
-                // Translate to the correct position
-                model = glm::translate(model, { pos.x, pos.y, 0.0f });
-
-                // Translate to center of quad, rotate, shift back
-                model = glm::translate(model, { size.x * 0.5f, size.y * 0.5f, 0.0f });
-                model = glm::rotate(model, glm::radians(rotationDegrees), { 0.0f, 0.0f, 1.0f });
-                model = glm::translate(model, { -size.x * 0.5f, -size.y * 0.5f, 0.0f });
-
-                // Scale
-                model = glm::scale(model, { size.x, size.y, 1.0f });
-
-                s_QuadData.texVertexArray->activate();
-                s_QuadData.shader->activate();
-                s_QuadData.shader->setMat4("u_model", false, model);
-                s_QuadData.shader->setMat4("u_view", false, s_SceneData.view);
-                s_QuadData.shader->setMat4("u_projection", false, s_SceneData.projection);
-                s_QuadData.shader->setFloat4("u_color", {1 ,1 , 1, 1});
-
-                // Finally draw the quad
                 glDrawElements(GL_TRIANGLES, s_QuadData.VA->getIndexBuffer()->getCount(), GL_UNSIGNED_INT, (void*)0);
             }
 
@@ -232,7 +198,6 @@ namespace Aquarius {
                     glDrawElements(GL_TRIANGLES, s_QuadData.textureVA->getIndexBuffer()->getCount(), GL_UNSIGNED_INT, (void*)0);
                 }
             }
-
 
         } // namespace Renderer
 
