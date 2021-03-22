@@ -12,10 +12,10 @@ namespace Aquarius {
 	{
 	public: 
 		QuadTexCoords()
-			: m_data(std::array<glm::vec2, 4>{ glm::vec2{ 0, 0 },
-											   glm::vec2{ 0, 0 },
-											   glm::vec2{ 0, 0 },
-											   glm::vec2{ 0, 0 } })
+            : m_data(std::array<glm::vec2, 4>{ glm::vec2{ 0, 0 },
+                                               glm::vec2{ 0, 0 },
+                                               glm::vec2{ 0, 0 },
+                                               glm::vec2{ 0, 0 } })
 		{}
 		QuadTexCoords(std::array<glm::vec2, 4> data) : m_data(data) {}
 		~QuadTexCoords() = default;

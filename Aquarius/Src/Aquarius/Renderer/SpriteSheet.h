@@ -1,7 +1,5 @@
 #pragma once
 
-#include "Aquarius/Renderer/Texture.h"
-
 #include <array>
 #include <cstdint>
 #include <vector>
