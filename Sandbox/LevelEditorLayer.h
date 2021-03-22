@@ -10,5 +10,6 @@ public:
 
 private:
 	// Map
+	Aquarius::sharedPtr<Aquarius::OrthographicCamera> m_Camera;
 
 };
