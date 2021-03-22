@@ -58,4 +58,4 @@ namespace Aquarius {
 		TextureConfiguration m_Configuration;
 	};
 
-}
+} // namespace Aquarius

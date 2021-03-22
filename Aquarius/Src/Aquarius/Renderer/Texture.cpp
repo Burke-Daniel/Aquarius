@@ -94,4 +94,4 @@ namespace Aquarius {
 		glBindTexture(GL_TEXTURE_2D, 0);
 	}
 
-}
+} // namespace Aquarius

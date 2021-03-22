@@ -1,11 +1,11 @@
 #pragma once
 
-#include "Aquarius/Renderer/VertexArray.h"
-#include "Aquarius/Renderer/OrthographicCamera.h"
 #include "Aquarius/Renderer/IndexBuffer.h"
+#include "Aquarius/Renderer/OrthographicCamera.h"
+#include "Aquarius/Renderer/QuadTexCoords.h"
 #include "Aquarius/Renderer/Shader.h"
 #include "Aquarius/Renderer/Texture.h"
-#include "Aquarius/Renderer/QuadTexCoords.h"
+#include "Aquarius/Renderer/VertexArray.h"
 
 #include <glm/glm.hpp>
 

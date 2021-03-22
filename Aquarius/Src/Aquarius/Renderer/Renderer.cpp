@@ -2,12 +2,12 @@
 #include "Aquarius/Core/Application.h"
 #include "Aquarius/Renderer/VertexArray.h"
 
+#include <array>
 #include <cstdint>
 #include <glad/glad.h>
 #include <glm/glm.hpp>
 #include <glm/gtc/matrix_transform.hpp>
 #include <vector>
-#include <array>
 
 
 namespace Aquarius {
@@ -193,7 +193,6 @@ namespace Aquarius {
                     };
 
                     s_QuadData.textureVA->getVertexBuffer()->loadData(vertexData.data(), 0, vertexData.size() * sizeof(float));
-
                     s_QuadData.textureVA->activate();
 
                     glDrawElements(GL_TRIANGLES, s_QuadData.textureVA->getIndexBuffer()->getCount(), GL_UNSIGNED_INT, (void*)0);
