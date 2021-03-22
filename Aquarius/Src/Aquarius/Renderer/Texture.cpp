@@ -1,5 +1,9 @@
 #include "Texture.h"
 
+#include "Aquarius/Core/Log.h"
+
+#include "stb_image.h"
+
 
 namespace Aquarius {
 
@@ -49,6 +53,29 @@ namespace Aquarius {
 		return success;
 	}
 
+	bool Texture::generateSolidTexture(std::array<uint8_t, 4> color)
+	{
+		glGenTextures(1, &m_ID);
+		glBindTexture(GL_TEXTURE_2D, m_ID);
+
+		glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_WRAP_S, static_cast<int>(m_Configuration.textureWrapS));
+		glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_WRAP_T, static_cast<int>(m_Configuration.textureWrapT));
+		glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_MIN_FILTER, static_cast<int>(m_Configuration.minTextureFiltering));
+		glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_MAG_FILTER, static_cast<int>(m_Configuration.magTextureFiltering));
+
+		m_Width = 1;
+		m_Height = 1;
+
+		uint32_t internalFormat = GL_RGBA8;
+		uint32_t format = GL_RGBA;
+
+		glTexImage2D(GL_TEXTURE_2D, 0, internalFormat, m_Width, m_Height, 0, format, GL_UNSIGNED_BYTE, color.data());
+		glGenerateMipmap(GL_TEXTURE_2D);
+		glBindTexture(GL_TEXTURE_2D, 0);
+
+		return true;
+	}
+
 	void Texture::bind(uint32_t textureSlot) const
 	{
 		if (textureSlot > 16)
@@ -64,4 +91,4 @@ namespace Aquarius {
 		glBindTexture(GL_TEXTURE_2D, 0);
 	}
 
-}
+} // namespace Aquarius
