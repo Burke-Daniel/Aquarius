@@ -19,6 +19,8 @@ namespace Aquarius {
         QuadTexCoords getSpriteCoords(uint32_t i, uint32_t j) const;
 
         Texture* getTexture() const { return m_Texture; }
+        uint32_t getSpriteWidth() const { return m_SpriteWidth; }
+        uint32_t getSpriteHeight() const { return m_SpriteHeight; }
 
     private:
         Texture* m_Texture;
