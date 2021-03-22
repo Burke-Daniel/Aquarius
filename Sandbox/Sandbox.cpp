@@ -33,8 +33,6 @@ void SandboxLayer::onCreation()
 
     m_Camera = std::make_shared<Aquarius::OrthographicCamera>(1, 0.01, height, width);
 
-
-    
     Aquarius::TextureConfiguration texConfig = {
         Aquarius::TextureWrapOption::Repeat,
         Aquarius::TextureWrapOption::Repeat,
@@ -76,15 +74,13 @@ void SandboxLayer::onUpdate(Aquarius::timeDelta_t ts)
     Aquarius::Renderer::DrawQuad(
         { 25, 400},
         { 50, 50},
-        m_texture.get(),
-        0.0f
+        m_texture.get()
     );
 
     Aquarius::Renderer::DrawQuad(
         { 50, 200 },
         { 50, 50},
-        m_texture.get(),
-        0.0f
+        m_texture.get()
     );
 
     Aquarius::Renderer::DrawQuad(
@@ -97,8 +93,7 @@ void SandboxLayer::onUpdate(Aquarius::timeDelta_t ts)
     Aquarius::Renderer::DrawQuad(
         { 200, 200 },
         { 50, 50},
-        m_texture.get(),
-        0.0f
+        m_texture.get()
     );
 
    //Aquarius::Renderer::Submit(m_vertexArray.get(), m_ShaderProgram.get());
