@@ -8,15 +8,20 @@ public:
     BubbleSortLayer();
 
     void onCreation() override;
+    void onEvent(const Aquarius::Event&) override;
     void onUpdate(Aquarius::timeDelta_t time) override;
 
 private:
     int barColors [4] = {1, 1, 1, 1};
     int barHeights [100];
-    int delay = 500;
+    int delay;
     int i = 0;
     int j = 1;
     void renderBars(int size);
     void swapBars(int i, int j);
+
+    Aquarius::Application* app = Aquarius::Application::get();
+    Aquarius::Window* window = app->getWindow();
+
     Aquarius::sharedPtr<Aquarius::OrthographicCamera> m_Camera;
 };

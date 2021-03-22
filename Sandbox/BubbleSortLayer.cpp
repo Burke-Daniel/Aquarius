@@ -4,12 +4,19 @@
 #include <thread>
 
 BubbleSortLayer::BubbleSortLayer()
-        : Aquarius::Layer("Bubble Sort") {}
+        : Aquarius::Layer("Bubble Sort")
+        {
+            app->getEventHandler().subscribe(Aquarius::eventType::MouseScrolledEvent,
+                                            [&](const Aquarius::Event& event)
+                                            {
+                                                onEvent(event);
+                                            });
+        }
 
 void BubbleSortLayer::onCreation()
 {
-    Aquarius::Application* app = Aquarius::Application::get();
-    Aquarius::Window* window = app->getWindow();
+    //Aquarius::Application* app = Aquarius::Application::get();
+    //Aquarius::Window* window = app->getWindow();
 
     int height = window->getHeight();
     int width = window->getWidth();
@@ -25,8 +32,19 @@ void BubbleSortLayer::onCreation()
     }
 }
 
+void BubbleSortLayer::onEvent(const Aquarius::Event& event)
+{
+    auto mouseScrolledEvent = static_cast<const Aquarius::MouseScrolledEvent&>(event);
+
+    delay = mouseScrolledEvent.getXOffset();
+}
+
 void BubbleSortLayer::onUpdate(Aquarius::timeDelta_t ts)
 {
+
+    Aquarius::Application* app = Aquarius::Application::get();
+    Aquarius::Window* window = app->getWindow();
+
     m_Camera->onUpdate(ts);
 
     Aquarius::Renderer::BeginScene(m_Camera.get());
