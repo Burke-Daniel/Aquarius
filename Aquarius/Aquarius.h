@@ -15,6 +15,7 @@
 #include "Aquarius/Renderer/QuadTexCoords.h"
 #include "Aquarius/Renderer/Renderer.h"
 #include "Aquarius/Renderer/Shader.h"
+#include "Aquarius/Renderer/SpriteSheet.h"
 #include "Aquarius/Renderer/Texture.h"
 #include "Aquarius/Renderer/VertexBuffer.h"
 #include "Aquarius/Renderer/VertexArray.h"
