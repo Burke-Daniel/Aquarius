@@ -99,8 +99,8 @@ void SandboxLayer::onUpdate(Aquarius::timeDelta_t ts)
         m_texture.get()
     );
 
-    AQ_INFO("Frametime: %v ms", ts);
-    AQ_INFO("FPS: %v", 1000 / ts);
+    AQ_TRACE("Frametime: %v ms", ts);
+    AQ_TRACE("FPS: %v", 1000 / ts);
 }
 
 Sandbox::Sandbox()
