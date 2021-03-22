@@ -3,7 +3,7 @@
 #include <glm/gtc/matrix_transform.hpp>
 
 SandboxLayer::SandboxLayer()
-    : Layer("Sandbox")
+    : Layer("Sandbox", true)
 {}
 
 void SandboxLayer::onCreation()

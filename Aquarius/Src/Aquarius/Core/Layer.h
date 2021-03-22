@@ -25,14 +25,18 @@ namespace Aquarius {
 		virtual void onDestruction() {};
 
 		const std::string& getLayerName() const { return m_layerName; }
+		bool isActive() const { return m_active; }
+		void activate() { m_active = true; }
+		void deactivate() { m_active = false; }
 
 	protected:
-		Layer(const std::string& layerName)
-			: m_layerName(layerName)
+		Layer(const std::string& layerName, bool isActive)
+			: m_layerName(layerName), m_active(isActive)
 		{}
 
 	private:
 		const std::string m_layerName;
+		bool m_active;
 	};
 
 } // namespace Aquarius
