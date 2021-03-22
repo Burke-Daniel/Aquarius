@@ -22,6 +22,10 @@ public:
 	void onEvent(const Aquarius::Event&) override;
 	void onUpdate(Aquarius::timeDelta_t) override;
 
+	void leftScore() { score.LeftScore++; }
+	void rightScore() { score.RightScore++; }
+	Score getScore() const { return score; }
+
 private:
 	void checkPaddleCollision();
 	void handleCollision(bool isLeftPaddle);
@@ -36,7 +40,4 @@ private:
 	Paddle m_RightPaddle;
 	Ball m_Ball;
 	Score score = { 0, 0 };
-
-	// State management
-	bool active = true;
 };

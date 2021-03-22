@@ -1,5 +1,7 @@
 #include "Ball.h"
 
+#include "../PongLayer.h"
+
 
 void Ball::Render() const
 {
@@ -33,12 +35,18 @@ void Ball::Update(Aquarius::timeDelta_t dt)
 	if (position.x <= 0)
 	{
 		AQ_INFO("Right Paddle Scored!");
+		game->rightScore();
+		auto score = game->getScore();
+		AQ_INFO("Current Score: %v - %v", (int)score.LeftScore, (int)score.RightScore);
 		Reset(false);
 	}
 
 	if (position.x >= window->getWidth() + 10.0)
 	{
 		AQ_INFO("Left Paddle Scored!");
+		game->leftScore();
+		auto score = game->getScore();
+		AQ_INFO("Current Score: %v - %v", (int)score.LeftScore, (int)score.RightScore);
 		Reset(true);
 	}
 }

@@ -3,6 +3,8 @@
 #include "Aquarius.h"
 
 
+class PongLayer;
+
 struct Ball
 {
 	void Render() const;
@@ -13,4 +15,5 @@ struct Ball
 	glm::vec2 size;
 	glm::vec2 speed;
 	glm::vec2 velocity;
+	PongLayer* game;
 };
