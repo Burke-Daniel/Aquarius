@@ -44,8 +44,7 @@ void SandboxLayer::onCreation()
     m_texture->bind(0);
 
     Aquarius::SpriteSheet sheet(m_texture.get(), 32, 32);
-
-    m_uv = std::make_shared<Aquarius::QuadTexCoords>(sheet.getSpriteCoords(0, 0));
+    m_uv = sheet.getSpriteCoords(0, 1);
 
     Aquarius::Renderer::Init();
 }
@@ -91,7 +90,7 @@ void SandboxLayer::onUpdate(Aquarius::timeDelta_t ts)
         { 200, 200 },
         { 50, 50 },
         m_texture.get(),
-        m_uv.get()
+        &m_uv
     );
 
     Aquarius::Renderer::DrawQuad(

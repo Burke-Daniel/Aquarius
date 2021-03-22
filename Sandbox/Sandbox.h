@@ -20,18 +20,9 @@ private:
 	Aquarius::sharedPtr<Aquarius::VertexArray> m_vertexArray;
 	Aquarius::sharedPtr<Aquarius::OrthographicCamera> m_Camera;
 	Aquarius::sharedPtr<Aquarius::Texture> m_texture;
-	Aquarius::sharedPtr<Aquarius::QuadTexCoords> m_uv;
 
 	// Tex coords
-	Aquarius::QuadTexCoords m_uv = 
-	{
-		{
-			glm::vec2{0.5f, 0.5f},
-			glm::vec2{1.0f, 0.5f},
-			glm::vec2{1.0f, 1.0f},
-			glm::vec2{0.5f, 1.0f}
-		} 
-	};
+	Aquarius::QuadTexCoords m_uv;
 
 	std::array<float, 7 * 4> m_triangleVertices =
 	{

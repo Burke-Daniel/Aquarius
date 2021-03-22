@@ -1,6 +1,6 @@
 #include "SpriteSheet.h"
 
-#include "QuadTexCoords.h"
+#include "Aquarius/Renderer/QuadTexCoords.h"
 
 
 namespace Aquarius {
