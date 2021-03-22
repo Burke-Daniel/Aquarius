@@ -66,13 +66,10 @@ namespace Aquarius {
 		m_Width = 1;
 		m_Height = 1;
 
-		uint8_t data[4];
-		memcpy(data, &color, sizeof(color));
-
 		uint32_t internalFormat = GL_RGBA8;
 		uint32_t format = GL_RGBA;
 
-		glTexImage2D(GL_TEXTURE_2D, 0, internalFormat, m_Width, m_Height, 0, format, GL_UNSIGNED_BYTE, data);
+		glTexImage2D(GL_TEXTURE_2D, 0, internalFormat, m_Width, m_Height, 0, format, GL_UNSIGNED_BYTE, color.data());
 		glGenerateMipmap(GL_TEXTURE_2D);
 		glBindTexture(GL_TEXTURE_2D, 0);
 
