@@ -65,8 +65,3 @@ void Level::draw()
 		}
 	}
 }
-
-void Level::serialize()
-{
-
-}

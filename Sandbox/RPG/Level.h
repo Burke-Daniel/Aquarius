@@ -26,9 +26,6 @@ public:
 	// Draw each of the textured quads in the world
 	void draw();
 
-	// Save the map to a file
-	void serialize();
-
 	int getHeight() const { return m_height; };
 	int getWidth() const { return m_width; };
 
