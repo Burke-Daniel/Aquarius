@@ -15,7 +15,7 @@ void moveUp(Aquarius::timeDelta_t dt, Paddle* paddle)
 
 void moveDown(Aquarius::timeDelta_t dt, Paddle* paddle)
 {
-	if (paddle->position.y < Aquarius::Application::get()->getWindow()->getHeight() - 80.0)
+	if (paddle->position.y + paddle->size.y < Aquarius::Application::get()->getWindow()->getHeight())
 	{
 		auto dy = dt * paddle->speedY;
 		paddle->position.y += dy;
