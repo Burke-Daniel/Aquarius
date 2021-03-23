@@ -79,7 +79,7 @@ public:
 		float dx = m_moveSpeed * ts;
 		m_count += ts;
 
-		if (m_count > m_walkInterval)
+		if (m_count >= m_walkInterval)
 		{
 			m_count = 0;
 
@@ -150,7 +150,7 @@ public:
 		if (m_playerState != m_playerPreviousState)
 		{
 			m_offset = 0;
-			m_activeSprite = m_activeFrames->at(m_offset);
+			m_count = m_walkInterval;
 		}
 
 		m_playerPreviousState = m_playerState;
