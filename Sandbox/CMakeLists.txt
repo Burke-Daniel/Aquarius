@@ -8,6 +8,6 @@ add_definitions(-DGLFW_INCLUDE_NONE)
 
 file(GLOB_RECURSE sources *.h *.cpp)
 
-add_executable(Sandbox ${sources})
+add_executable(Sandbox ${sources} IntroLayer.h IntroLayer.cpp)
 
 target_link_libraries(Sandbox Aquarius-Engine)

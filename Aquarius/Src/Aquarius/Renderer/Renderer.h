@@ -35,7 +35,8 @@ namespace Aquarius {
                       const glm::vec2& size, 
                       Texture* texture,
                       QuadTexCoords* uv = nullptr,
-                      float rotationDegrees = 0.0f);
+                      float rotationDegrees = 0.0f,
+                      const glm::vec4& color = {1,1,1,1});
 
     } // namespace Renderer
 
