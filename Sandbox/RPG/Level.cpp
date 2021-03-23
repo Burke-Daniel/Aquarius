@@ -39,6 +39,11 @@ void Level::setTile(int mapI, int mapJ, int spriteI, int spriteJ)
 	m_map[mapI][mapJ].clear = false;
 }
 
+glm::vec2 Level::getTileWorldCoords(int mapI, int mapJ)
+{
+	return {m_map[mapI][mapJ].x, m_map[mapI][mapJ].y};
+}
+
 void Level::clearTile(int mapI, int mapJ)
 {
 	m_map[mapI][mapJ].i = 0;

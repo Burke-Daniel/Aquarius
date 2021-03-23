@@ -19,6 +19,7 @@ public:
 
 	// Set the given tile to the given texture 
 	void setTile(int mapI, int mapJ, int spriteI, int spriteJ);
+	glm::vec2 getTileWorldCoords(int mapI, int mapJ);
 
 	// Remove texture from the given tile 
 	void clearTile(int mapI, int mapJ);
