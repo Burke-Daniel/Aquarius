@@ -19,6 +19,6 @@ echo "-----------------------------------"
 
 echo "-----------------------------------"
 echo "Running executable..."
-cd Sandbox
-./Sandbox
+cd .. 
+./build/Sandbox/Sandbox
 echo "-----------------------------------"

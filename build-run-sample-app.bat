@@ -20,5 +20,5 @@ cmake --build . --config Release
 @echo ---------------------------------------------------
 @echo Running executable...
 @echo ---------------------------------------------------
-cd Sandbox\Release
-.\Sandbox.exe
+cd ..
+.\build\Sandbox\Release\Sandbox.exe
