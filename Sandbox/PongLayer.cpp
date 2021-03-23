@@ -2,11 +2,20 @@
 
 #include "Aquarius.h"
 
+#include <algorithm>
 #include <array>
 #include <cmath>
 
 
 static constexpr auto pi = 3.14159265358979323846;
+
+static const struct
+{
+	const float RegularMode = 0.02;
+	const float HyperMode = 0.5;
+} GameMode {};
+
+static auto ballSpeedIncrease = GameMode.RegularMode;
 
 PongLayer::PongLayer()
 	: Layer("Pong", true), m_LeftPaddle(), m_RightPaddle(), m_Ball()
@@ -23,23 +32,40 @@ void PongLayer::onCreation()
 	int height = window.getHeight();
 	int width = window.getWidth();
 
+	glfwSetInputMode(window.get(), GLFW_CURSOR, GLFW_CURSOR_DISABLED);
+
 	m_Camera = std::make_shared<Aquarius::OrthographicCamera>(1, 0.01, height, width);
 	Aquarius::Renderer::Init();
 
 	constexpr auto paddleWidth = 10.0;
 	constexpr auto paddleHeight = 80.0;
-	constexpr auto ballSize = 10.0;
+	constexpr auto ballSize = 15.0;
 	constexpr auto leftPaddleSpeed = 0.3;
-	constexpr auto rightPaddleSpeed = 0.2;
+	constexpr auto rightPaddleSpeed = 1.0;
+
+	Aquarius::TextureConfiguration textureConfiguration = {
+		Aquarius::TextureWrapOption::Repeat,
+		Aquarius::TextureWrapOption::Repeat,
+		Aquarius::TextureFilteringOption::Nearest,
+		Aquarius::TextureFilteringOption::Nearest,
+	};
+
+	auto paddleTexture = std::make_shared<Aquarius::Texture>("Sandbox/Assets/Paddle.png", textureConfiguration, true);
+	auto ballTexture = std::make_shared<Aquarius::Texture>("Sandbox/Assets/Ball.png", textureConfiguration, true);
+	m_BackgroundTexture = std::make_shared<Aquarius::Texture>("Sandbox/Assets/logo-black-transparent.png", Aquarius::TextureConfiguration{}, true);
 
 	m_LeftPaddle = {
+		paddleTexture,
+		//std::make_unique<MousePaddleController>(),
 		std::make_unique<KeyboardPaddleController>(Aquarius::Input::KeyCode::Key_w, Aquarius::Input::KeyCode::Key_s),
+		//std::make_unique<AIPaddleController>(),
 		{ 20.0, (window.getHeight() / 2.0) - 40.0},
 		{ paddleWidth, paddleHeight },
 		leftPaddleSpeed
 	};
 
 	m_RightPaddle = {
+		paddleTexture,
 		std::make_unique<AIPaddleController>(),
 		{ window.getWidth() - 30.0, (window.getHeight() / 2.0) - 40.0 },
 		{ paddleWidth, paddleHeight },
@@ -51,7 +77,8 @@ void PongLayer::onCreation()
 		{ ballSize, ballSize },
 		{ 0.4, 0.4 },
 		{ -0.2, 0.0 },
-		this
+		this,
+		ballTexture
 	};
 }
 
@@ -67,29 +94,49 @@ void PongLayer::onEvent(const Aquarius::Event& event)
 			isActive() ? deactivate() : activate();
 			break;
 		}
+
+		case(Aquarius::Input::KeyCode::Key_h):
+		{
+			if (ballSpeedIncrease == GameMode.RegularMode)
+			{
+				ballSpeedIncrease = GameMode.HyperMode;
+				AQ_INFO("HYPER MODE ACTIVATED!!!");
+			}
+			else
+			{
+				ballSpeedIncrease = GameMode.RegularMode;
+			}
+			break;
+		}
 	}
 }
 
 void PongLayer::onUpdate(Aquarius::timeDelta_t dt)
 {
-	if (isActive())
-	{
-		Aquarius::Renderer::BeginScene(m_Camera.get());
-		Aquarius::Renderer::ClearColor({ 0.2, 0.3, 0.7 });
-		Aquarius::Renderer::Clear();
+	Aquarius::Renderer::BeginScene(m_Camera.get());
+	Aquarius::Renderer::ClearColor({ 169.0 / 255.0, 169.0 / 255.0, 169.0 / 255.0 });
+	Aquarius::Renderer::Clear();
 
-		float dy = dt * m_LeftPaddle.speedY;
+	float dy = dt * m_LeftPaddle.speedY;
 
-		m_RightPaddle.controller->movePaddle(dt, &m_RightPaddle, &m_Ball);
-		m_LeftPaddle.controller->movePaddle(dt, &m_LeftPaddle, &m_Ball);
+	m_RightPaddle.controller->movePaddle(dt, &m_RightPaddle, &m_Ball);
+	m_LeftPaddle.controller->movePaddle(dt, &m_LeftPaddle, &m_Ball);
 
-		m_Ball.Update(dt);
-		checkPaddleCollision();
+	m_Ball.Update(dt);
+	checkPaddleCollision();
 
-		m_LeftPaddle.Render();
-		m_RightPaddle.Render();
-		m_Ball.Render();
-	}
+	Aquarius::Renderer::DrawQuad(
+		{ 0.0, 0.0 },
+		{ window.getWidth(), window.getHeight() },
+		m_BackgroundTexture.get()
+	);
+
+	m_LeftPaddle.Render();
+	m_RightPaddle.Render();
+	m_Ball.Render();
+
+	AQ_INFO("Frametime: %v ms", dt);
+	AQ_INFO("FPS: %v", 1000 / dt);
 }
 
 void PongLayer::checkPaddleCollision()
@@ -147,6 +194,7 @@ void PongLayer::checkPaddleCollision()
 void PongLayer::handleCollision(bool isLeftPaddle)
 {
 	constexpr auto maxDepartureAngle = 45.0;
+	constexpr float maxBallSpeed = 1.75;
 
 	// This weird looking calculation gives the ball a departure angle
 	// based off of how far away from the centre of the paddle the collision
@@ -159,7 +207,7 @@ void PongLayer::handleCollision(bool isLeftPaddle)
 		
 		auto bounceAngle = normalizedIntersectY * maxDepartureAngle;
 		m_Ball.velocity = { m_Ball.speed.x * cos(bounceAngle * (pi / 180.0)), -m_Ball.speed.y * sin(bounceAngle * (pi / 180.0)) };
-		m_Ball.speed = { m_Ball.speed.x + 0.02, m_Ball.speed.y };
+		m_Ball.speed = { std::min(m_Ball.speed.x + ballSpeedIncrease, maxBallSpeed), m_Ball.speed.y };
 	}
 
 	else
@@ -169,7 +217,7 @@ void PongLayer::handleCollision(bool isLeftPaddle)
 
 		auto bounceAngle = normalizedIntersectY * maxDepartureAngle;
 		m_Ball.velocity = { -m_Ball.speed.x * cos(bounceAngle * (pi / 180.0)), -m_Ball.speed.y * sin(bounceAngle * (pi / 180.0)) };
-		m_Ball.speed = { m_Ball.speed.x + 0.02, m_Ball.speed.y };
+		m_Ball.speed = { std::min(m_Ball.speed.x + ballSpeedIncrease, maxBallSpeed), m_Ball.speed.y };
 	}
 }
 

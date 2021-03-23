@@ -36,6 +36,7 @@ private:
 	
 	// Pong specific stuff
 	Aquarius::sharedPtr<Aquarius::OrthographicCamera> m_Camera;
+	Aquarius::sharedPtr<Aquarius::Texture> m_BackgroundTexture;
 	Paddle m_LeftPaddle;
 	Paddle m_RightPaddle;
 	Ball m_Ball;
