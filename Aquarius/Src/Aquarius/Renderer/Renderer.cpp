@@ -71,7 +71,6 @@ namespace Aquarius {
 
                 s_QuadData.whiteTexture = std::make_shared<Texture>();
                 s_QuadData.whiteTexture->generateSolidTexture({ 255, 255, 255, 255});
-                s_QuadData.whiteTexture->bind(0);
 
                 s_QuadData.VA = std::make_shared<VertexArray>(vertexBuffer, indexBuffer, bufferLayout);
                 s_QuadData.textureVA = std::make_shared<VertexArray>(texVertexBuffer, indexBuffer, bufferLayout);
@@ -120,6 +119,7 @@ namespace Aquarius {
 
             void DrawQuad(const glm::vec2& pos, const glm::vec2& size, float rotationDegrees, const glm::vec4& color)
             {
+                s_QuadData.whiteTexture->bind(0);
                 // Configure model matrix
                 glm::mat4 model = glm::mat4(1.0f);
 

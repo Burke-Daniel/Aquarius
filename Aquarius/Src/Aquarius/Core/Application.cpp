@@ -13,6 +13,8 @@ namespace Aquarius {
 
 	Window* Application::getWindow() { return m_Window.get(); }
 
+	EventHandler& Application::getEventHandler() { return m_EventHandler; }
+
 	Application::Application(std::string&& windowName)
 		: m_Window(Window::Create(800, 600, std::move(windowName)))
 	{

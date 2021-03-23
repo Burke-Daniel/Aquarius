@@ -20,7 +20,7 @@ namespace Aquarius {
 		virtual ~Layer() { onDestruction(); };
 
 		virtual void onCreation() {};
-		virtual void onEvent(Event& event) {};
+		virtual void onEvent(const Event& event) {};
 		virtual void onUpdate(timeDelta_t time) {};
 		virtual void onDestruction() {};
 
