@@ -13,12 +13,14 @@ public:
 		  uint32_t tileWidth,
 		  uint32_t tileHeight,
 		  const std::string& name
-		);
+	);
 
 	~Level() = default;
 
+	// Set the given tile to the given texture 
 	void setTile(int mapI, int mapJ, int spriteI, int spriteJ);
 
+	// Remove texture from the given tile 
 	void clearTile(int mapI, int mapJ);
 
 	// Draw each of the textured quads in the world

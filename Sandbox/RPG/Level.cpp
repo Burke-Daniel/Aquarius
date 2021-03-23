@@ -2,8 +2,8 @@
 
 
 Level::Level(Aquarius::SpriteSheet* spritesheet,
-			 uint32_t screenWidth,
-			 uint32_t screenHeight,
+			 uint32_t mapWidth,
+			 uint32_t mapHeight,
 			 uint32_t tileWidth,
 			 uint32_t tileHeight,
 			 const std::string& name)
@@ -13,8 +13,8 @@ Level::Level(Aquarius::SpriteSheet* spritesheet,
 	m_spritesheet = spritesheet;
 	m_tileHeight = tileHeight;
 	m_tileWidth = tileWidth;
-	m_height = std::ceil( (float)screenHeight / tileHeight);
-	m_width = std::ceil((float)screenWidth / tileWidth);
+	m_height = mapHeight;
+	m_width = mapWidth;
 	m_map = std::vector<std::vector<Tile>>(m_height, std::vector<Tile>(m_width));
 
 	auto texCoords = Aquarius::QuadTexCoords();

@@ -17,15 +17,26 @@ void LevelEditorLayer::onCreation()
 
 	// Create spritesheet and level
 	Aquarius::TextureConfiguration spriteMapTexConfig = {
-	Aquarius::TextureWrapOption::Repeat,
-	Aquarius::TextureWrapOption::Repeat,
-	Aquarius::TextureFilteringOption::Nearest,
-	Aquarius::TextureFilteringOption::Nearest
+		Aquarius::TextureWrapOption::Repeat,
+		Aquarius::TextureWrapOption::Repeat,
+		Aquarius::TextureFilteringOption::Nearest,
+		Aquarius::TextureFilteringOption::Nearest
 	};
 
 	m_spriteSheetTexture = std::make_unique<Aquarius::Texture>("Sandbox/Assets/tilemap_packed.png", spriteMapTexConfig, true);
 	m_spritesheet = std::make_unique<Aquarius::SpriteSheet>(m_spriteSheetTexture.get(), 16, 16);
-	m_level = std::make_unique<Level>(m_spritesheet.get(), 800, 600, 64, 64, "Level 1");
+	m_level = std::make_unique<Level>(m_spritesheet.get(), 16, 16, 64, 64, "Level 1");
+
+	m_playerTexture = std::make_unique<Aquarius::Texture>("Sandbox/Assets/PlayerSpriteSheet.png", spriteMapTexConfig, true);
+	m_playerSpritesheet = std::make_unique<Aquarius::SpriteSheet>(m_playerTexture.get(), 16, 16);
+	m_player = std::make_unique<Player>(
+		m_spritesheet.get(),
+		0.2,
+		glm::vec2{64, 64},
+		glm::vec2{64, 64},
+		0.0
+	);
+
 
 	int levelHeight = m_level->getHeight();
 	int levelWidth = m_level->getWidth();
@@ -48,7 +59,9 @@ void LevelEditorLayer::onUpdate(Aquarius::timeDelta_t time)
 	Aquarius::Renderer::Clear();
 
 	//m_camera->onUpdate(time);
+	m_player->onUpdate(time);
 	m_level->draw();
+	m_player->draw();
 
 	AQ_INFO("FPS: %v", 1000.0 / time);
 }
