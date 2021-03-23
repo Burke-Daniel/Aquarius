@@ -135,6 +135,7 @@ void IntroLayer::onUpdate(Aquarius::timeDelta_t dt)
                 alpha = 0;
                 drawMUN = false;
                 maxAlpha = false;
+                drawAquarius = true;
             }
         }
     }
