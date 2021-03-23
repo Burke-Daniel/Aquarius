@@ -18,7 +18,7 @@ void BubbleSortLayer::onCreation()
     int height = window->getHeight();
     int width = window->getWidth();
 
-    m_Camera = std::make_shared<Aquarius::OrthographicCamera>(1, 0.01, height, width);
+    m_Camera = std::make_unique<Aquarius::OrthographicCamera>(1, 0.01, height, width);
 
     Aquarius::Renderer::Init();
 }
@@ -64,9 +64,9 @@ void BubbleSortLayer::onUpdate(Aquarius::timeDelta_t ts)
 {
     if (resetSort)
     {
-        for (int i = 0; i < 100; i++)
+        for (int i = 0; i < numRectangles; i++)
         {
-            barHeights[i] = rand() % 750 + 30;
+            barHeights[i] = (rand() % (window->getHeight() - 100)) + 30;
         }
 
         resetSort = false;
@@ -74,17 +74,16 @@ void BubbleSortLayer::onUpdate(Aquarius::timeDelta_t ts)
 
     if (isActive())
     {
-        Aquarius::Renderer::BeginScene(m_Camera.get());
-        Aquarius::Renderer::ClearColor({ 0.2, 0.3, 0.7 });
+        Aquarius::Renderer::ClearColor({ 219.0 / 255.0, 219.0 / 255.0, 219.0 / 255.0 });
         Aquarius::Renderer::Clear();
 
-        renderBars(100);
+        renderBars(numRectangles);
 
         swapBars(i, j);
         i += 1;
         j += 1;
 
-        if(i == 99 && j ==100)
+        if(i == numRectangles - 1 && j == numRectangles)
             {
                 i = 0;
                 j = 1;
@@ -101,11 +100,12 @@ void BubbleSortLayer::renderBars(int size)
 
     for(int i = 0; i < size; i++)
     {
+        auto normalizationConst = barHeights[i] / (float)(window->getHeight() - 70);
         Aquarius::Renderer::DrawQuad(
-                { position, 0} ,
+                { position, window->getHeight() - barHeights[i]} ,
                 { barWidth, barHeights[i] },
                 0,
-                { barColors[0], barColors[1], barColors[2], barColors[3] }
+                { 1 - barColors.x * normalizationConst, 0, 0, barColors.w }
         );
 
         position += barWidth + 1;

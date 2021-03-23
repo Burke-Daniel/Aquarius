@@ -12,19 +12,20 @@ public:
     void onUpdate(Aquarius::timeDelta_t time) override;
 
 private:
+    Aquarius::Application* app = Aquarius::Application::get();
+    Aquarius::Window* window = app->getWindow();
+
+    static constexpr int numRectangles = 40;
     bool resetSort = true;
     bool isSafe = true;
-    int barWidth = 10;
-    int barColors [4] = {1, 1, 1, 1};
-    int barHeights [100];
+    float barWidth = (window->getWidth() / numRectangles) - 1.0;
+    glm::vec4 barColors = {1.0, 1.0, 1.0, 1.0};
+    int barHeights [numRectangles];
     int delay = 500;
     int i = 0;
     int j = 1;
     void renderBars(int size);
     void swapBars(int i, int j);
 
-    Aquarius::Application* app = Aquarius::Application::get();
-    Aquarius::Window* window = app->getWindow();
-
-    Aquarius::sharedPtr<Aquarius::OrthographicCamera> m_Camera;
+    Aquarius::uniquePtr<Aquarius::OrthographicCamera> m_Camera;
 };
