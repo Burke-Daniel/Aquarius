@@ -9,32 +9,15 @@ A 2D game engine developed by Colton Smith, Daniel Burke, & Liam Warren for the 
 **The below commands and the sample application works for Windows, MAC, and Linux but not Windows
 Subsystem for Linux (WSL)**
 
-**For ease of building and running a sample Aquarius application scripts were developed to automate the building and 
+**For ease of building and running the sample Aquarius applications, scripts were developed to automate the building and 
 running. Please see the below instructions based on your operating system.**
 
-## Building and Running a Sample Aquarius Application Automatically on Mac & Linux
+## Building and Running Sample Aquarius Applications on Mac & Linux
 1. Navigate in a command-line interface to the project folder
 2. In your command-line execute the following command `sh build-run-sample-app.sh`
 3. If a window opens, you have successfully built and run a sample Aquarius application!
 
-## Building and Running a Sample Aquarius Application Automatically on Windows
+## Building and Running Sample Aquarius Applications on Windows
 1. Navigate in a command-line interface to the project folder
 2. In your command-line interface execute the following command `build-run-sample-app.bat`
-3. If a window opens, you have successfully built and run a sample Aquarius application!
-
-**Alternatively, the below instructions could be used to complete the building and running of a sample Aquarius 
-application manually on Windows, MAC, and Linux but not WSL.**
-
-## Building Aquarius Manually
-1. Navigate in a command-line interface to the project folder 
-2. Make a build directory by executing the following command `mkdir build`
-3. Navigate to the build directory by executing the following command `cd build`
-4. Execute CMake to build the project by executing the following command `cmake ..`
-5. Generate an executable file by executing the following command `cmake --build . --config Release`
-
-## Running a Sample Aquarius Application Manually
-1. If using Windows navigate to Aquarius/build/Sandbox/Release in command-line interface. If using MAC or Linux navigate
-   to Aquarius/build/Sandbox in command-line interface. Use the `cd` command in the command-line interface to navigate 
-   to the correct directory.
-2. Run the generated executable file by executing the following command `./Sandbox`
 3. If a window opens, you have successfully built and run a sample Aquarius application!
