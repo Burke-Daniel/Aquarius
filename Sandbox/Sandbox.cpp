@@ -98,10 +98,10 @@ Sandbox::Sandbox()
 
     auto introLayer = PushLayer(std::make_unique<IntroLayer>());
     auto testLayer1 = PushLayer(std::make_unique<SandboxLayer>());
-    auto testLayer2 = PushLayer(std::make_unique<PongLayer>());
+    auto pongLayer = PushLayer(std::make_unique<PongLayer>());
 
     PushLayer(std::make_unique<ManagerLayer>(
-        std::vector<Aquarius::Layer*>{ introLayer, testLayer1, testLayer2 }));
+        std::vector<Aquarius::Layer*>{ introLayer, testLayer1, pongLayer }));
     
 }
 

@@ -32,7 +32,7 @@ void IntroLayer::onCreation()
 
 void IntroLayer::onUpdate(Aquarius::timeDelta_t dt)
 {
-    float delay = dt*0.275;
+    float delay = dt*0.5;
 
     Aquarius::Renderer::BeginScene(m_Camera.get());
     Aquarius::Renderer::ClearColor({ 1, 1, 1});
