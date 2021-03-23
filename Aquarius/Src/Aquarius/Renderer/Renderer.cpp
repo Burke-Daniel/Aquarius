@@ -146,7 +146,7 @@ namespace Aquarius {
                 glDrawElements(GL_TRIANGLES, s_QuadData.VA->getIndexBuffer()->getCount(), GL_UNSIGNED_INT, (void*)0);
             }
 
-            void DrawQuad(const glm::vec2& pos, const glm::vec2& size, Texture* texture, QuadTexCoords* uv, float rotationDegrees)
+            void DrawQuad(const glm::vec2& pos, const glm::vec2& size, Texture* texture, QuadTexCoords* uv, float rotationDegrees, const glm::vec4& color)
             {
                 // Bind texture to TEXTURE_1 
                 texture->bind(1);
@@ -172,7 +172,7 @@ namespace Aquarius {
                 s_QuadData.shader->setMat4("u_model", false, model);
                 s_QuadData.shader->setMat4("u_view", false, s_SceneData.view);
                 s_QuadData.shader->setMat4("u_projection", false, s_SceneData.projection);
-                s_QuadData.shader->setFloat4("u_color", {1, 1, 1, 1});
+                s_QuadData.shader->setFloat4("u_color", color);
 
                 if (uv == nullptr)
                 {
