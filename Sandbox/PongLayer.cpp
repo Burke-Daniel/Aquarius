@@ -41,7 +41,7 @@ void PongLayer::onCreation()
 	constexpr auto paddleHeight = 80.0;
 	constexpr auto ballSize = 15.0;
 	constexpr auto leftPaddleSpeed = 0.3;
-	constexpr auto rightPaddleSpeed = 1.0;
+	constexpr auto rightPaddleSpeed = 0.2;
 
 	Aquarius::TextureConfiguration textureConfiguration = {
 		Aquarius::TextureWrapOption::Repeat,
