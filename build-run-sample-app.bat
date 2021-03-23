@@ -15,10 +15,10 @@ cmake ..
 @echo ---------------------------------------------------
 @echo Building sandbox executable...
 @echo ---------------------------------------------------
-cmake --build . --config Debug
+cmake --build . --config Release
 
 @echo ---------------------------------------------------
 @echo Running executable...
 @echo ---------------------------------------------------
 cd ..
-.\build\Sandbox\Debug\Sandbox.exe
+.\build\Sandbox\Release\Sandbox.exe
