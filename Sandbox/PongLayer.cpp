@@ -84,29 +84,32 @@ void PongLayer::onCreation()
 
 void PongLayer::onEvent(const Aquarius::Event& event)
 {
-	// Static cast instead of dynamic because we know this will be a KeyPressedEvent
-	// no need for a runtime check
-	auto keyPressEvent = static_cast<const Aquarius::KeyPressedEvent&>(event);
-	switch (keyPressEvent.getCode())
+	if (isActive())
 	{
-		case(Aquarius::Input::KeyCode::Key_escape):
+		// Static cast instead of dynamic because we know this will be a KeyPressedEvent
+		// no need for a runtime check
+		auto keyPressEvent = static_cast<const Aquarius::KeyPressedEvent&>(event);
+		switch (keyPressEvent.getCode())
 		{
-			isActive() ? deactivate() : activate();
-			break;
-		}
+			case(Aquarius::Input::KeyCode::Key_p):
+			{
+				m_isPaused = !m_isPaused;
+				break;
+			}
 
-		case(Aquarius::Input::KeyCode::Key_h):
-		{
-			if (ballSpeedIncrease == GameMode.RegularMode)
+			case(Aquarius::Input::KeyCode::Key_h):
 			{
-				ballSpeedIncrease = GameMode.HyperMode;
-				AQ_INFO("HYPER MODE ACTIVATED!!!");
+				if (ballSpeedIncrease == GameMode.RegularMode)
+				{
+					ballSpeedIncrease = GameMode.HyperMode;
+					AQ_INFO("HYPER MODE ACTIVATED!!!");
+				}
+				else
+				{
+					ballSpeedIncrease = GameMode.RegularMode;
+				}
+				break;
 			}
-			else
-			{
-				ballSpeedIncrease = GameMode.RegularMode;
-			}
-			break;
 		}
 	}
 }
@@ -119,11 +122,14 @@ void PongLayer::onUpdate(Aquarius::timeDelta_t dt)
 
 	float dy = dt * m_LeftPaddle.speedY;
 
-	m_RightPaddle.controller->movePaddle(dt, &m_RightPaddle, &m_Ball);
-	m_LeftPaddle.controller->movePaddle(dt, &m_LeftPaddle, &m_Ball);
+	if (!m_isPaused)
+	{
+		m_RightPaddle.controller->movePaddle(dt, &m_RightPaddle, &m_Ball);
+		m_LeftPaddle.controller->movePaddle(dt, &m_LeftPaddle, &m_Ball);
 
-	m_Ball.Update(dt);
-	checkPaddleCollision();
+		m_Ball.Update(dt);
+		checkPaddleCollision();
+	}
 
 	Aquarius::Renderer::DrawQuad(
 		{ 0.0, 0.0 },
@@ -135,8 +141,8 @@ void PongLayer::onUpdate(Aquarius::timeDelta_t dt)
 	m_RightPaddle.Render();
 	m_Ball.Render();
 
-	AQ_INFO("Frametime: %v ms", dt);
-	AQ_INFO("FPS: %v", 1000 / dt);
+	AQ_TRACE("Frametime: %v ms", dt);
+	AQ_TRACE("FPS: %v", 1000 / dt);
 }
 
 void PongLayer::checkPaddleCollision()
@@ -170,20 +176,26 @@ void PongLayer::checkPaddleCollision()
 	};
 
 	// Check Collision with right paddle
-	if (ballCoords[topRight].x >= rightPaddleCoords[topLeft].x)
+	if (ballCoords[topRight].x >= rightPaddleCoords[topLeft].x &&
+		ballCoords[topRight].x <= rightPaddleCoords[topRight].x)
 	{
-		if (ballCoords[topRight].y >= rightPaddleCoords[topLeft].y &&
-			ballCoords[topRight].y <= rightPaddleCoords[bottomLeft].y)
+		if ((ballCoords[topRight].y >= rightPaddleCoords[topLeft].y &&
+			ballCoords[topRight].y <= rightPaddleCoords[bottomLeft].y) ||
+		   (ballCoords[bottomRight].y >= rightPaddleCoords[topLeft].y &&
+			ballCoords[bottomRight].y <= rightPaddleCoords[bottomLeft].y))
 		{
 			AQ_INFO("Collision with right paddle!!");
 			handleCollision(false);
 		}
 	}
 
-	if (ballCoords[topLeft].x <= leftPaddleCoords[topRight].x)
+	if (ballCoords[topLeft].x <= leftPaddleCoords[topRight].x &&
+		ballCoords[topLeft].x >= leftPaddleCoords[topLeft].x)
 	{
-		if (ballCoords[topLeft].y >= leftPaddleCoords[topRight].y &&
-			ballCoords[topLeft].y <= leftPaddleCoords[bottomRight].y)
+		if ((ballCoords[topLeft].y >= leftPaddleCoords[topRight].y &&
+			ballCoords[topLeft].y <= leftPaddleCoords[bottomRight].y) ||
+		   (ballCoords[bottomLeft].y >= leftPaddleCoords[topRight].y &&
+			ballCoords[bottomLeft].y <= leftPaddleCoords[bottomRight].y))
 		{
 			AQ_INFO("Collision with left paddle!!");
 			handleCollision(true);
