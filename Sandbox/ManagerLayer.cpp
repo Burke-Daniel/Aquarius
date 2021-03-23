@@ -41,6 +41,12 @@ void ManagerLayer::onEvent(const Aquarius::Event& event)
 				m_ManagedLayers[m_ActiveLayerIndex]->deactivate();
 				m_ManagedLayers[++m_ActiveLayerIndex]->activate();
 			}
+			else
+			{
+				m_ManagedLayers[m_ActiveLayerIndex]->deactivate();
+				m_ActiveLayerIndex = 0;
+				m_ManagedLayers[m_ActiveLayerIndex]->activate();
+			}
 			break;
 		}
 
@@ -51,6 +57,12 @@ void ManagerLayer::onEvent(const Aquarius::Event& event)
 			{
 				m_ManagedLayers[m_ActiveLayerIndex]->deactivate();
 				m_ManagedLayers[--m_ActiveLayerIndex]->activate();
+			}
+			else
+			{
+				m_ManagedLayers[m_ActiveLayerIndex]->deactivate();
+				m_ActiveLayerIndex = m_ManagedLayers.size() - 1;
+				m_ManagedLayers[m_ActiveLayerIndex]->activate();
 			}
 			break;
 		}
