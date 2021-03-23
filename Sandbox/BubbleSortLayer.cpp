@@ -28,16 +28,6 @@ void BubbleSortLayer::onEvent(const Aquarius::Event& event)
     auto keyPressEvent = static_cast<const Aquarius::KeyPressedEvent &>(event);
 
     switch (keyPressEvent.getCode()) {
-        case (Aquarius::Input::KeyCode::Key_p): {
-            isActive() ? deactivate() : activate();
-
-            if (Aquarius::Input::isKeyPressed(Aquarius::Input::KeyCode::Key_r)) {
-                resetSort = true;
-            }
-
-            break;
-        }
-
         case (Aquarius::Input::KeyCode::Key_up): {
             if (delay >= 0) {
                 delay = delay - 200;
