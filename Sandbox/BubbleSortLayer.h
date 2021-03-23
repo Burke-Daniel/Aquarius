@@ -14,6 +14,7 @@ public:
 private:
     bool resetSort = true;
     bool isSafe = true;
+    int barWidth = 10;
     int barColors [4] = {1, 1, 1, 1};
     int barHeights [100];
     int delay = 500;

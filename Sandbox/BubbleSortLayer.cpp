@@ -89,10 +89,10 @@ void BubbleSortLayer::onUpdate(Aquarius::timeDelta_t ts)
         renderBars(100);
 
         swapBars(i, j);
-        i = i+1;
-        j = j+1;
+        i += 1;
+        j += 1;
 
-        if(i == 99 and j ==100)
+        if(i == 99 && j ==100)
         {
             i = 0;
             j = 1;
@@ -110,13 +110,13 @@ void BubbleSortLayer::renderBars(int size)
     for(int i = 0; i < size; i++)
     {
         Aquarius::Renderer::DrawQuad(
-                {position, 0},
-                {10, barHeights[i]},
+                { position, 0} ,
+                { barWidth, barHeights[i] },
                 0,
-                {barColors[0],barColors[1],barColors[2],barColors[3]}
+                { barColors[0], barColors[1], barColors[2], barColors[3] }
         );
 
-        position = position + 11;
+        position += barWidth + 1;
     }
 }
 
@@ -124,8 +124,6 @@ void BubbleSortLayer::swapBars(int i, int j)
 {
     if(barHeights[i] > barHeights[j])
     {
-        int holder = barHeights[i];
-        barHeights[i] = barHeights[j];
-        barHeights[j] = holder;
+        std::swap(barHeights[i], barHeights[j]);
     }
 }
