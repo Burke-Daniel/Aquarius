@@ -58,6 +58,9 @@ void LevelEditorLayer::onCreation()
 		0.0
 	);
 
+	m_coordMap.insert({ "traffic_light", m_spritesheet->getSpriteCoords(6, 2) });
+	m_coordMap.insert({"cone", m_spritesheet->getSpriteCoords(10, 6)});
+	m_coordMap.insert({ "bench", m_spritesheet->getSpriteCoords(3, 3) });
 
 	int levelHeight = m_level->getHeight();
 	int levelWidth = m_level->getWidth();
@@ -71,7 +74,6 @@ void LevelEditorLayer::onCreation()
 		}
 	}
 
-
 	Aquarius::Renderer::Init();
 }
 
@@ -81,11 +83,67 @@ void LevelEditorLayer::onUpdate(Aquarius::timeDelta_t time)
 	Aquarius::Renderer::ClearColor({0, 0, 0});
 	Aquarius::Renderer::Clear();
 
-	//m_camera->onUpdate(time);
 	m_player->onUpdate(time);
 	m_level->draw();
-	m_player->draw();
 
+	Aquarius::Renderer::DrawQuad(
+		m_level->getTileWorldCoords(2, 7),
+		{ 64, 64 },
+		m_spriteSheetTexture.get(),
+		&m_coordMap.at("bench")
+	);
+
+	Aquarius::Renderer::DrawQuad(
+		m_level->getTileWorldCoords(5, 7),
+		{ 64, 64 },
+		m_spriteSheetTexture.get(),
+		&m_coordMap.at("bench")
+	);
+
+	Aquarius::Renderer::DrawQuad(
+		m_level->getTileWorldCoords(3, 3),
+		{ 64, 64 },
+		m_spriteSheetTexture.get(),
+		&m_coordMap.at("cone")
+	);
+
+	Aquarius::Renderer::DrawQuad(
+		m_level->getTileWorldCoords(4, 3),
+		{ 64, 64 },
+		m_spriteSheetTexture.get(),
+		&m_coordMap.at("cone")
+	);
+
+	Aquarius::Renderer::DrawQuad(
+		m_level->getTileWorldCoords(5, 3),
+		{ 64, 64 },
+		m_spriteSheetTexture.get(),
+		&m_coordMap.at("cone")
+	);
+
+	Aquarius::Renderer::DrawQuad(
+		m_level->getTileWorldCoords(0, 0),
+		{ 64, 64 },
+		m_spriteSheetTexture.get(),
+		&m_coordMap.at("traffic_light")
+	);
+
+	Aquarius::Renderer::DrawQuad(
+		m_level->getTileWorldCoords(3, 0),
+		{ 64, 64 },
+		m_spriteSheetTexture.get(),
+		&m_coordMap.at("traffic_light")
+	);
+
+	Aquarius::Renderer::DrawQuad(
+		m_level->getTileWorldCoords(6, 0),
+		{ 64, 64 },
+		m_spriteSheetTexture.get(),
+		&m_coordMap.at("traffic_light")
+	);
+
+
+	m_player->draw();
 	AQ_TRACE("FPS: %v", 1000.0 / time);
 }
 

@@ -21,4 +21,5 @@ private:
 	Aquarius::uniquePtr<Player> m_player;
 	Aquarius::uniquePtr<Aquarius::Texture> m_playerTexture;
 	Aquarius::uniquePtr<Aquarius::SpriteSheet> m_playerSpritesheet;
+	std::unordered_map<std::string, Aquarius::QuadTexCoords> m_coordMap;
 };
