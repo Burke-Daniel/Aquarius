@@ -120,6 +120,7 @@ namespace Aquarius {
             void DrawQuad(const glm::vec2& pos, const glm::vec2& size, float rotationDegrees, const glm::vec4& color)
             {
                 s_QuadData.whiteTexture->bind(0);
+
                 // Configure model matrix
                 glm::mat4 model = glm::mat4(1.0f);
 

@@ -1,4 +1,5 @@
 #include "Sandbox.h"
+#include "RPG/LevelEditorLayer.h"
 
 #include "IntroLayer.h"
 #include "BubbleSortLayer.h"
@@ -100,10 +101,10 @@ Sandbox::Sandbox()
     auto introLayer = PushLayer(std::make_unique<IntroLayer>());
     auto pongLayer = PushLayer(std::make_unique<PongLayer>());
     auto bubbleSortLayer = PushLayer(std::make_unique<BubbleSortLayer>());
-    auto testLayer1 = PushLayer(std::make_unique<SandboxLayer>());
+    auto rpgLayer = PushLayer(std::make_unique<LevelEditorLayer>());
 
     PushLayer(std::make_unique<ManagerLayer>(
-        std::vector<Aquarius::Layer*>{ introLayer, pongLayer, bubbleSortLayer, testLayer1 }));
+        std::vector<Aquarius::Layer*>{ introLayer, pongLayer, bubbleSortLayer, rpgLayer }));
     
 }
 

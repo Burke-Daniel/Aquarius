@@ -25,7 +25,7 @@ namespace Aquarius {
         // Up
         if (Input::isKeyPressed(Input::KeyCode::Key_w))
         {
-            m_Position.y -= dx;;
+            m_Position.y -= dx;
         }
 
         // Down
