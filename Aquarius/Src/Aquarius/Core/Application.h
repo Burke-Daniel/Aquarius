@@ -34,9 +34,7 @@ namespace Aquarius {
 
 	protected:
 		Application(std::string&& windowName = "Application");
-
-		LayerStack& getLayerStack() { return m_layerStack; }
-
+		
 	private:
 		static Application* s_Application;
 		uniquePtr<Window> m_Window;
