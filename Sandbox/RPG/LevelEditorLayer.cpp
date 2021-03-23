@@ -1,5 +1,6 @@
 #include "LevelEditorLayer.h"
 
+
 static std::vector<std::vector<glm::ivec2>> MapTiles =
 {
 	{ {0,2}, {1,2}, {1,2}, {1,2}, {1,2}, {1,2}, {1,2}, {1,2}, {1,2}, {1,2}, {1,2}, {1,2}, {0,2}, {0,0}, {0,0}, {0,0} },
