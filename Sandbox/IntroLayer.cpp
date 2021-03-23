@@ -32,6 +32,8 @@ void IntroLayer::onCreation()
 
 void IntroLayer::onUpdate(Aquarius::timeDelta_t dt)
 {
+    float delay = dt*0.275;
+
     Aquarius::Renderer::BeginScene(m_Camera.get());
     Aquarius::Renderer::ClearColor({ 1, 1, 1});
     Aquarius::Renderer::Clear();
@@ -52,7 +54,7 @@ void IntroLayer::onUpdate(Aquarius::timeDelta_t dt)
 
             if(alpha < 1)
             {
-                alpha = alpha + 0.001;
+                alpha = alpha + 0.001*delay;
             }
 
             else
@@ -75,7 +77,7 @@ void IntroLayer::onUpdate(Aquarius::timeDelta_t dt)
 
             if(alpha > 0)
             {
-                alpha = alpha - 0.001;
+                alpha = alpha - 0.001*delay;
             }
 
             else
@@ -104,7 +106,7 @@ void IntroLayer::onUpdate(Aquarius::timeDelta_t dt)
 
             if(alpha < 1.0)
             {
-                alpha = alpha + 0.001;
+                alpha = alpha + 0.001*delay;
             }
 
             else
@@ -127,7 +129,7 @@ void IntroLayer::onUpdate(Aquarius::timeDelta_t dt)
 
             if(alpha > 0)
             {
-                alpha = alpha - 0.001;
+                alpha = alpha - 0.001*delay;
             }
 
             else
