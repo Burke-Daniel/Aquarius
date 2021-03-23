@@ -20,5 +20,5 @@ echo "-----------------------------------"
 echo "-----------------------------------"
 echo "Running executable..."
 cd .. 
-./buid/Sandbox/Sandbox
+./build/Sandbox/Sandbox
 echo "-----------------------------------"
