@@ -1,6 +1,7 @@
 #include "Sandbox.h"
 
 #include "IntroLayer.h"
+#include "BubbleSortLayer.h"
 #include "ManagerLayer.h"
 #include "PongLayer.h"
 
@@ -97,11 +98,12 @@ Sandbox::Sandbox()
     Aquarius::Log::setLogLevel(Aquarius::LogLevel::Info);
 
     auto introLayer = PushLayer(std::make_unique<IntroLayer>());
-    auto testLayer1 = PushLayer(std::make_unique<SandboxLayer>());
     auto pongLayer = PushLayer(std::make_unique<PongLayer>());
+    auto bubbleSortLayer = PushLayer(std::make_unique<BubbleSortLayer>());
+    auto testLayer1 = PushLayer(std::make_unique<SandboxLayer>());
 
     PushLayer(std::make_unique<ManagerLayer>(
-        std::vector<Aquarius::Layer*>{ introLayer, testLayer1, pongLayer }));
+        std::vector<Aquarius::Layer*>{ introLayer, pongLayer, bubbleSortLayer, testLayer1 }));
     
 }
 
