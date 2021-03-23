@@ -25,43 +25,35 @@ void BubbleSortLayer::onCreation()
 
 void BubbleSortLayer::onEvent(const Aquarius::Event& event)
 {
-    auto keyPressEvent = static_cast<const Aquarius::KeyPressedEvent&>(event);
+    auto keyPressEvent = static_cast<const Aquarius::KeyPressedEvent &>(event);
 
-    switch (keyPressEvent.getCode())
-    {
-        case(Aquarius::Input::KeyCode::Key_p):
-        {
+    switch (keyPressEvent.getCode()) {
+        case (Aquarius::Input::KeyCode::Key_p): {
             isActive() ? deactivate() : activate();
 
-            if(Aquarius::Input::isKeyPressed(Aquarius::Input::KeyCode::Key_r))
-            {
+            if (Aquarius::Input::isKeyPressed(Aquarius::Input::KeyCode::Key_r)) {
                 resetSort = true;
             }
 
             break;
         }
 
-        case(Aquarius::Input::KeyCode::Key_up):
-        {
-            if(delay >= 0)
-            {
+        case (Aquarius::Input::KeyCode::Key_up): {
+            if (delay >= 0) {
                 delay = delay - 200;
             }
             break;
         }
 
-        case(Aquarius::Input::KeyCode::Key_down):
-        {
-            if(delay >= 0)
-            {
+        case (Aquarius::Input::KeyCode::Key_down): {
+            if (delay >= 0) {
                 delay = delay + 200;
             }
 
             break;
         }
 
-        case(Aquarius::Input::KeyCode::Key_r):
-        {
+        case (Aquarius::Input::KeyCode::Key_r): {
             resetSort = true;
             break;
         }
@@ -93,10 +85,10 @@ void BubbleSortLayer::onUpdate(Aquarius::timeDelta_t ts)
         j += 1;
 
         if(i == 99 && j ==100)
-        {
-            i = 0;
-            j = 1;
-        }
+            {
+                i = 0;
+                j = 1;
+            }
 
         // This delay will allow for the changes occurring during the sort to be visible
         std::this_thread::sleep_for(std::chrono::microseconds(delay));
