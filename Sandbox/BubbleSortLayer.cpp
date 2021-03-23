@@ -4,9 +4,9 @@
 #include <thread>
 
 BubbleSortLayer::BubbleSortLayer()
-        : Aquarius::Layer("Bubble Sort")
+        : Aquarius::Layer("Bubble Sort", true)
         {
-            app->getEventHandler().subscribe(Aquarius::eventType::MouseScrolledEvent,
+            app->getEventHandler().subscribe(Aquarius::eventType::KeyPressedEvent,
                                             [&](const Aquarius::Event& event)
                                             {
                                                 onEvent(event);
@@ -15,57 +15,92 @@ BubbleSortLayer::BubbleSortLayer()
 
 void BubbleSortLayer::onCreation()
 {
-    //Aquarius::Application* app = Aquarius::Application::get();
-    //Aquarius::Window* window = app->getWindow();
-
     int height = window->getHeight();
     int width = window->getWidth();
 
     m_Camera = std::make_shared<Aquarius::OrthographicCamera>(1, 0.01, height, width);
 
     Aquarius::Renderer::Init();
-
-    // Populate the bar heights with random values
-    for (int i = 0; i < 100; i++)
-    {
-        barHeights[i] = rand() % 750 + 30;
-    }
 }
 
 void BubbleSortLayer::onEvent(const Aquarius::Event& event)
 {
-    auto mouseScrolledEvent = static_cast<const Aquarius::MouseScrolledEvent&>(event);
+    auto keyPressEvent = static_cast<const Aquarius::KeyPressedEvent&>(event);
 
-    delay = mouseScrolledEvent.getXOffset();
+    switch (keyPressEvent.getCode())
+    {
+        case(Aquarius::Input::KeyCode::Key_p):
+        {
+            isActive() ? deactivate() : activate();
+
+            if(Aquarius::Input::isKeyPressed(Aquarius::Input::KeyCode::Key_r))
+            {
+                resetSort = true;
+            }
+
+            break;
+        }
+
+        case(Aquarius::Input::KeyCode::Key_up):
+        {
+            if(delay >= 0)
+            {
+                delay = delay - 200;
+            }
+            break;
+        }
+
+        case(Aquarius::Input::KeyCode::Key_down):
+        {
+            if(delay >= 0)
+            {
+                delay = delay + 200;
+            }
+
+            break;
+        }
+
+        case(Aquarius::Input::KeyCode::Key_r):
+        {
+            resetSort = true;
+            break;
+        }
+    }
 }
 
 void BubbleSortLayer::onUpdate(Aquarius::timeDelta_t ts)
 {
-
-    Aquarius::Application* app = Aquarius::Application::get();
-    Aquarius::Window* window = app->getWindow();
-
-    m_Camera->onUpdate(ts);
-
-    Aquarius::Renderer::BeginScene(m_Camera.get());
-    Aquarius::Renderer::ClearColor({ 0.2, 0.3, 0.7 });
-    Aquarius::Renderer::Clear();
-
-
-    renderBars(100);
-
-    swapBars(i, j);
-    i = i+1;
-    j = j+1;
-
-    if(i == 99 and j ==100)
+    if (resetSort)
     {
-        i = 0;
-        j = 1;
+        for (int i = 0; i < 100; i++)
+        {
+            barHeights[i] = rand() % 750 + 30;
+        }
+
+        resetSort = false;
     }
 
-    // This delay will allow for the changes occurring during the sort to be visible
-    std::this_thread::sleep_for(std::chrono::microseconds(delay));
+    if (isActive())
+    {
+        Aquarius::Renderer::BeginScene(m_Camera.get());
+        Aquarius::Renderer::ClearColor({ 0.2, 0.3, 0.7 });
+        Aquarius::Renderer::Clear();
+
+        renderBars(100);
+
+        swapBars(i, j);
+        i = i+1;
+        j = j+1;
+
+        if(i == 99 and j ==100)
+        {
+            i = 0;
+            j = 1;
+        }
+
+        // This delay will allow for the changes occurring during the sort to be visible
+        std::this_thread::sleep_for(std::chrono::microseconds(delay));
+    }
 }
 
 void BubbleSortLayer::renderBars(int size)
