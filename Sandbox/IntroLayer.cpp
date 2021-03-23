@@ -32,27 +32,27 @@ void IntroLayer::onCreation()
 
 void IntroLayer::onUpdate(Aquarius::timeDelta_t dt)
 {
-    float delay = dt*0.5;
+    float delay = dt * 0.5;
 
     Aquarius::Renderer::BeginScene(m_Camera.get());
-    Aquarius::Renderer::ClearColor({ 1, 1, 1});
+    Aquarius::Renderer::ClearColor({ 1, 1, 1 });
     Aquarius::Renderer::Clear();
 
-    if(drawAquarius)
+    if (drawAquarius)
     {
         // Fade the Aquarius logo on the window
-        if(!maxAlpha)
+        if (!maxAlpha)
         {
             Aquarius::Renderer::DrawQuad(
-                    {200, 100},
-                    {400, 300},
+                    { 200, 100 },
+                    { 400, 300 },
                     AquariusLogo.get(),
                     nullptr,
                     0,
-                    {1,1,1,alpha}
+                    { 1, 1, 1, alpha }
             );
 
-            if(alpha < 1)
+            if (alpha < 1)
             {
                 alpha = alpha + 0.001*delay;
             }
@@ -67,17 +67,17 @@ void IntroLayer::onUpdate(Aquarius::timeDelta_t dt)
         else if (maxAlpha)
         {
             Aquarius::Renderer::DrawQuad(
-                    {200, 100},
-                    {400, 300},
+                    { 200, 100},
+                    { 400, 300},
                     AquariusLogo.get(),
                     nullptr,
                     0,
-                    {1,1,1,alpha}
+                    { 1, 1, 1, alpha}
             );
 
-            if(alpha > 0)
+            if (alpha > 0)
             {
-                alpha = alpha - 0.001*delay;
+                alpha = alpha - 0.001 * delay;
             }
 
             else
@@ -90,23 +90,23 @@ void IntroLayer::onUpdate(Aquarius::timeDelta_t dt)
         }
     }
 
-    if(drawMUN)
+    if (drawMUN)
     {
         // Fade the MUN logo on the window
-        if(!maxAlpha)
+        if (!maxAlpha)
         {
             Aquarius::Renderer::DrawQuad(
-                    {200, 100},
-                    {400, 300},
+                    { 200,  100 },
+                    { 400,  300 },
                     MUNLogo.get(),
                     nullptr,
                     0,
-                    {1,1,1,alpha}
+                    { 1, 1, 1, alpha }
             );
 
-            if(alpha < 1.0)
+            if (alpha < 1.0)
             {
-                alpha = alpha + 0.001*delay;
+                alpha = alpha + 0.001 * delay;
             }
 
             else
@@ -119,17 +119,17 @@ void IntroLayer::onUpdate(Aquarius::timeDelta_t dt)
         else if (maxAlpha)
         {
             Aquarius::Renderer::DrawQuad(
-                    {200, 100},
-                    {400, 300},
+                    { 200, 100 },
+                    { 400, 300 },
                     MUNLogo.get(),
                     nullptr,
                     0,
-                    {1,1,1,alpha}
+                    { 1, 1,  1, alpha }
             );
 
-            if(alpha > 0)
+            if (alpha > 0)
             {
-                alpha = alpha - 0.001*delay;
+                alpha = alpha - 0.001 * delay;
             }
 
             else
