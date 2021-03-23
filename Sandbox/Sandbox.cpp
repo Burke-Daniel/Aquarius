@@ -1,8 +1,10 @@
 #include "Sandbox.h"
 
+#include "ManagerLayer.h"
 #include "PongLayer.h"
 
 #include <glm/gtc/matrix_transform.hpp>
+
 
 SandboxLayer::SandboxLayer()
     : Layer("Sandbox", true)
@@ -91,7 +93,14 @@ void SandboxLayer::onUpdate(Aquarius::timeDelta_t ts)
 Sandbox::Sandbox()
     : Aquarius::Application("Sandbox")
 {
-    PushLayer(std::make_unique<PongLayer>());
+    Aquarius::Log::setLogLevel(Aquarius::LogLevel::Info);
+
+    auto testLayer1 = PushLayer(std::make_unique<SandboxLayer>());
+    auto testLayer2 = PushLayer(std::make_unique<PongLayer>());
+
+    PushLayer(std::make_unique<ManagerLayer>(
+        std::vector<Aquarius::Layer*>{ testLayer1, testLayer2 }));
+    
 }
 
 Aquarius::uniquePtr<Aquarius::Application> createApplication()
