@@ -50,10 +50,12 @@ namespace Aquarius {
 	    m_EventHandler.notify(event);
   }
 
-	void Application::PushLayer(uniquePtr<Layer> layer)
+	Layer* Application::PushLayer(uniquePtr<Layer> layer)
 	{
 		m_layerStack.push_back(std::move(layer));
 		m_layerStack.back()->onCreation();
+	
+		return m_layerStack.back().get();
 	}
 
 } // namespace Aquarius

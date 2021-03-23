@@ -29,9 +29,12 @@ namespace Aquarius {
 		void run();
 
 		void onEvent(Event& event);
+
+		Layer* PushLayer(uniquePtr<Layer> layer);
+
 	protected:
 		Application(std::string&& windowName = "Application");
-		void PushLayer(uniquePtr<Layer> layer);
+		
 	private:
 		static Application* s_Application;
 		uniquePtr<Window> m_Window;
