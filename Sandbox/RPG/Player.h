@@ -32,35 +32,35 @@ public:
 		m_offset = 0;
 
 		m_walkLeftFrames = {    
-			m_spritesheet->getSpriteCoords(0 + 23,2 + 15),
-			m_spritesheet->getSpriteCoords(0 + 23,1 + 15),
-			m_spritesheet->getSpriteCoords(0 + 23,2 + 15),
-			m_spritesheet->getSpriteCoords(0 + 23,0 + 15),
-		};
-
-		m_walkRightFrames =  {     
-			m_spritesheet->getSpriteCoords(3 + 23,2 + 15),
-			m_spritesheet->getSpriteCoords(3 + 23,1 + 15),
-			m_spritesheet->getSpriteCoords(3 + 23,2 + 15),
-			m_spritesheet->getSpriteCoords(3 + 23,0 + 15)
-		};
-
-		m_walkUpFrames = {
-			m_spritesheet->getSpriteCoords(2 + 23,2 + 15),
-			m_spritesheet->getSpriteCoords(2 + 23,1 + 15),
-			m_spritesheet->getSpriteCoords(2 + 23,2 + 15),
-			m_spritesheet->getSpriteCoords(2 + 23,0 + 15)
-		};
-
-		m_walkDownFrames = {
-			m_spritesheet->getSpriteCoords(1 + 23,2 + 15),
-			m_spritesheet->getSpriteCoords(1 + 23,1 + 15),
-			m_spritesheet->getSpriteCoords(1 + 23,2 + 15),
-			m_spritesheet->getSpriteCoords(1 + 23,0 + 15)
+			m_spritesheet->getSpriteCoords(0 + 23,2 + 6),
+			m_spritesheet->getSpriteCoords(0 + 23,1 + 6),
+			m_spritesheet->getSpriteCoords(0 + 23,2 + 6),
+			m_spritesheet->getSpriteCoords(0 + 23,0 + 6),
+		};											
+													
+		m_walkRightFrames =  {     					
+			m_spritesheet->getSpriteCoords(3 + 23,2 + 6),
+			m_spritesheet->getSpriteCoords(3 + 23,1 + 6),
+			m_spritesheet->getSpriteCoords(3 + 23,2 + 6),
+			m_spritesheet->getSpriteCoords(3 + 23,0 + 6)
+		};											
+													
+		m_walkUpFrames = {							
+			m_spritesheet->getSpriteCoords(2 + 23,2 + 6),
+			m_spritesheet->getSpriteCoords(2 + 23,1 + 6),
+			m_spritesheet->getSpriteCoords(2 + 23,2 + 6),
+			m_spritesheet->getSpriteCoords(2 + 23,0 + 6)
+		};											
+													
+		m_walkDownFrames = {						
+			m_spritesheet->getSpriteCoords(1 + 23,2 + 6),
+			m_spritesheet->getSpriteCoords(1 + 23,1 + 6),
+			m_spritesheet->getSpriteCoords(1 + 23,2 + 6),
+			m_spritesheet->getSpriteCoords(1 + 23,0 + 6)
 		};
 
 		m_idlingFrames = {
-			m_spritesheet->getSpriteCoords(1 + 23,2 + 15)
+			m_spritesheet->getSpriteCoords(1 + 23,2 + 6)
 		};
 
 		m_playerState = PlayerState::IDLING;
@@ -120,6 +120,26 @@ public:
 		{
 			m_playerState = PlayerState::WALKING_RIGHT;
 			m_position.x += dx;
+		}
+
+		if (m_position.x + m_scale.x > m_app->getWindow()->getWidth())
+		{
+			m_position.x = m_app->getWindow()->getWidth() - m_scale.x;
+		}
+
+		if (m_position.x < 0)
+		{
+			m_position.x = 0;
+		}
+
+		if (m_position.y + m_scale.y > m_app->getWindow()->getHeight())
+		{
+			m_position.y = m_app->getWindow()->getHeight() - m_scale.y;
+		}
+
+		if (m_position.y < 0)
+		{
+			m_position.y = 0;
 		}
 
 		updateState();
@@ -189,4 +209,5 @@ private:
 
 	Aquarius::timeDelta_t m_count;
 	Aquarius::timeDelta_t m_walkInterval;
+	Aquarius::Application* m_app = Aquarius::Application::get();
 };
