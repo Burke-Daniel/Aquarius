@@ -16,4 +16,5 @@ struct Ball
 	glm::vec2 speed;
 	glm::vec2 velocity;
 	PongLayer* game;
+	Aquarius::sharedPtr<Aquarius::Texture> ballTexture;
 };
