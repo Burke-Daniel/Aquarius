@@ -1,9 +1,8 @@
 #include "Application.h"
 #include "Aquarius/Core/Input.h"
 #include "Aquarius/Core/Log.h"
+#include "Aquarius/Sound/Devices.h"
 
-#define AL_LIBTYPE_STATIC
-#include "AL/al.h"
 
 #include <chrono>
 
@@ -25,8 +24,8 @@ namespace Aquarius {
 
 		Log::initLoggers();
 		m_Window->Initialize();
-
 		AQ_CORE_INFO("Window Initialized Successfully");
+		m_SoundDevice->Create();
 	}
 
 	void Application::run()
