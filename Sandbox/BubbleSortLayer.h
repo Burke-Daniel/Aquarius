@@ -16,12 +16,12 @@ private:
     Aquarius::Window* window = app->getWindow();
 
     static constexpr int numRectangles = 40;
+    bool pauseSort = false;
     bool resetSort = true;
-    bool isSafe = true;
     float barWidth = (window->getWidth() / numRectangles) - 1.0;
     glm::vec4 barColors = {1.0, 1.0, 1.0, 1.0};
     int barHeights [numRectangles];
-    int delay = 500;
+    int delay;
     int i = 0;
     int j = 1;
     void renderBars(int size);

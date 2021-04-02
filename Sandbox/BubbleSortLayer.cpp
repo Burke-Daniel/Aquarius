@@ -28,31 +28,34 @@ void BubbleSortLayer::onEvent(const Aquarius::Event& event)
 {
     auto keyPressEvent = static_cast<const Aquarius::KeyPressedEvent &>(event);
 
-    switch (keyPressEvent.getCode()) {
-        case (Aquarius::Input::KeyCode::Key_up): {
-            if (delay >= 0) {
-                delay = delay - 200;
-            }
-            break;
-        }
-
-        case (Aquarius::Input::KeyCode::Key_down): {
-            if (delay >= 0) {
-                delay = delay + 200;
-            }
-
-            break;
-        }
-
-        case (Aquarius::Input::KeyCode::Key_r): {
+    switch (keyPressEvent.getCode())
+    {
+        case (Aquarius::Input::KeyCode::Key_r):
+            {
             resetSort = true;
             break;
-        }
+            }
+
+        case (Aquarius::Input::KeyCode::Key_p):
+            {
+            if(!pauseSort)
+            {
+                pauseSort = true;
+            }
+
+            else
+            {
+                pauseSort = false;
+            }
+            break;
+            }
     }
 }
 
-void BubbleSortLayer::onUpdate(Aquarius::timeDelta_t ts)
+void BubbleSortLayer::onUpdate(Aquarius::timeDelta_t dt)
 {
+    delay = dt * 750;
+
     if (resetSort)
     {
         for (int i = 0; i < numRectangles; i++)
@@ -63,7 +66,13 @@ void BubbleSortLayer::onUpdate(Aquarius::timeDelta_t ts)
         resetSort = false;
     }
 
-    if (isActive())
+    if(pauseSort)
+    {
+        Aquarius::Renderer::Clear();
+        renderBars(numRectangles);
+    }
+
+    if (!pauseSort)
     {
         Aquarius::Renderer::ClearColor({ 219.0 / 255.0, 219.0 / 255.0, 219.0 / 255.0 });
         Aquarius::Renderer::Clear();
@@ -75,10 +84,10 @@ void BubbleSortLayer::onUpdate(Aquarius::timeDelta_t ts)
         j += 1;
 
         if(i == numRectangles - 1 && j == numRectangles)
-            {
+        {
                 i = 0;
                 j = 1;
-            }
+        }
 
         // This delay will allow for the changes occurring during the sort to be visible
         std::this_thread::sleep_for(std::chrono::microseconds(delay));
@@ -98,7 +107,6 @@ void BubbleSortLayer::renderBars(int size)
                 0,
                 { 1 - barColors.x * normalizationConst, 0, 0, barColors.w }
         );
-
         position += barWidth + 1;
     }
 }
