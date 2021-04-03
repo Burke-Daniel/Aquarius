@@ -7,3 +7,6 @@
 [submodule "Aquarius/Vendor/glm"]
 	path = Aquarius/Vendor/glm
 	url = https://github.com/g-truc/glm.git
+[submodule "Aquarius/Vendor/imgui"]
+	path = Aquarius/Vendor/imgui
+	url = https://github.com/ocornut/imgui.git
