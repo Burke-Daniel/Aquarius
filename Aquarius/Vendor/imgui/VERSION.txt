@@ -1,0 +1,2 @@
+TAG: 1.82
+URL: https://github.com/ocornut/imgui/tree/v1.82
