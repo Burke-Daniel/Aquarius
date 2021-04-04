@@ -1,4 +1,5 @@
 #include "Application.h"
+#include "Aquarius/Imgui/GuiHandler.h"
 #include "Aquarius/Core/Input.h"
 #include "Aquarius/Core/Log.h"
 
@@ -23,6 +24,10 @@ namespace Aquarius {
 		Log::initLoggers();
 		m_Window->Initialize();
 
+		Gui::Init();
+		Gui::AttachRenderer(m_Window.get()->get(), "#version 410 core");
+		Gui::SetStyle(Gui::ImguiStyle::DARK);
+
 		AQ_CORE_INFO("Window Initialized Successfully");
 	}
 
@@ -41,8 +46,19 @@ namespace Aquarius {
 					layer->onUpdate(std::chrono::duration_cast<std::chrono::microseconds>(timeDelta).count() / 1000.0);
 				}
 			}
+
+			Gui::NewFrame();
+			for (const auto& layer : m_layerStack)
+			{
+				if (layer->isActive())
+				{
+					layer->onUpdateGUI(std::chrono::duration_cast<std::chrono::microseconds>(timeDelta).count() / 1000.0);
+				}
+			}
+			Gui::Render();
 			m_Window->OnUpdate();
 		}
+		Gui::Shutdown();
 	}
 
 	void Application::onEvent(Event &event)
