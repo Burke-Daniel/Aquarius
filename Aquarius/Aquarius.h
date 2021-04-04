@@ -27,6 +27,9 @@
 #include "Aquarius/Events/MouseEvent.h"
 #include "Aquarius/Events/WindowEvent.h"
 
+// -- Imgui
+#include "Aquarius/Imgui/GuiHandler.h"
+
 #include <easylogging++.h>
 #include <glad/glad.h>
 #include <GLFW/glfw3.h>
