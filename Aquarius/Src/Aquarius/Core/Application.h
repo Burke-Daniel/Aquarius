@@ -29,6 +29,7 @@ namespace Aquarius {
 		void run();
 
 		void onEvent(Event& event);
+		void onWindowResize(const Event& event);
 
 		Layer* PushLayer(uniquePtr<Layer> layer);
 
