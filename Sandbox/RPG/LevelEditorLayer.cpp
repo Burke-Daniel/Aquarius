@@ -75,6 +75,8 @@ void LevelEditorLayer::onCreation()
 		}
 	}
 
+	// TODO
+	glfwSetInputMode(window->get(), GLFW_CURSOR, GLFW_CURSOR_NORMAL);
 	Aquarius::Renderer::Init();
 }
 
@@ -151,4 +153,9 @@ void LevelEditorLayer::onUpdate(Aquarius::timeDelta_t time)
 void LevelEditorLayer::onDestruction()
 {
 	// Cleanup
+}
+
+void LevelEditorLayer::onUpdateGUI(Aquarius::timeDelta_t time)
+{
+	Aquarius::Gui::ShowDemoWindow(&m_MenuOpen);
 }
