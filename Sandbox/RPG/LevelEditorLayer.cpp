@@ -75,6 +75,9 @@ void LevelEditorLayer::onCreation()
 		}
 	}
 
+	// TODO
+	glfwSetInputMode(window->get(), GLFW_CURSOR, GLFW_CURSOR_NORMAL);
+
 	Aquarius::Renderer::Init();
 }
 
@@ -83,6 +86,12 @@ void LevelEditorLayer::onUpdate(Aquarius::timeDelta_t time)
 	Aquarius::Renderer::BeginScene(m_camera.get());
 	Aquarius::Renderer::ClearColor({0, 0, 0});
 	Aquarius::Renderer::Clear();
+
+	// Toggle demo window
+	if (Aquarius::Input::isKeyPressed(Aquarius::Input::KeyCode::Key_m))
+	{
+		m_MenuOpen = true;
+	}
 
 	m_player->onUpdate(time);
 	m_level->draw();
@@ -146,6 +155,14 @@ void LevelEditorLayer::onUpdate(Aquarius::timeDelta_t time)
 
 	m_player->draw();
 	AQ_TRACE("FPS: %v", 1000.0 / time);
+}
+
+void LevelEditorLayer::onUpdateGUI(Aquarius::timeDelta_t time)
+{
+	if (m_MenuOpen)
+	{
+		Aquarius::Gui::ShowDemoWindow(&m_MenuOpen);
+	}
 }
 
 void LevelEditorLayer::onDestruction()
