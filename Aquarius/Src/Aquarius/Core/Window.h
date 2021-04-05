@@ -9,6 +9,7 @@
 
 
 namespace Aquarius {
+    class Event;
 
     class Window
     {
@@ -22,6 +23,7 @@ namespace Aquarius {
 
         // Poll inputs and swap buffers
         void OnUpdate();
+        void onWindowResize(const Event& event);
 
         // Utility methods
         uint32_t getWidth() const;
