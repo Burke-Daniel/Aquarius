@@ -1,6 +1,7 @@
 #pragma once
 
-#include "Event.h"
+#include "Aquarius/Events/Event.h"
+#include "Aquarius/Core/Log.h"
 
 
 namespace Aquarius {

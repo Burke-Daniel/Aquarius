@@ -1,5 +1,9 @@
 #include "OrthographicCamera.h"
 
+#include "Aquarius/Core/Application.h"
+#include "Aquarius/Events/WindowEvent.h"
+
+
 namespace Aquarius {
 
     OrthographicCamera::OrthographicCamera(float moveSpeed, float zoomSpeed, float height, float width)
@@ -14,6 +18,12 @@ namespace Aquarius {
     {
         updateView();
         updateProjection();
+
+        Application::get()->getEventHandler().subscribe(Aquarius::eventType::WindowResizedEvent,
+            [&](const Aquarius::Event& event)
+            {
+                onWindowResize(event);
+            });
     }
 
     void OrthographicCamera::onUpdate(timeDelta_t dt)
@@ -80,6 +90,16 @@ namespace Aquarius {
     void OrthographicCamera::updateProjection()
     {
         m_Projection = glm::ortho(0.0f, m_Width, m_Height, 0.0f, -1.0f, 1.0f);
+    }
+
+    void OrthographicCamera::onWindowResize(const Event& event)
+    {
+        auto e = static_cast<const Aquarius::WindowResizedEvent&>(event);
+        m_Width = e.getWidth();
+        m_Height = e.getHeight();
+
+        updateProjection();
+        updateView();
     }
 
 } // namespace Aquarius

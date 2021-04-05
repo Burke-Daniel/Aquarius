@@ -1,4 +1,5 @@
 #include "Window.h"
+
 #include "Aquarius/Core/Input.h"
 #include "Aquarius/Core/Log.h"
 #include "Aquarius/Events/Callbacks.h"
@@ -72,6 +73,13 @@ namespace Aquarius {
 
         glfwSetInputMode(m_Window, GLFW_STICKY_MOUSE_BUTTONS, 1);
         glfwSetInputMode(m_Window, GLFW_STICKY_KEYS,1);
+
+        // Register window resize event
+        Application::get()->getEventHandler().subscribe(eventType::WindowResizedEvent,
+            [&](const Event& event)
+            {
+                onWindowResize(event);
+            });
     }
 
     uint32_t Window::getWidth() const
@@ -131,6 +139,13 @@ namespace Aquarius {
             AQ_CORE_INFO("Vsync disabled");
         }
         m_VsyncEnabled = enabled;
+    }
+
+    void Window::onWindowResize(const Event& event)
+    {
+        auto windowResizeEvent = static_cast<const WindowResizedEvent&>(event);
+        m_Height = windowResizeEvent.getHeight();
+        m_Width = windowResizeEvent.getWidth();
     }
 
 } // namespace Aquarius

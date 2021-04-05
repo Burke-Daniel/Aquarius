@@ -1,6 +1,9 @@
 #include "Application.h"
+#include "Aquarius/Imgui/GuiManager.h"
 #include "Aquarius/Core/Input.h"
 #include "Aquarius/Core/Log.h"
+#include "Aquarius/Events/WindowEvent.h"
+#include "Aquarius/Renderer/Renderer.h"
 
 
 #include <chrono>
@@ -23,7 +26,19 @@ namespace Aquarius {
 
 		Log::initLoggers();
 		m_Window->Initialize();
+
+		Gui::Init();
+		Gui::AttachRenderer(m_Window.get()->get(), "#version 410 core");
+		Gui::SetStyle(Gui::ImguiStyle::DARK);
+
 		AQ_CORE_INFO("Window Initialized Successfully");
+
+		// Register window resize event
+		m_EventHandler.subscribe(Aquarius::eventType::WindowResizedEvent,
+			[&](const Aquarius::Event& event)
+			{
+				onWindowResize(event);
+			});
 	}
 
 	void Application::run()
@@ -41,14 +56,31 @@ namespace Aquarius {
 					layer->onUpdate(std::chrono::duration_cast<std::chrono::microseconds>(timeDelta).count() / 1000.0);
 				}
 			}
+
+			Gui::NewFrame();
+			for (const auto& layer : m_layerStack)
+			{
+				if (layer->isActive())
+				{
+					layer->onUpdateGUI(std::chrono::duration_cast<std::chrono::microseconds>(timeDelta).count() / 1000.0);
+				}
+			}
+			Gui::Render();
 			m_Window->OnUpdate();
 		}
+		Gui::Shutdown();
 	}
 
 	void Application::onEvent(Event &event)
 	{
 	    m_EventHandler.notify(event);
-  }
+    }
+
+	void Application::onWindowResize(const Event& event)
+	{
+		auto e = static_cast<const Aquarius::WindowResizedEvent&>(event);
+		glViewport(0, 0, e.getWidth(), e.getHeight());
+	}
 
 	Layer* Application::PushLayer(uniquePtr<Layer> layer)
 	{
