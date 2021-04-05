@@ -44,3 +44,6 @@ cmake-build-debug/
 
 # Logs
 *.log
+
+# MAC
+.DS_Store
