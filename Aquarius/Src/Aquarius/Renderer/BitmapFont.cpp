@@ -7,7 +7,6 @@
 
 namespace Aquarius {
 
-	// TODO fix indexing for alphabet
 	static const std::unordered_map<char, std::pair<uint32_t, uint32_t>> characterLocations =
 	{
 		{'A', {8, 5}},

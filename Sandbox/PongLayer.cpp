@@ -53,6 +53,8 @@ void PongLayer::onCreation()
 	auto paddleTexture = std::make_shared<Aquarius::Texture>("Sandbox/Assets/Paddle.png", textureConfiguration, true);
 	auto ballTexture = std::make_shared<Aquarius::Texture>("Sandbox/Assets/Ball.png", textureConfiguration, true);
 	m_BackgroundTexture = std::make_shared<Aquarius::Texture>("Sandbox/Assets/logo-black-transparent.png", Aquarius::TextureConfiguration{}, true);
+	m_FontTexture = std::make_shared<Aquarius::Texture>("Sandbox/Assets/8bitfont.png", textureConfiguration, true);
+	m_Font = std::make_shared<Aquarius::Bitmap>(m_FontTexture.get(), 21, 28);
 
 	m_LeftPaddle = {
 		paddleTexture,
@@ -137,6 +139,19 @@ void PongLayer::onUpdate(Aquarius::timeDelta_t dt)
 		m_BackgroundTexture.get()
 	);
 
+	char leftScore[3];
+	char rightScore[3];
+	sprintf(leftScore, "%02d", m_Score.LeftScore);
+	sprintf(rightScore, "%02d", m_Score.RightScore);
+	
+	glm::vec4 red = { 1.0, 0.0, 0.0, 1.0 };
+	
+	// To center the scoreboard position, subtract 2.5 times the sprite width (scoreboard contains 5 sprites)
+	// and then multiply by 2.0 because of the multiplier on the font size in the RenderText call
+	glm::vec2 scoreboardPosition = { (window.getWidth() / 2.0) - (m_Font->getSpriteWidth() * 2.0 * 2.5), 20.0 };
+
+	m_Font->RenderText(std::string(leftScore) + "-" + std::string(rightScore), scoreboardPosition, 2.0, red);
+	
 	m_LeftPaddle.Render();
 	m_RightPaddle.Render();
 	m_Ball.Render();
