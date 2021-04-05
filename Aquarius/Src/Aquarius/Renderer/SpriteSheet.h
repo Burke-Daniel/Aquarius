@@ -23,7 +23,7 @@ namespace Aquarius {
         uint32_t getSpriteWidth() const { return m_SpriteWidth; }
         uint32_t getSpriteHeight() const { return m_SpriteHeight; }
 
-    private:
+    protected:
         Texture* m_Texture;
         uint32_t m_TotalWidth;
         uint32_t m_TotalHeight;

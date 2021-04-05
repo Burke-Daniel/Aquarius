@@ -22,9 +22,9 @@ public:
 	void onEvent(const Aquarius::Event&) override;
 	void onUpdate(Aquarius::timeDelta_t) override;
 
-	void leftScore() { score.LeftScore++; }
-	void rightScore() { score.RightScore++; }
-	Score getScore() const { return score; }
+	void leftScore() { m_Score.LeftScore++; }
+	void rightScore() { m_Score.RightScore++; }
+	Score getScore() const { return m_Score; }
 
 private:
 	void checkPaddleCollision();
@@ -37,10 +37,13 @@ private:
 	// Pong specific stuff
 	Aquarius::sharedPtr<Aquarius::OrthographicCamera> m_Camera;
 	Aquarius::sharedPtr<Aquarius::Texture> m_BackgroundTexture;
+	Aquarius::sharedPtr<Aquarius::Texture> m_FontTexture;
+	Aquarius::sharedPtr<Aquarius::Bitmap> m_Font;
+
 	Paddle m_LeftPaddle;
 	Paddle m_RightPaddle;
 	Ball m_Ball;
-	Score score = { 0, 0 };
+	Score m_Score = { 0, 0 };
 
 	// State management
 	bool m_isPaused = false;

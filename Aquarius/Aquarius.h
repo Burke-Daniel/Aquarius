@@ -10,6 +10,7 @@
 #include "Aquarius/Core/Window.h"
 
 // -- Renderer
+#include "Aquarius/Renderer/BitmapFont.h"
 #include "Aquarius/Renderer/IndexBuffer.h"
 #include "Aquarius/Renderer/OrthographicCamera.h"
 #include "Aquarius/Renderer/QuadTexCoords.h"
