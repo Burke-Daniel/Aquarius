@@ -22,6 +22,7 @@ namespace Aquarius {
 		virtual void onCreation() {};
 		virtual void onEvent(const Event& event) {};
 		virtual void onUpdate(timeDelta_t time) {};
+		virtual void onUpdateGUI(timeDelta_t time) {};
 		virtual void onDestruction() {};
 
 		const std::string& getLayerName() const { return m_layerName; }
