@@ -3,6 +3,7 @@
 #include "Aquarius/Core/Input.h"
 #include "Aquarius/Core/Utility.h"
 #include "Aquarius/Core/Log.h"
+#include "Aquarius/Events/Event.h"
 
 #include <glm/glm.hpp>
 #include <glm/gtc/matrix_transform.hpp>
@@ -17,6 +18,7 @@ namespace Aquarius {
 		~OrthographicCamera() = default;
 
 		void onUpdate(timeDelta_t dt);
+		void onWindowResize(const Event& event);
 		void updateView();
 		void updateProjection();
 
