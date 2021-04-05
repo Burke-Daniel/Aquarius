@@ -20,6 +20,8 @@ void BubbleSortLayer::onCreation()
     int width = window->getWidth();
 
     m_Camera = std::make_unique<Aquarius::OrthographicCamera>(1, 0.01, height, width);
+    m_FontTexture = std::make_shared<Aquarius::Texture>("Sandbox/Assets/8bitfont.png", Aquarius::TextureConfiguration{}, true);
+    m_Font = std::make_shared<Aquarius::Bitmap>(m_FontTexture.get(), 21, 28);
 
     Aquarius::Renderer::Init();
 }
@@ -41,10 +43,12 @@ void BubbleSortLayer::onEvent(const Aquarius::Event& event)
             if (!pauseSort)
             {
                 pauseSort = true;
+                titleColor = { 0.0, 1.0, 0.0, 1.0 };
             }
             else
             {
                 pauseSort = false;
+                titleColor = { 1.0, 0.0, 0.0, 1.0 };
             }
             break;
         }
@@ -57,12 +61,20 @@ void BubbleSortLayer::onUpdate(Aquarius::timeDelta_t dt)
 
     int delay = dt * delayConstant;
 
+    // To center the scoreboard position, subtract 2.5 times the sprite width (scoreboard contains 5 sprites)
+    // and then multiply by 2.0 because of the multiplier on the font size in the RenderText call
+    glm::vec2 titlePosition = { (window->getWidth() / 2.0) - (m_Font->getSpriteWidth() * 1.0 * 2.5), 20.0 };
+
+    m_Font->RenderText("BUBBLE-SORT", titlePosition, 1.0, titleColor);
+
     if (resetSort)
     {
         for (int i = 0; i < numRectangles; i++)
         {
             barHeights[i] = (rand() % (window->getHeight() - 100)) + 30;
         }
+
+        titleColor = { 1.0, 0.0, 0.0, 1.0 };
 
         resetSort = false;
     }

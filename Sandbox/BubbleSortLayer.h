@@ -14,12 +14,15 @@ public:
 private:
     Aquarius::Application* app = Aquarius::Application::get();
     Aquarius::Window* window = app->getWindow();
+    Aquarius::sharedPtr<Aquarius::Texture> m_FontTexture;
+    Aquarius::sharedPtr<Aquarius::Bitmap> m_Font;
 
     static constexpr int numRectangles = 40;
     bool pauseSort = false;
     bool resetSort = true;
     float barWidth = (window->getWidth() / numRectangles) - 1.0;
     glm::vec4 barColors = {1.0, 1.0, 1.0, 1.0};
+    glm::vec4 titleColor = { 1.0, 0.0, 0.0, 1.0 };
     int barHeights [numRectangles];
     int delayConstant = 750;
     int i = 0;
