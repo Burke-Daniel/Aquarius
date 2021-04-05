@@ -94,53 +94,45 @@ public:
 		}
 
 		m_playerState = PlayerState::IDLING;
-
 		// Up
 		if (Aquarius::Input::isKeyPressed(Aquarius::Input::KeyCode::Key_w))
 		{
 			m_playerState = PlayerState::WALKING_UP;
-			m_position.y -= dx;;
+			if (!(m_position.y <= 0))
+			{
+				m_position.y -= dx;
+			}
 		}
 
 		// Down
 		if (Aquarius::Input::isKeyPressed(Aquarius::Input::KeyCode::Key_s))
 		{
 			m_playerState = PlayerState::WALKING_DOWN;
-			m_position.y += dx;
+			if (!(m_position.y + m_scale.y >= m_app->getWindow()->getHeight()))
+			{
+				m_position.y += dx;
+			}
 		}
 
 		// Left
 		if (Aquarius::Input::isKeyPressed(Aquarius::Input::KeyCode::Key_a))
 		{
 			m_playerState = PlayerState::WALKING_LEFT;
-			m_position.x -= dx;
+			if (!(m_position.x <= 0))
+			{
+				m_position.x -= dx;
+			}
 		}
 
 		// Right
 		if (Aquarius::Input::isKeyPressed(Aquarius::Input::KeyCode::Key_d))
 		{
 			m_playerState = PlayerState::WALKING_RIGHT;
-			m_position.x += dx;
-		}
 
-		if (m_position.x + m_scale.x > m_app->getWindow()->getWidth())
-		{
-			m_position.x = m_app->getWindow()->getWidth() - m_scale.x;
-		}
-
-		if (m_position.x < 0)
-		{
-			m_position.x = 0;
-		}
-
-		if (m_position.y + m_scale.y > m_app->getWindow()->getHeight())
-		{
-			m_position.y = m_app->getWindow()->getHeight() - m_scale.y;
-		}
-
-		if (m_position.y < 0)
-		{
-			m_position.y = 0;
+			if (! (m_position.x + m_scale.x >= m_app->getWindow()->getWidth() ) )
+			{
+				m_position.x += dx;
+			}
 		}
 
 		updateState();
