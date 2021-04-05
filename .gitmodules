@@ -7,3 +7,6 @@
 [submodule "Aquarius/Vendor/glm"]
 	path = Aquarius/Vendor/glm
 	url = https://github.com/g-truc/glm.git
+[submodule "Aquarius/Vendor/openal-soft"]
+	path = Aquarius/Vendor/openal-soft
+	url = https://github.com/kcat/openal-soft

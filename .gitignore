@@ -45,5 +45,8 @@ cmake-build-debug/
 # Logs
 *.log
 
+# MAC
+.DS_Store
+
 # Config files
 *.ini
