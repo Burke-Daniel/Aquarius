@@ -1,6 +1,8 @@
 #include "Input.h"
 #include "Aquarius/Core/Application.h"
 
+#include "imgui.h"
+
 
 namespace Aquarius {
 
@@ -20,12 +22,18 @@ namespace Aquarius {
 
 		bool isKeyPressed(KeyCode key)
 		{
-			return getKeyState(key) == KeyState::Pressed;
+			ImGuiIO& io = ImGui::GetIO();
+			bool imguiConsumingKeyboard = io.WantCaptureKeyboard;
+
+			return getKeyState(key) == KeyState::Pressed && !imguiConsumingKeyboard;
 		}
 
 		bool isMouseButtonPressed(MouseButtonCode button)
 		{
-			return getMouseButtonState(button) == MouseButtonState::Pressed;
+			ImGuiIO& io = ImGui::GetIO();
+			bool imguiConsumingMouse = io.WantCaptureMouse;
+
+			return getMouseButtonState(button) == MouseButtonState::Pressed && imguiConsumingMouse;
 		}
 
 		MousePosition getMousePosition()
