@@ -15,6 +15,7 @@ IF(APPLE)
     set(THREADS_PREFER_PTHREAD_FLAG ON)
 ENDIF()
 
+set(LIBTYPE "STATIC" CACHE STRING "" FORCE)
 include_directories(${PROJECT_SOURCE_DIR}/Aquarius)
 include_directories(${PROJECT_SOURCE_DIR}/Aquarius/Src)
 include_directories(${PROJECT_SOURCE_DIR}/Aquarius/Vendor/glfw/include)

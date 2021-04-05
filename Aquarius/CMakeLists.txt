@@ -23,19 +23,15 @@ source_group("Sound" FILES ${SOUND_SOURCES})
 
 include_directories(Src/)
 
-add_library(Aquarius-Engine STATIC  ${TOP_LEVEL_FILES} 
-									${CORE_SOURCES} 
-									${EVENT_SOURCES} 
+add_library(Aquarius-Engine STATIC  ${TOP_LEVEL_FILES}
+									${CORE_SOURCES}
+									${EVENT_SOURCES}
 									${RENDERER_SOURCES}
 									${SOUND_SOURCES})
-
-# OpenAL names its output library IMPLTARGET, create OpenAL variable
-# just to make it a little more clear what is going on here
-set(OpenAL ${IMPL_TARGET})
 
 target_link_libraries(Aquarius-Engine glad)
 target_link_libraries(Aquarius-Engine glfw ${GLFW_LIBRARIES})
 target_link_libraries(Aquarius-Engine glm::glm)
 target_link_libraries(Aquarius-Engine easyloggingpp)
-target_link_libraries(Aquarius-Engine ${OpenAL})
+target_link_libraries(Aquarius-Engine OpenAL)
 target_link_libraries(Aquarius-Engine stb_image)
