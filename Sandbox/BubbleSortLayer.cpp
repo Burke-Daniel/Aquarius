@@ -30,31 +30,32 @@ void BubbleSortLayer::onEvent(const Aquarius::Event& event)
 
     switch (keyPressEvent.getCode())
     {
-        case (Aquarius::Input::KeyCode::Key_r):
-            {
+        case(Aquarius::Input::KeyCode::Key_r):
+        {
             resetSort = true;
             break;
-            }
+        }
 
-        case (Aquarius::Input::KeyCode::Key_p):
-            {
-            if(!pauseSort)
+        case(Aquarius::Input::KeyCode::Key_p):
+        {
+            if (!pauseSort)
             {
                 pauseSort = true;
             }
-
             else
             {
                 pauseSort = false;
             }
             break;
-            }
+        }
     }
 }
 
 void BubbleSortLayer::onUpdate(Aquarius::timeDelta_t dt)
 {
-    delay = dt * 750;
+    Aquarius::Renderer::Clear();
+
+    int delay = dt * delayConstant;
 
     if (resetSort)
     {
@@ -66,16 +67,14 @@ void BubbleSortLayer::onUpdate(Aquarius::timeDelta_t dt)
         resetSort = false;
     }
 
-    if(pauseSort)
+    if (pauseSort)
     {
-        Aquarius::Renderer::Clear();
         renderBars(numRectangles);
     }
 
     if (!pauseSort)
     {
         Aquarius::Renderer::ClearColor({ 219.0 / 255.0, 219.0 / 255.0, 219.0 / 255.0 });
-        Aquarius::Renderer::Clear();
 
         renderBars(numRectangles);
 
@@ -83,7 +82,7 @@ void BubbleSortLayer::onUpdate(Aquarius::timeDelta_t dt)
         i += 1;
         j += 1;
 
-        if(i == numRectangles - 1 && j == numRectangles)
+        if (i == numRectangles - 1 && j == numRectangles)
         {
                 i = 0;
                 j = 1;
@@ -98,7 +97,7 @@ void BubbleSortLayer::renderBars(int size)
 {
     int position = 0;
 
-    for(int i = 0; i < size; i++)
+    for (int i = 0; i < size; i++)
     {
         auto normalizationConst = barHeights[i] / (float)(window->getHeight() - 70);
         Aquarius::Renderer::DrawQuad(
@@ -113,7 +112,7 @@ void BubbleSortLayer::renderBars(int size)
 
 void BubbleSortLayer::swapBars(int i, int j)
 {
-    if(barHeights[i] > barHeights[j])
+    if (barHeights[i] > barHeights[j])
     {
         std::swap(barHeights[i], barHeights[j]);
     }

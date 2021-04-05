@@ -21,7 +21,7 @@ private:
     float barWidth = (window->getWidth() / numRectangles) - 1.0;
     glm::vec4 barColors = {1.0, 1.0, 1.0, 1.0};
     int barHeights [numRectangles];
-    int delay;
+    int delayConstant = 750;
     int i = 0;
     int j = 1;
     void renderBars(int size);
