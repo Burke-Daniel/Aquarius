@@ -73,7 +73,7 @@ endif ()
 # Setup definitions
 #
 
-include(SndFileChecks)
+#include(SndFileChecks)
 
 
 cmake_dependent_option (BUILD_REGTEST "Build regtest" ON "SQLITE3_FOUND" OFF)
