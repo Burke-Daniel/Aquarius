@@ -1,7 +1,10 @@
 #pragma once 
 
 #include "Aquarius.h"
+#include "Level.h"
+
 #include <chrono>
+#include <unordered_map>
 
 
 class Player
@@ -20,7 +23,8 @@ public:
 		   float moveSpeed, 
 		   const glm::vec2& scale,
 		   const glm::vec2& position,
-		   float rotation)
+		   float rotation,
+		   Level* level)
 	{
 		m_position = position;
 		m_rotation = rotation;
@@ -28,9 +32,12 @@ public:
 		m_spritesheet = spritesheet;
 		m_moveSpeed = moveSpeed;
 		m_spriteTexture = m_spritesheet->getTexture();
+		m_level = level;
 		m_count = 0;
 		m_walkInterval = 100;
 		m_offset = 0;
+		m_itemTypes = { "" };
+		m_activeItemIt = m_itemTypes.begin();
 
 		m_walkLeftFrames = {    
 			m_spritesheet->getSpriteCoords(0 + 23,2 + 6),
@@ -66,9 +73,33 @@ public:
 
 		m_playerState = PlayerState::IDLING;
 		m_playerPreviousState = PlayerState::IDLING;
+
+
+		// Register mouse wheel event
+		Aquarius::Application::get()->getEventHandler().subscribe(Aquarius::eventType::MouseScrolledEvent,
+			[&](const Aquarius::Event& event)
+			{
+				onMouseWheel(event);
+			});
+
+		Aquarius::Application::get()->getEventHandler().subscribe(Aquarius::eventType::MouseButtonReleasedEvent,
+			[&](const Aquarius::Event& event)
+			{
+				onMouseReleased(event);
+			});
 	}
 
-	~Player() = default;
+	~Player()
+	{
+		for (const std::string& type : m_itemTypes)
+		{
+			for (const Item* item : m_inventory[type])
+			{
+				delete item;
+				item = nullptr;
+			}
+		}
+	}
 
 	glm::vec2 getPosition() const { return m_position; }
 	glm::vec2 getScale() const { return m_scale; }
@@ -134,7 +165,7 @@ public:
 				m_position.x += dx;
 			}
 		}
-
+		
 		updateState();
 	};
 
@@ -169,6 +200,95 @@ public:
 		m_playerPreviousState = m_playerState;
 	}
 
+	void addItem(Item* item)
+	{
+		// If the bucket for this item type exists
+		if (m_inventory.find(item->m_name) == m_inventory.end()) 
+		{
+			m_inventory[item->m_name] = std::vector<Item*>{ item };
+			m_itemTypes.push_back(item->m_name);
+			m_activeItemIt = m_itemTypes.end() - 1;
+		}
+		else 
+		{
+			m_inventory[item->m_name].push_back(item);
+		}
+	}
+
+	int getItemCount(const std::string& item)
+	{
+		if (m_inventory.find(item) == m_inventory.end()) 
+		{
+			return 0;
+		}	
+		else 
+		{
+			return m_inventory[item].size();
+		}
+	}
+
+	Item* popItem(const std::string& item)
+	{
+		if (m_inventory.find(item) == m_inventory.end())
+		{
+			return nullptr;
+		}
+		else 
+		{
+			Item* lastItem = m_inventory[item].back();
+			m_inventory[item].pop_back();
+
+			// All items are gone 
+			if (m_inventory[item].size() == 0)
+			{
+				m_inventory.erase(item);
+
+				if (item == *m_activeItemIt)
+				{
+					m_activeItemIt = m_itemTypes.erase(m_activeItemIt);
+					if (m_activeItemIt == m_itemTypes.end())
+					{
+						m_activeItemIt = m_itemTypes.begin();
+					}
+				}
+			}
+
+			return lastItem;
+		}
+	}
+
+	// Next item to be popped of that type
+	Item* peekItem(const std::string& item)
+	{
+		if (m_inventory.find(item) == m_inventory.end())
+		{
+			return nullptr;
+		}
+		else
+		{
+			Item* lastItem = m_inventory[item].back();
+			return lastItem;
+		}
+	}
+
+	void placeActiveItem()
+	{
+		Item* item = popItem(*m_activeItemIt);
+
+		if (item == nullptr)
+		{
+			return;
+		}
+
+		item->m_position = m_position;
+		m_level->addItem(item);
+	}
+
+	Item* getActiveItem()
+	{
+		return peekItem(*m_activeItemIt);
+	}
+
 	void draw()
 	{
 		Aquarius::Renderer::DrawQuad(
@@ -177,6 +297,58 @@ public:
 			m_spriteTexture,
 			&m_activeSprite
 		);
+	}
+
+	void onMouseWheel(const Aquarius::Event& event)
+	{
+		ImGuiIO& io = ImGui::GetIO();
+		bool imguiConsumingMouse = io.WantCaptureMouse;
+
+		if (imguiConsumingMouse)
+		{
+			return;
+		}
+
+		auto e = static_cast<const Aquarius::MouseScrolledEvent&>(event);
+		int yOffset = e.getYOffset();
+
+		if (m_itemTypes.size() != 0)
+		{
+			// Scrolled up
+			if (yOffset == 1)
+			{
+				m_activeItemIt++;
+				if (m_activeItemIt == m_itemTypes.end())
+				{
+					m_activeItemIt = m_itemTypes.begin();
+				}
+			}
+			else
+			{
+				if (m_activeItemIt == m_itemTypes.begin())
+				{
+					m_activeItemIt = m_itemTypes.end() - 1;
+				}
+				else
+				{
+					m_activeItemIt--;
+				}
+			}
+		}
+		AQ_INFO("Current active item: %v", *m_activeItemIt);
+	}
+
+	void onMouseReleased(const Aquarius::Event& event)
+	{
+		ImGuiIO& io = ImGui::GetIO();
+		bool imguiConsumingMouse = io.WantCaptureMouse;
+
+		auto e = static_cast<const Aquarius::MouseButtonReleasedEvent&>(event);
+
+		if (!imguiConsumingMouse && e.getCode() == Aquarius::Input::MouseButtonCode::Mouse_button_1)
+		{
+			placeActiveItem();
+		}
 	}
 
 private:
@@ -203,4 +375,9 @@ private:
 	Aquarius::timeDelta_t m_count;
 	Aquarius::timeDelta_t m_walkInterval;
 	Aquarius::Application* m_app = Aquarius::Application::get();
+
+	std::unordered_map<std::string, std::vector<Item*>> m_inventory;
+	std::vector<std::string> m_itemTypes;
+	std::vector<std::string>::iterator m_activeItemIt;
+	Level* m_level;
 };
