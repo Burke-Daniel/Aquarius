@@ -162,7 +162,7 @@ void BubbleSortLayer::onUpdateGUI(Aquarius::timeDelta_t dt)
 
         if (ImGui::CollapsingHeader("Configuration"))
         {
-            ImGui::InputInt("Delay", &delayConstant);
+            ImGui::SliderInt("Delay Speed", &delayConstant, 0, 1000);
 
             ImGuiColorEditFlags colorPickerFlags = ImGuiColorEditFlags_Float;
             ImGui::ColorEdit4("Bar Color##Bar Color", &barColors.x, colorPickerFlags);
