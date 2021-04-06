@@ -25,6 +25,13 @@ PongLayer::PongLayer()
 		{
 			onEvent(event);
 		});
+
+	app.getEventHandler().subscribe(Aquarius::eventType::WindowResizedEvent,
+		[&](const Aquarius::Event& event)
+		{
+			auto windowResize = static_cast<const Aquarius::WindowResizedEvent&>(event);
+			m_RightPaddle.position = glm::vec2(window.getWidth() - 30.0, (window.getHeight() / 2.0) - 40.0);
+		});
 }
 
 PongLayer::~PongLayer()
