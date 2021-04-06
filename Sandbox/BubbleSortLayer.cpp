@@ -16,9 +16,8 @@ BubbleSortLayer::BubbleSortLayer()
                                              [&](const Aquarius::Event& event)
                                              {
                                                  auto windowResize = static_cast<const Aquarius::WindowResizedEvent&>(event);
-                                                 m_Height = windowResize.getHeight();
-                                                 yposition = (m_Height/2.0) - 40;
-                                                 //resized = true;
+                                                 resized = true;
+                                                 m_Height = window->getHeight();
                                              });
         }
 
@@ -80,7 +79,13 @@ void BubbleSortLayer::onUpdate(Aquarius::timeDelta_t dt)
 
     if (resized)
     {
+        for (int i = 0; i < numRectangles; i++)
+        {
+            barHeights[i] += (m_Height-200)*0.00005;
+        }
 
+        AQ_CORE_INFO("Resized event");
+        resized = false;
     }
     if (Aquarius::Input::isKeyPressed(Aquarius::Input::KeyCode::Key_m))
     {
@@ -185,10 +190,8 @@ void BubbleSortLayer::renderBars(int size)
 
     for (int i = 0; i < size; i++)
     {
-        yposition = window->getHeight() - barHeights[i];
-
         Aquarius::Renderer::DrawQuad(
-                { position, yposition} ,
+                { position, m_Height - barHeights[i]} ,
                 { barWidth, barHeights[i] },
                 0,
                 barColors
