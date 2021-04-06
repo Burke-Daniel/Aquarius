@@ -15,7 +15,25 @@ static const struct
 	const float HyperMode = 0.5;
 } GameMode {};
 
+enum class PaddleTypes : int
+{
+	Keyboard = 0,
+	Mouse = 1,
+	AI = 2
+};
+
+constexpr auto aiPaddleSpeed = 0.2;
+constexpr auto playerPaddleSpeed = 0.3;
+
 static auto ballSpeedIncrease = GameMode.RegularMode;
+static const char* const paddleControllerTypes[] = { "Keyboard", "Mouse", "AI" };
+
+static int currentLeftPaddleType;
+static int currentRightPaddleType;
+
+static int leftPaddleType = 0;
+static int rightPaddleType = 2;
+
 
 PongLayer::PongLayer()
 	: Layer("Pong", true), m_LeftPaddle(), m_RightPaddle(), m_Ball()
@@ -50,8 +68,6 @@ void PongLayer::onCreation()
 	constexpr auto paddleWidth = 10.0;
 	constexpr auto paddleHeight = 80.0;
 	constexpr auto ballSize = 15.0;
-	constexpr auto leftPaddleSpeed = 0.3;
-	constexpr auto rightPaddleSpeed = 0.2;
 
 	Aquarius::TextureConfiguration textureConfiguration = {
 		Aquarius::TextureWrapOption::Repeat,
@@ -69,22 +85,22 @@ void PongLayer::onCreation()
 	m_SoundBuffer = Aquarius::Sound::SoundBuffer::Create();
     m_PaddleSound = m_SoundBuffer->addEffect("Sandbox/Assets/Paddle-sound.wav");
 
+	currentLeftPaddleType = static_cast<int>(PaddleTypes::Keyboard);
 	m_LeftPaddle = {
 		paddleTexture,
-		//std::make_unique<MousePaddleController>(),
 		std::make_unique<KeyboardPaddleController>(Aquarius::Input::KeyCode::Key_w, Aquarius::Input::KeyCode::Key_s),
-		//std::make_unique<AIPaddleController>(),
 		{ 20.0, (window.getHeight() / 2.0) - 40.0},
 		{ paddleWidth, paddleHeight },
-		leftPaddleSpeed
+		playerPaddleSpeed
 	};
 
+	rightPaddleType = static_cast<int>(PaddleTypes::AI);
 	m_RightPaddle = {
 		paddleTexture,
 		std::make_unique<AIPaddleController>(),
 		{ window.getWidth() - 30.0, (window.getHeight() / 2.0) - 40.0 },
 		{ paddleWidth, paddleHeight },
-		rightPaddleSpeed
+		aiPaddleSpeed
 	};
 
 	m_Ball = {
@@ -141,6 +157,70 @@ void PongLayer::onUpdate(Aquarius::timeDelta_t dt)
 
 	if (!m_isPaused)
 	{
+		if (leftPaddleType != currentLeftPaddleType)
+		{
+			switch (static_cast<PaddleTypes>(leftPaddleType))
+			{
+				case (PaddleTypes::Keyboard):
+				{
+					m_LeftPaddle.ChangePaddleController(
+						std::make_unique<KeyboardPaddleController>(
+							Aquarius::Input::KeyCode::Key_w, Aquarius::Input::KeyCode::Key_s));
+					currentLeftPaddleType = static_cast<int>(PaddleTypes::Keyboard);
+					m_LeftPaddle.speedY = playerPaddleSpeed;
+					break;
+				}
+
+				case (PaddleTypes::Mouse):
+				{
+					m_LeftPaddle.ChangePaddleController(std::make_unique<MousePaddleController>());
+					currentLeftPaddleType = static_cast<int>(PaddleTypes::Mouse);
+					m_LeftPaddle.speedY = playerPaddleSpeed;
+					break;
+				}
+
+				case (PaddleTypes::AI):
+				{
+					m_LeftPaddle.ChangePaddleController(std::make_unique<AIPaddleController>());
+					currentLeftPaddleType = static_cast<int>(PaddleTypes::AI);
+					m_LeftPaddle.speedY = aiPaddleSpeed;
+					break;
+				}
+			}
+		}
+
+		if (rightPaddleType != currentRightPaddleType)
+		{
+			switch (static_cast<PaddleTypes>(rightPaddleType))
+			{
+				case (PaddleTypes::Keyboard):
+				{
+					m_RightPaddle.ChangePaddleController(
+						std::make_unique<KeyboardPaddleController>(
+							Aquarius::Input::KeyCode::Key_up, Aquarius::Input::KeyCode::Key_down));
+					currentRightPaddleType = static_cast<int>(PaddleTypes::Keyboard);
+					m_LeftPaddle.speedY = playerPaddleSpeed;
+					break;
+				}
+
+				case (PaddleTypes::Mouse):
+				{
+					m_RightPaddle.ChangePaddleController(std::make_unique<MousePaddleController>());
+					currentRightPaddleType = static_cast<int>(PaddleTypes::Mouse);
+					m_LeftPaddle.speedY = playerPaddleSpeed;
+					break;
+				}
+
+				case (PaddleTypes::AI):
+				{
+					m_RightPaddle.ChangePaddleController(std::make_unique<AIPaddleController>());
+					currentRightPaddleType = static_cast<int>(PaddleTypes::AI);
+					m_RightPaddle.speedY = aiPaddleSpeed;
+					break;
+				}
+			}
+		}
+		
 		m_RightPaddle.controller->movePaddle(dt, &m_RightPaddle, &m_Ball);
 		m_LeftPaddle.controller->movePaddle(dt, &m_LeftPaddle, &m_Ball);
 
@@ -180,14 +260,19 @@ void PongLayer::onUpdateGUI(Aquarius::timeDelta_t time)
 	{
 		ImGui::Begin("Configuration Menu");
 
-		ImGui::Text("Ball Speed");
 		ImGui::SliderFloat("Ball Speed", &m_Ball.speed.x, 0.1f, 1.0f);
 
-		ImGui::Text("Left Paddle Length");
 		ImGui::SliderFloat("Left Paddle Length", &m_LeftPaddle.size.y, 40, 160);
 
-		ImGui::Text("Right Paddle Length");
 		ImGui::SliderFloat("Right Paddle Length", &m_RightPaddle.size.y, 40, 160);
+
+		ImGui::SliderFloat ("Left Paddle Speed", &m_LeftPaddle.speedY, 0.1f, 0.8f);
+
+		ImGui::SliderFloat("Right Paddle Speed", &m_RightPaddle.speedY, 0.1f, 0.8f);
+		
+		ImGui::Combo("Left Paddle Type", &leftPaddleType, paddleControllerTypes, IM_ARRAYSIZE(paddleControllerTypes));
+
+		ImGui::Combo("Right Paddle Type", &rightPaddleType, paddleControllerTypes, IM_ARRAYSIZE(paddleControllerTypes));
 
 		ImGui::End();
 	}
