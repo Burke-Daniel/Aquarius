@@ -73,11 +73,11 @@ namespace Aquarius {
             int32_t status = AL_PLAYING;
             AQ_CORE_TRACE("Sound is playing");
 
-            while(status == AL_PLAYING && alGetError() == AL_NO_ERROR)
+            /*while(status == AL_PLAYING && alGetError() == AL_NO_ERROR)
             {
                 AQ_CORE_TRACE("Still playing sound");
                 alGetSourcei(m_Source, AL_SOURCE_STATE, &status);
-            }
+            }*/
 
         }
 

@@ -37,7 +37,7 @@ namespace Aquarius {
             std::queue<uint32_t> m_QueuedSounds;
             std::mutex m_SoundMutex;
             std::thread m_SoundThread;
-            std::atomic_bool m_SoundThreadShouldExit = false;
+            std::atomic_bool m_SoundThreadShouldExit = { false };
         };
 
     } // namespace Sound
