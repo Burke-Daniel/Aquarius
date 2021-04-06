@@ -7,7 +7,7 @@ void Toolbar::draw() const
 		m_position,
 		m_size,
 		0,
-		{0.71, 0.396, 0.11, 0.95}
+		m_color
 	);
 
 	// Draw item sprite, smaller and offset by 10
@@ -57,4 +57,9 @@ void Toolbar::setAlignment(ToolbarAlignment alignment)
 			m_position = { (screenW / 2) - (m_size.x / 2), screenH - m_size.y };
 			break;
 	}
+}
+
+void Toolbar::setColor(const glm::vec4& color)
+{
+	m_color = color;
 }

@@ -17,6 +17,8 @@ public:
 
 private:
 	bool m_MenuOpen = true;
+	float m_MoveSpeed = 0.2;
+	float m_toolbarColor[4] = { 0, 0, 0, 1 };
 	ToolbarAlignment m_activeItemToolbarAlignment;
 
 	Aquarius::sharedPtr<Aquarius::OrthographicCamera> m_camera;

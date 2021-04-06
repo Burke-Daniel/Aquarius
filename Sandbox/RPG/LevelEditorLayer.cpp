@@ -70,7 +70,7 @@ void LevelEditorLayer::onCreation()
 
 	m_player = std::make_unique<Player>(
 		m_spritesheet.get(),
-		0.2,
+		m_MoveSpeed,
 		glm::vec2{64, 64},
 		glm::vec2{64, 64},
 		0.0,
@@ -156,9 +156,36 @@ void LevelEditorLayer::onUpdate(Aquarius::timeDelta_t time)
 
 void LevelEditorLayer::onUpdateGUI(Aquarius::timeDelta_t time)
 {
+
 	if (m_MenuOpen)
 	{
-		Aquarius::Gui::ShowDemoWindow(&m_MenuOpen);
+		ImGui::Begin("RPG Demo", &m_MenuOpen);   // Pass a pointer to our bool variable (the window will have a closing button that will clear the bool when clicked)
+		ImGui::Text("Top Down RPG Demo!");
+		if (ImGui::CollapsingHeader("Controls"))
+		{
+			ImGui::Text("1. To move, use WASD");
+			ImGui::Text("2. To cycle through available items, scroll up/down");
+			ImGui::Text("3. To place an item, press left mouse button.");
+		}
+
+		if (ImGui::CollapsingHeader("Configuration"))
+		{
+			ImGui::Text("To aid the demo, a couple of options are configurable here!");
+			ImGui::DragFloat("Move speed", &m_MoveSpeed, 0.01, 0.001, 2);
+			ImGui::DragFloat4("UI Color", m_toolbarColor, 0.01, 0, 1);
+
+			m_activeItemToolbar->setColor({m_toolbarColor[0], m_toolbarColor[1], m_toolbarColor[2], m_toolbarColor[3]});
+			m_player->setMovespeed(m_MoveSpeed);
+		}
+
+		if (ImGui::CollapsingHeader("Profiling"))
+		{
+			ImGui::Text("Application average %.3f ms/frame (%.1f FPS)",
+				1000.0f / ImGui::GetIO().Framerate,
+				ImGui::GetIO().Framerate);
+		}
+
+		ImGui::End();
 	}
 }
 
