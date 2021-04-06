@@ -1,6 +1,7 @@
 #pragma once
 #include <cstdint>
 #include <vector>
+#include <string>
 
 
 namespace Aquarius {
@@ -13,7 +14,6 @@ namespace Aquarius {
             static SoundBuffer* get();
 
             uint32_t addEffect(const std::string file_path);
-            bool removeEffect(const uint32_t& data);
 
         private:
             SoundBuffer();

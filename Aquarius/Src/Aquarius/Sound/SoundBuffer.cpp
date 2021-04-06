@@ -1,3 +1,6 @@
+// Fix for std::numeric_limits on Windows, necessary to use AudioFile.h
+#define NOMINMAX
+
 #include "SoundBuffer.h"
 #include "Aquarius/Core/Log.h"
 #include <AudioFile.h>
@@ -69,26 +72,6 @@ namespace Aquarius {
             m_EffectBuffer.push_back(buffer);
 
             return buffer;
-        }
-
-        bool SoundBuffer::removeEffect(const uint32_t &data)
-        {
-            auto iterator = m_EffectBuffer.begin();
-
-            while (iterator != m_EffectBuffer.end())
-            {
-                if (*iterator == data)
-                {
-                    alDeleteBuffers(1, &*iterator);
-
-                    iterator = m_EffectBuffer.erase(iterator);
-                }
-
-                else
-                {
-                    iterator++;
-                }
-            }
         }
 
         SoundBuffer::SoundBuffer()
