@@ -2,6 +2,7 @@
 
 #include "Aquarius/Renderer/Renderer.h"
 
+#include <ctype.h>
 #include <unordered_map>
 
 
@@ -76,7 +77,8 @@ namespace Aquarius {
 		auto xOffset = pos.x;
 		for (const auto c : text)
 		{
-			RenderCharacter(c, glm::vec2(xOffset, pos.y), sizeMultiplier, color);
+			auto character = toupper(c);
+			RenderCharacter(character, glm::vec2(xOffset, pos.y), sizeMultiplier, color);
 			xOffset += m_SpriteWidth * sizeMultiplier;
 		}
 	}

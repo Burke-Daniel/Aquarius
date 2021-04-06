@@ -38,8 +38,8 @@ static int rightPaddleType = 2;
 
 static float scoreboardColor[] = { 1.0, 0.0, 0.0 };
 
-static float leftHasScored = 2000;
-static float rightHasScored = 2000;
+static float leftHasScored = 1000;
+static float rightHasScored = 1000;
 
 static glm::vec4 convertColorToVec4(float scoreboardColor[3])
 {
@@ -259,10 +259,11 @@ void PongLayer::onUpdate(Aquarius::timeDelta_t dt)
 		               2.0,
 		               convertColorToVec4(scoreboardColor));
 
+	// Displays for 1 second after respective paddle has scored
 	if (leftHasScored < 1000)
 	{
 		m_Font->RenderText(
-			"LEFT SCORES",
+			"Left Scores",
 			glm::vec2((window.getWidth() / 2.0) - (m_Font->getSpriteWidth() * 2.0 * 5.5), (window.getHeight() / 2.0) - (m_Font->getSpriteHeight() * 2.0)),
 			2.0
 		);
@@ -273,7 +274,7 @@ void PongLayer::onUpdate(Aquarius::timeDelta_t dt)
 	if (rightHasScored < 1000)
 	{
 		m_Font->RenderText(
-			"RIGHT SCORES",
+			"Right Scores",
 			glm::vec2((window.getWidth() / 2.0) - (m_Font->getSpriteWidth() * 2.0 * 6.0), (window.getHeight() / 2.0) - (m_Font->getSpriteHeight() * 2.0)),
 			2.0
 		);
