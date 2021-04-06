@@ -67,6 +67,11 @@ void BubbleSortLayer::onUpdate(Aquarius::timeDelta_t dt)
 
     m_Font->RenderText("BUBBLE-SORT", titlePosition, 1.0, titleColor);
 
+    if (Aquarius::Input::isKeyPressed(Aquarius::Input::KeyCode::Key_m))
+    {
+        m_MenuOpen = true;
+    }
+
     if (resetSort)
     {
         for (int i = 0; i < numRectangles; i++)
@@ -102,6 +107,29 @@ void BubbleSortLayer::onUpdate(Aquarius::timeDelta_t dt)
 
         // This delay will allow for the changes occurring during the sort to be visible
         std::this_thread::sleep_for(std::chrono::microseconds(delay));
+    }
+}
+
+void BubbleSortLayer::onUpdateGUI(Aquarius::timeDelta_t dt)
+{
+    if (m_MenuOpen)
+    {
+        ImGui::Begin("Bubble Sort Demo", &m_MenuOpen);
+
+        if (ImGui::CollapsingHeader("About"))
+        {
+            ImGui::Text("This application shows a visualization of the Bubble Sort");
+            ImGui::Text("- To reset the sort press R on your keyboard");
+            ImGui::Text("- To pause the sort press P on your keyboard");
+            ImGui::Text("- Other settings can be configured under the Configuration Header");
+        }
+
+        if (ImGui::CollapsingHeader("Configuration"))
+        {
+            ImGui::InputInt("Delay", &delayConstant);
+        }
+
+        ImGui::End();
     }
 }
 

@@ -10,6 +10,7 @@ public:
     void onCreation() override;
     void onEvent(const Aquarius::Event&) override;
     void onUpdate(Aquarius::timeDelta_t time) override;
+    void onUpdateGUI(Aquarius::timeDelta_t time) override;
 
 private:
     Aquarius::Application* app = Aquarius::Application::get();
@@ -20,6 +21,7 @@ private:
     static constexpr int numRectangles = 40;
     bool pauseSort = false;
     bool resetSort = true;
+    bool m_MenuOpen = true;
     float barWidth = (window->getWidth() / numRectangles) - 1.0;
     glm::vec4 barColors = {1.0, 1.0, 1.0, 1.0};
     glm::vec4 titleColor = { 1.0, 0.0, 0.0, 1.0 };
