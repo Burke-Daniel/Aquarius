@@ -54,6 +54,8 @@ void PongLayer::onCreation()
 	m_FontTexture = std::make_shared<Aquarius::Texture>("Sandbox/Assets/8bitfont.png", textureConfiguration, true);
 	m_Font = std::make_shared<Aquarius::Bitmap>(m_FontTexture.get(), 21, 28);
 
+    m_PaddleSound = Aquarius::Sound::SoundBuffer::get()->addEffect("Sandbox/Assets/Paddle-sound.wav");
+
 	m_LeftPaddle = {
 		paddleTexture,
 		//std::make_unique<MousePaddleController>(),
@@ -197,6 +199,7 @@ void PongLayer::checkPaddleCollision()
 		   (ballCoords[bottomRight].y >= rightPaddleCoords[topLeft].y &&
 			ballCoords[bottomRight].y <= rightPaddleCoords[bottomLeft].y))
 		{
+		    m_SoundSource.playSound(m_PaddleSound);
 			AQ_INFO("Collision with right paddle!!");
 			handleCollision(false);
 		}
@@ -210,6 +213,7 @@ void PongLayer::checkPaddleCollision()
 		   (ballCoords[bottomLeft].y >= leftPaddleCoords[topRight].y &&
 			ballCoords[bottomLeft].y <= leftPaddleCoords[bottomRight].y))
 		{
+            m_SoundSource.playSound(m_PaddleSound);
 			AQ_INFO("Collision with left paddle!!");
 			handleCollision(true);
 		}

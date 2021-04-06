@@ -39,6 +39,8 @@ private:
 	Aquarius::sharedPtr<Aquarius::Texture> m_BackgroundTexture;
 	Aquarius::sharedPtr<Aquarius::Texture> m_FontTexture;
 	Aquarius::sharedPtr<Aquarius::Bitmap> m_Font;
+	Aquarius::Sound::Source m_SoundSource;
+	uint32_t m_PaddleSound;
 
 	Paddle m_LeftPaddle;
 	Paddle m_RightPaddle;

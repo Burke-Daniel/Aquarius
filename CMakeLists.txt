@@ -25,6 +25,8 @@ include_directories(${PROJECT_SOURCE_DIR}/Aquarius/Vendor/openal-soft/include)
 include_directories(${PROJECT_SOURCE_DIR}/Aquarius/Vendor/stb_image)
 include_directories(${PROJECT_SOURCE_DIR}/Aquarius/Vendor/imgui)
 include_directories(${PROJECT_SOURCE_DIR}/Aquarius/Vendor/imgui/backends)
+include_directories(${PROJECT_SOURCE_DIR}/Aquarius/Vendor/AudioFile)
+
 
 # So that easylogging++ is build as a static lib
 set(build_static_lib ON CACHE BOOL "build static library" FORCE)
@@ -41,5 +43,6 @@ add_subdirectory(Aquarius/Vendor/glad)
 add_subdirectory(Aquarius/Vendor/glfw)
 add_subdirectory(Aquarius/Vendor/openal-soft)
 add_subdirectory(Aquarius/Vendor/stb_image)
+add_subdirectory(Aquarius/Vendor/AudioFile)
 add_subdirectory(Aquarius/Vendor/imgui)
 add_subdirectory(Sandbox)
