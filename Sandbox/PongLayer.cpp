@@ -175,6 +175,30 @@ void PongLayer::onUpdate(Aquarius::timeDelta_t dt)
 	AQ_TRACE("FPS: %v", 1000 / dt);
 }
 
+void PongLayer::onUpdateGUI(Aquarius::timeDelta_t time)
+{
+	{
+		ImGui::Begin("Configuration Menu");
+
+		ImGui::Text("Ball Speed");
+		ImGui::SliderFloat("Ball Speed", &m_Ball.speed.x, 0.1f, 1.0f);
+
+		ImGui::Text("Left Paddle Length");
+		ImGui::SliderFloat("Left Paddle Length", &m_LeftPaddle.size.y, 40, 160);
+
+		ImGui::Text("Right Paddle Length");
+		ImGui::SliderFloat("Right Paddle Length", &m_RightPaddle.size.y, 40, 160);
+
+		ImGui::End();
+	}
+
+	{
+		ImGui::Begin("Performance Statistics");
+		ImGui::Text("Application average %.3f ms/frame (%.1f FPS)", 1000.0f / ImGui::GetIO().Framerate, ImGui::GetIO().Framerate);
+		ImGui::End();
+	}
+}
+
 void PongLayer::onDestruction()
 {
 	m_SoundSource.endSoundThread();
@@ -269,4 +293,3 @@ void PongLayer::handleCollision(bool isLeftPaddle)
 		m_Ball.speed = { std::min(m_Ball.speed.x + ballSpeedIncrease, maxBallSpeed), m_Ball.speed.y };
 	}
 }
-

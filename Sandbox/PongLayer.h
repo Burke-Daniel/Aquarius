@@ -22,6 +22,7 @@ public:
 	void onCreation() override;
 	void onEvent(const Aquarius::Event&) override;
 	void onUpdate(Aquarius::timeDelta_t) override;
+	void onUpdateGUI(Aquarius::timeDelta_t time) override;
 	void onDestruction() override;
 
 	void leftScore() { m_Score.LeftScore++; }
