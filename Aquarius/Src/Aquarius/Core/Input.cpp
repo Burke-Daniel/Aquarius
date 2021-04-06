@@ -33,7 +33,7 @@ namespace Aquarius {
 			ImGuiIO& io = ImGui::GetIO();
 			bool imguiConsumingMouse = io.WantCaptureMouse;
 
-			return getMouseButtonState(button) == MouseButtonState::Pressed && imguiConsumingMouse;
+			return getMouseButtonState(button) == MouseButtonState::Pressed && !imguiConsumingMouse;
 		}
 
 		MousePosition getMousePosition()
