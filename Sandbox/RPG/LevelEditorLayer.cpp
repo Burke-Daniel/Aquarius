@@ -1,5 +1,5 @@
 #include "LevelEditorLayer.h"
-
+#include "Item.h"
 
 static std::vector<std::vector<glm::ivec2>> MapTiles =
 {
@@ -46,22 +46,12 @@ void LevelEditorLayer::onCreation()
 
 	m_spriteSheetTexture = std::make_unique<Aquarius::Texture>("Sandbox/Assets/tilemap_packed.png", spriteMapTexConfig, true);
 	m_spritesheet = std::make_unique<Aquarius::SpriteSheet>(m_spriteSheetTexture.get(), 16, 16);
-	m_level = std::make_unique<Level>(m_spritesheet.get(), 16, 16, 64, 64, "Level 1");
-
-	m_playerTexture = std::make_unique<Aquarius::Texture>("Sandbox/Assets/PlayerSpriteSheet.png", spriteMapTexConfig, true);
-	m_playerSpritesheet = std::make_unique<Aquarius::SpriteSheet>(m_playerTexture.get(), 16, 16);
-
-	m_player = std::make_unique<Player>(
-		m_spritesheet.get(),
-		0.2,
-		glm::vec2{64, 64},
-		glm::vec2{64, 64},
-		0.0
-	);
-
+	
 	m_coordMap.insert({ "traffic_light", m_spritesheet->getSpriteCoords(6, 2) });
-	m_coordMap.insert({"cone", m_spritesheet->getSpriteCoords(10, 6)});
+	m_coordMap.insert({ "cone", m_spritesheet->getSpriteCoords(10, 6) });
 	m_coordMap.insert({ "bench", m_spritesheet->getSpriteCoords(3, 3) });
+
+	m_level = std::make_unique<Level>(m_spritesheet.get(), 16, 16, 64, 64, "Level 1");
 
 	int levelHeight = m_level->getHeight();
 	int levelWidth = m_level->getWidth();
@@ -75,6 +65,51 @@ void LevelEditorLayer::onCreation()
 		}
 	}
 
+	m_playerTexture = std::make_unique<Aquarius::Texture>("Sandbox/Assets/PlayerSpriteSheet.png", spriteMapTexConfig, true);
+	m_playerSpritesheet = std::make_unique<Aquarius::SpriteSheet>(m_playerTexture.get(), 16, 16);
+
+	m_player = std::make_unique<Player>(
+		m_spritesheet.get(),
+		0.2,
+		glm::vec2{64, 64},
+		glm::vec2{64, 64},
+		0.0,
+		m_level.get()
+	);
+
+	for (int i = 0; i < 1000; i++)
+	{
+		Item* cone = new Item({ 0, 0 },
+			{ 64, 64 },
+			m_spriteSheetTexture.get(),
+			&m_coordMap.at("cone"),
+			"cone");
+
+		Item* traffic_light = new Item({ 0, 0 },
+			{ 64, 64 },
+			m_spriteSheetTexture.get(),
+			&m_coordMap.at("traffic_light"),
+			"traffic_light");
+
+		Item* bench = new Item({ 0, 0 },
+			{ 64, 64 },
+			m_spriteSheetTexture.get(),
+			&m_coordMap.at("bench"),
+			"bench");
+
+		m_player->addItem(cone);
+		m_player->addItem(traffic_light);
+		m_player->addItem(bench);
+	}
+
+	m_activeItemToolbar = std::make_unique<Toolbar>(
+		glm::vec2{84, 84},
+		m_spriteSheetTexture.get(),
+		m_player->getActiveItem()->m_spriteTexCoords
+	);
+
+	m_activeItemToolbar->setAlignment(ToolbarAlignment::TopLeft);
+	
 	// TODO
 	glfwSetInputMode(window->get(), GLFW_CURSOR, GLFW_CURSOR_NORMAL);
 
@@ -94,66 +129,28 @@ void LevelEditorLayer::onUpdate(Aquarius::timeDelta_t time)
 	}
 
 	m_player->onUpdate(time);
+	
+	Item* activeItem = m_player->getActiveItem();
+
+	if (activeItem != nullptr)
+	{
+		m_activeItemToolbar->setActiveItemIcon(
+			m_spriteSheetTexture.get(),
+			m_player->getActiveItem()->m_spriteTexCoords
+		);
+	}
+	else
+	{
+		m_activeItemToolbar->setActiveItemIcon(
+			m_spriteSheetTexture.get(),
+			nullptr
+		);
+	}
+
 	m_level->draw();
-
-	Aquarius::Renderer::DrawQuad(
-		m_level->getTileWorldCoords(2, 7),
-		{ 64, 64 },
-		m_spriteSheetTexture.get(),
-		&m_coordMap.at("bench")
-	);
-
-	Aquarius::Renderer::DrawQuad(
-		m_level->getTileWorldCoords(5, 7),
-		{ 64, 64 },
-		m_spriteSheetTexture.get(),
-		&m_coordMap.at("bench")
-	);
-
-	Aquarius::Renderer::DrawQuad(
-		m_level->getTileWorldCoords(3, 3),
-		{ 64, 64 },
-		m_spriteSheetTexture.get(),
-		&m_coordMap.at("cone")
-	);
-
-	Aquarius::Renderer::DrawQuad(
-		m_level->getTileWorldCoords(4, 3),
-		{ 64, 64 },
-		m_spriteSheetTexture.get(),
-		&m_coordMap.at("cone")
-	);
-
-	Aquarius::Renderer::DrawQuad(
-		m_level->getTileWorldCoords(5, 3),
-		{ 64, 64 },
-		m_spriteSheetTexture.get(),
-		&m_coordMap.at("cone")
-	);
-
-	Aquarius::Renderer::DrawQuad(
-		m_level->getTileWorldCoords(0, 0),
-		{ 64, 64 },
-		m_spriteSheetTexture.get(),
-		&m_coordMap.at("traffic_light")
-	);
-
-	Aquarius::Renderer::DrawQuad(
-		m_level->getTileWorldCoords(3, 0),
-		{ 64, 64 },
-		m_spriteSheetTexture.get(),
-		&m_coordMap.at("traffic_light")
-	);
-
-	Aquarius::Renderer::DrawQuad(
-		m_level->getTileWorldCoords(6, 0),
-		{ 64, 64 },
-		m_spriteSheetTexture.get(),
-		&m_coordMap.at("traffic_light")
-	);
-
-
 	m_player->draw();
+	m_activeItemToolbar->draw();
+
 	AQ_TRACE("FPS: %v", 1000.0 / time);
 }
 
