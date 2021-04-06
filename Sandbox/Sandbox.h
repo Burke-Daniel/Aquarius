@@ -1,6 +1,7 @@
 #pragma once
 
-#include <Aquarius.h>
+#include "Aquarius.h"
+#include "Entity.h"
 
 #include <array>
 
@@ -8,11 +9,15 @@ class SandboxLayer : public Aquarius::Layer
 {
 public:
 	SandboxLayer();
+	~SandboxLayer();
 
 	void onCreation() override;
 	void onUpdate(Aquarius::timeDelta_t time) override;
+	void onUpdateGUI(Aquarius::timeDelta_t time) override;
 
 private:
+	bool m_MenuOpen = true;
+
 	Aquarius::sharedPtr<Aquarius::Shader> m_ShaderProgram;
 	Aquarius::sharedPtr<Aquarius::VertexBuffer> m_vertexBuffer;
 	Aquarius::sharedPtr<Aquarius::IndexBuffer> m_indexBuffer;
@@ -20,6 +25,8 @@ private:
 	Aquarius::sharedPtr<Aquarius::VertexArray> m_vertexArray;
 	Aquarius::sharedPtr<Aquarius::OrthographicCamera> m_Camera;
 	Aquarius::sharedPtr<Aquarius::Texture> m_texture;
+
+	std::vector<Entity*> m_entities;
 
 	// Tex coords
 	Aquarius::QuadTexCoords m_uv;
