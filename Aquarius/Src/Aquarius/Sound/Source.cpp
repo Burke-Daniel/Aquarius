@@ -69,16 +69,6 @@ namespace Aquarius {
             }
 
             alSourcePlay(m_Source);
-
-            int32_t status = AL_PLAYING;
-            AQ_CORE_TRACE("Sound is playing");
-
-            /*while(status == AL_PLAYING && alGetError() == AL_NO_ERROR)
-            {
-                AQ_CORE_TRACE("Still playing sound");
-                alGetSourcei(m_Source, AL_SOURCE_STATE, &status);
-            }*/
-
         }
 
         void Source::queueSound(uint32_t sound_buffer)
