@@ -25,8 +25,8 @@ public:
 	void onUpdateGUI(Aquarius::timeDelta_t time) override;
 	void onDestruction() override;
 
-	void leftScore() { m_Score.LeftScore++; }
-	void rightScore() { m_Score.RightScore++; }
+	void leftScore();
+	void rightScore();
 	Score getScore() const { return m_Score; }
 
 private:

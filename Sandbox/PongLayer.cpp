@@ -4,7 +4,9 @@
 
 #include <algorithm>
 #include <array>
+#include <chrono>
 #include <cmath>
+#include <thread>
 
 
 static constexpr auto pi = 3.14159265358979323846;
@@ -34,6 +36,15 @@ static int currentRightPaddleType;
 static int leftPaddleType = 0;
 static int rightPaddleType = 2;
 
+static float scoreboardColor[] = { 1.0, 0.0, 0.0 };
+
+static float leftHasScored = 2000;
+static float rightHasScored = 2000;
+
+static glm::vec4 convertColorToVec4(float scoreboardColor[3])
+{
+	return glm::vec4(scoreboardColor[0], scoreboardColor[1], scoreboardColor[2], 1.0f);
+}
 
 PongLayer::PongLayer()
 	: Layer("Pong", true), m_LeftPaddle(), m_RightPaddle(), m_Ball()
@@ -239,13 +250,36 @@ void PongLayer::onUpdate(Aquarius::timeDelta_t dt)
 	sprintf(leftScore, "%02d", m_Score.LeftScore);
 	sprintf(rightScore, "%02d", m_Score.RightScore);
 	
-	glm::vec4 red = { 1.0, 0.0, 0.0, 1.0 };
-	
 	// To center the scoreboard position, subtract 2.5 times the sprite width (scoreboard contains 5 sprites)
 	// and then multiply by 2.0 because of the multiplier on the font size in the RenderText call
 	glm::vec2 scoreboardPosition = { (window.getWidth() / 2.0) - (m_Font->getSpriteWidth() * 2.0 * 2.5), 20.0 };
 
-	m_Font->RenderText(std::string(leftScore) + "-" + std::string(rightScore), scoreboardPosition, 2.0, red);
+	m_Font->RenderText(std::string(leftScore) + "-" + std::string(rightScore),
+		               scoreboardPosition,
+		               2.0,
+		               convertColorToVec4(scoreboardColor));
+
+	if (leftHasScored < 1000)
+	{
+		m_Font->RenderText(
+			"LEFT SCORES",
+			glm::vec2((window.getWidth() / 2.0) - (m_Font->getSpriteWidth() * 2.0 * 5.5), (window.getHeight() / 2.0) - (m_Font->getSpriteHeight() * 2.0)),
+			2.0
+		);
+
+		leftHasScored += dt;
+	}
+
+	if (rightHasScored < 1000)
+	{
+		m_Font->RenderText(
+			"RIGHT SCORES",
+			glm::vec2((window.getWidth() / 2.0) - (m_Font->getSpriteWidth() * 2.0 * 6.0), (window.getHeight() / 2.0) - (m_Font->getSpriteHeight() * 2.0)),
+			2.0
+		);
+
+		rightHasScored += dt;
+	}
 	
 	m_LeftPaddle.Render();
 	m_RightPaddle.Render();
@@ -274,6 +308,8 @@ void PongLayer::onUpdateGUI(Aquarius::timeDelta_t time)
 
 		ImGui::Combo("Right Paddle Type", &rightPaddleType, paddleControllerTypes, IM_ARRAYSIZE(paddleControllerTypes));
 
+		ImGui::ColorEdit3("Scoreboard Color", scoreboardColor);
+
 		ImGui::End();
 	}
 
@@ -287,6 +323,18 @@ void PongLayer::onUpdateGUI(Aquarius::timeDelta_t time)
 void PongLayer::onDestruction()
 {
 	m_SoundSource.endSoundThread();
+}
+
+void PongLayer::leftScore()
+{
+	m_Score.LeftScore++;
+	leftHasScored = 0;
+}
+
+void PongLayer::rightScore()
+{
+	m_Score.RightScore++;
+	rightHasScored = 0;
 }
 
 void PongLayer::checkPaddleCollision()
