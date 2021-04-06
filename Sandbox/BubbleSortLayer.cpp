@@ -12,6 +12,14 @@ BubbleSortLayer::BubbleSortLayer()
                                             {
                                                 onEvent(event);
                                             });
+            app->getEventHandler().subscribe(Aquarius::eventType::WindowResizedEvent,
+                                             [&](const Aquarius::Event& event)
+                                             {
+                                                 auto windowResize = static_cast<const Aquarius::WindowResizedEvent&>(event);
+                                                 m_Height = windowResize.getHeight();
+                                                 yposition = (m_Height/2.0) - 40;
+                                                 //resized = true;
+                                             });
         }
 
 void BubbleSortLayer::onCreation()
@@ -70,6 +78,10 @@ void BubbleSortLayer::onUpdate(Aquarius::timeDelta_t dt)
     m_Font->RenderText("BUBBLE SORT", titlePosition, 1.0, titleColor);
     m_Font->RenderText("COMPARISON COUNT-" + std::string(comparisonCountDigits), comparisonPosition, 0.5, titleColor);
 
+    if (resized)
+    {
+
+    }
     if (Aquarius::Input::isKeyPressed(Aquarius::Input::KeyCode::Key_m))
     {
         m_MenuOpen = true;
@@ -79,7 +91,7 @@ void BubbleSortLayer::onUpdate(Aquarius::timeDelta_t dt)
     {
         for (int i = 0; i < numRectangles; i++)
         {
-            barHeights[i] = (rand() % (window->getHeight() - 100)) + 30;
+            barHeights[i] = (rand() % (m_Height - 100)) + 30;
         }
         comparisonCount = 0;
         resetSort = false;
@@ -173,8 +185,10 @@ void BubbleSortLayer::renderBars(int size)
 
     for (int i = 0; i < size; i++)
     {
+        yposition = window->getHeight() - barHeights[i];
+
         Aquarius::Renderer::DrawQuad(
-                { position, window->getHeight() - barHeights[i]} ,
+                { position, yposition} ,
                 { barWidth, barHeights[i] },
                 0,
                 barColors
