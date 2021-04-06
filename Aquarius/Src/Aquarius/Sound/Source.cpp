@@ -24,24 +24,39 @@ namespace Aquarius {
             alDeleteSources(1, &m_Source);
         }
 
-        void Source::audioLoop(bool* soundThreadShouldStop)
+    	void Source::beginSoundThread()
         {
-            while (!*soundThreadShouldStop)
+            m_SoundThread = std::thread([&]()
             {
-                uint32_t sound = -1;
-                {
-                    std::lock_guard<std::mutex> lock(m_SoundMutex);
-                    if (!m_QueuedSounds.empty())
-                    {
-                        sound = m_QueuedSounds.front();
-                        m_QueuedSounds.pop();
-                    }
-                }
+            	while (!m_SoundThreadShouldExit)
+            	{
+                    audioLoop();
+            	}
+            });
+        }
 
-                if (sound != -1)
+    	void Source::endSoundThread()
+        {
+            m_SoundThreadShouldExit = true;
+
+            m_SoundThread.join();
+        }
+
+        void Source::audioLoop()
+        {
+            uint32_t sound = -1;
+            {
+                std::lock_guard<std::mutex> lock(m_SoundMutex);
+                if (!m_QueuedSounds.empty())
                 {
-                    playSound(sound);
+                    sound = m_QueuedSounds.front();
+                    m_QueuedSounds.pop();
                 }
+            }
+
+            if (sound != -1)
+            {
+                playSound(sound);
             }
         }
 

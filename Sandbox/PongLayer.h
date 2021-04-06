@@ -55,6 +55,4 @@ private:
 
 	// Audio
 	Aquarius::Sound::Source m_SoundSource;
-	std::thread m_SoundThread;
-	bool m_SoundThreadShouldExit = false;
 };

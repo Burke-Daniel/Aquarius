@@ -88,7 +88,7 @@ void PongLayer::onCreation()
 		ballTexture
 	};
 
-	m_SoundThread = std::thread([&]() { m_SoundSource.audioLoop(&m_SoundThreadShouldExit); });
+	m_SoundSource.beginSoundThread();
 }
 
 void PongLayer::onEvent(const Aquarius::Event& event)
@@ -169,9 +169,7 @@ void PongLayer::onUpdate(Aquarius::timeDelta_t dt)
 
 void PongLayer::onDestruction()
 {
-	m_SoundThreadShouldExit = true;
-
-	m_SoundThread.join();
+	m_SoundSource.endSoundThread();
 }
 
 void PongLayer::checkPaddleCollision()
