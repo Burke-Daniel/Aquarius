@@ -43,12 +43,10 @@ void BubbleSortLayer::onEvent(const Aquarius::Event& event)
             if (!pauseSort)
             {
                 pauseSort = true;
-                titleColor = { 0.0, 1.0, 0.0, 1.0 };
             }
             else
             {
                 pauseSort = false;
-                titleColor = { 1.0, 0.0, 0.0, 1.0 };
             }
             break;
         }
@@ -61,11 +59,16 @@ void BubbleSortLayer::onUpdate(Aquarius::timeDelta_t dt)
 
     int delay = dt * delayConstant;
 
-    // To center the scoreboard position, subtract 2.5 times the sprite width (scoreboard contains 5 sprites)
-    // and then multiply by 2.0 because of the multiplier on the font size in the RenderText call
-    glm::vec2 titlePosition = { (window->getWidth() / 2.0) - (m_Font->getSpriteWidth() * 1.0 * 2.5), 20.0 };
+    char comparisonCountDigits[4];
 
-    m_Font->RenderText("BUBBLE-SORT", titlePosition, 1.0, titleColor);
+    sprintf(comparisonCountDigits, "%04d", comparisonCount);
+
+    glm::vec2 titlePosition = { 10.0, 10.0 };
+    glm::vec2 comparisonPosition = {10.0, 45.0};
+    glm::vec2 statusPosition = {10.0, 65};
+
+    m_Font->RenderText("BUBBLE SORT", titlePosition, 1.0, titleColor);
+    m_Font->RenderText("COMPARISON COUNT-" + std::string(comparisonCountDigits), comparisonPosition, 0.5, titleColor);
 
     if (Aquarius::Input::isKeyPressed(Aquarius::Input::KeyCode::Key_m))
     {
@@ -78,13 +81,18 @@ void BubbleSortLayer::onUpdate(Aquarius::timeDelta_t dt)
         {
             barHeights[i] = (rand() % (window->getHeight() - 100)) + 30;
         }
-
-        titleColor = { 1.0, 0.0, 0.0, 1.0 };
-
+        comparisonCount = 0;
         resetSort = false;
+        m_Font->RenderText("SORT RESET", statusPosition, 0.5, titleColor);
     }
 
     if (pauseSort)
+    {
+        renderBars(numRectangles);
+        m_Font->RenderText("SORT PAUSED", statusPosition, 0.5, { 1.0, 0.0, 0.0, 1.0 });
+    }
+
+    if (sorted)
     {
         renderBars(numRectangles);
     }
@@ -92,7 +100,6 @@ void BubbleSortLayer::onUpdate(Aquarius::timeDelta_t dt)
     if (!pauseSort)
     {
         Aquarius::Renderer::ClearColor({ 219.0 / 255.0, 219.0 / 255.0, 219.0 / 255.0 });
-
         renderBars(numRectangles);
 
         swapBars(i, j);
@@ -103,6 +110,21 @@ void BubbleSortLayer::onUpdate(Aquarius::timeDelta_t dt)
         {
                 i = 0;
                 j = 1;
+        }
+
+        comparisonCount++;
+
+        if (std::is_sorted(barHeights, barHeights+40))
+        {
+            sorted = true;
+            comparisonCount--;
+            m_Font->RenderText("SORT COMPLETED", statusPosition, 0.5, { 0.133, 0.289, 0.010, 1.0 });
+        }
+
+        if (!(std::is_sorted(barHeights, barHeights+40)))
+        {
+            sorted = false;
+            m_Font->RenderText("SORT IN PROGRESS", statusPosition, 0.5, { 0.0, 0.0, 1.0, 1.0 });
         }
 
         // This delay will allow for the changes occurring during the sort to be visible
@@ -121,12 +143,24 @@ void BubbleSortLayer::onUpdateGUI(Aquarius::timeDelta_t dt)
             ImGui::Text("This application shows a visualization of the Bubble Sort");
             ImGui::Text("- To reset the sort press R on your keyboard");
             ImGui::Text("- To pause the sort press P on your keyboard");
-            ImGui::Text("- Other settings can be configured under the Configuration Header");
+            ImGui::Text("- The delay speed of the sort can be changed under the Configuration Header");
+            ImGui::Text("- The bar color can be changed under the Configuration Header");
+
         }
 
         if (ImGui::CollapsingHeader("Configuration"))
         {
             ImGui::InputInt("Delay", &delayConstant);
+
+            ImGuiColorEditFlags colorPickerFlags = ImGuiColorEditFlags_Float;
+            ImGui::ColorEdit4("Bar Color##Bar Color", &barColors.x, colorPickerFlags);
+        }
+
+        if (ImGui::CollapsingHeader("Profiling"))
+        {
+            ImGui::Text("Application average %.3f ms/frame (%.1f FPS)",
+                        1000.0f / ImGui::GetIO().Framerate,
+                        ImGui::GetIO().Framerate);
         }
 
         ImGui::End();
@@ -139,13 +173,13 @@ void BubbleSortLayer::renderBars(int size)
 
     for (int i = 0; i < size; i++)
     {
-        auto normalizationConst = barHeights[i] / (float)(window->getHeight() - 70);
         Aquarius::Renderer::DrawQuad(
                 { position, window->getHeight() - barHeights[i]} ,
                 { barWidth, barHeights[i] },
                 0,
-                { 1 - barColors.x * normalizationConst, 0, 0, barColors.w }
+                barColors
         );
+
         position += barWidth + 1;
     }
 }
@@ -155,5 +189,6 @@ void BubbleSortLayer::swapBars(int i, int j)
     if (barHeights[i] > barHeights[j])
     {
         std::swap(barHeights[i], barHeights[j]);
+        swapped = true;
     }
 }
