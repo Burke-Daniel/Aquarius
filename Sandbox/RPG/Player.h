@@ -335,7 +335,6 @@ public:
 				}
 			}
 		}
-		AQ_INFO("Current active item: %v", *m_activeItemIt);
 	}
 
 	void onMouseReleased(const Aquarius::Event& event)
@@ -351,6 +350,10 @@ public:
 		}
 	}
 
+	void setMovespeed(float speed)
+	{
+		m_moveSpeed = speed;
+	}
 private:
 	PlayerState m_playerState;
 	PlayerState m_playerPreviousState;
