@@ -3,6 +3,7 @@
 #include <AudioFile.h>
 #include <AL/alext.h>
 #include <AL/al.h>
+#include <string>
 
 
 namespace Aquarius {
