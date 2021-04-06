@@ -27,6 +27,11 @@ PongLayer::PongLayer()
 		});
 }
 
+PongLayer::~PongLayer()
+{
+	onDestruction();
+}
+
 void PongLayer::onCreation()
 {
 	int height = window.getHeight();
@@ -82,6 +87,8 @@ void PongLayer::onCreation()
 		this,
 		ballTexture
 	};
+
+	m_SoundThread = std::thread([&]() { m_SoundSource.audioLoop(&m_SoundThreadShouldExit); });
 }
 
 void PongLayer::onEvent(const Aquarius::Event& event)
@@ -160,6 +167,13 @@ void PongLayer::onUpdate(Aquarius::timeDelta_t dt)
 	AQ_TRACE("FPS: %v", 1000 / dt);
 }
 
+void PongLayer::onDestruction()
+{
+	m_SoundThreadShouldExit = true;
+
+	m_SoundThread.join();
+}
+
 void PongLayer::checkPaddleCollision()
 {
 	// Constants for readability
@@ -199,7 +213,7 @@ void PongLayer::checkPaddleCollision()
 		   (ballCoords[bottomRight].y >= rightPaddleCoords[topLeft].y &&
 			ballCoords[bottomRight].y <= rightPaddleCoords[bottomLeft].y))
 		{
-		    m_SoundSource.playSound(m_PaddleSound);
+		    m_SoundSource.queueSound(m_PaddleSound);
 			AQ_INFO("Collision with right paddle!!");
 			handleCollision(false);
 		}
@@ -213,7 +227,7 @@ void PongLayer::checkPaddleCollision()
 		   (ballCoords[bottomLeft].y >= leftPaddleCoords[topRight].y &&
 			ballCoords[bottomLeft].y <= leftPaddleCoords[bottomRight].y))
 		{
-            m_SoundSource.playSound(m_PaddleSound);
+            m_SoundSource.queueSound(m_PaddleSound);
 			AQ_INFO("Collision with left paddle!!");
 			handleCollision(true);
 		}

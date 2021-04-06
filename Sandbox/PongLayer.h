@@ -6,6 +6,8 @@
 #include "Pong/Paddle.h"
 #include "Pong/PaddleController.h"
 
+#include <future>
+
 
 struct Score
 {
@@ -17,10 +19,12 @@ class PongLayer : public Aquarius::Layer
 {
 public:
 	PongLayer();
+	virtual ~PongLayer();
 
 	void onCreation() override;
 	void onEvent(const Aquarius::Event&) override;
 	void onUpdate(Aquarius::timeDelta_t) override;
+	void onDestruction() override;
 
 	void leftScore() { m_Score.LeftScore++; }
 	void rightScore() { m_Score.RightScore++; }
@@ -39,7 +43,6 @@ private:
 	Aquarius::sharedPtr<Aquarius::Texture> m_BackgroundTexture;
 	Aquarius::sharedPtr<Aquarius::Texture> m_FontTexture;
 	Aquarius::sharedPtr<Aquarius::Bitmap> m_Font;
-	Aquarius::Sound::Source m_SoundSource;
 	uint32_t m_PaddleSound;
 
 	Paddle m_LeftPaddle;
@@ -49,4 +52,9 @@ private:
 
 	// State management
 	bool m_isPaused = false;
+
+	// Audio
+	Aquarius::Sound::Source m_SoundSource;
+	std::thread m_SoundThread;
+	bool m_SoundThreadShouldExit = false;
 };
