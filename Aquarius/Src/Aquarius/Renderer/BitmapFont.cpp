@@ -46,7 +46,7 @@ namespace Aquarius {
 		{'8', {11, 6}},
 		{'9', {12, 5}},
 		{'-', {0, 6}},
-		{' ', {26, 1}}
+		{' ', {11, 0}}
 	};
 
 	Bitmap::Bitmap(Texture* texture, uint32_t fontWidth, uint32_t fontHeight)
