@@ -18,8 +18,6 @@ namespace Aquarius {
         private:
             SoundBuffer();
             ~SoundBuffer();
-            int m_Channels;
-            int m_bitsPerSample;
             std::vector<uint32_t> m_EffectBuffer;
         };
 

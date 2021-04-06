@@ -31,8 +31,8 @@ namespace Aquarius {
                 AQ_CORE_ERROR("Unable to open audio file %v, due to %v", file_path);
             }
 
-            m_Channels = sound_file.getNumChannels();
-            m_bitsPerSample = sound_file.getBitDepth();
+            int m_Channels = sound_file.getNumChannels();
+            int m_bitsPerSample = sound_file.getBitDepth();
 
             //Determine WAV format
             if (m_Channels == 1 && m_bitsPerSample == 8)
