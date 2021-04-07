@@ -4,7 +4,9 @@
 
 #include <algorithm>
 #include <array>
+#include <chrono>
 #include <cmath>
+#include <thread>
 
 
 static constexpr auto pi = 3.14159265358979323846;
@@ -15,7 +17,34 @@ static const struct
 	const float HyperMode = 0.5;
 } GameMode {};
 
+enum class PaddleTypes : int
+{
+	Keyboard = 0,
+	Mouse = 1,
+	AI = 2
+};
+
+constexpr auto aiPaddleSpeed = 0.2;
+constexpr auto playerPaddleSpeed = 0.3;
+
 static auto ballSpeedIncrease = GameMode.RegularMode;
+static const char* const paddleControllerTypes[] = { "Keyboard", "Mouse", "AI" };
+
+static int currentLeftPaddleType;
+static int currentRightPaddleType;
+
+static int leftPaddleType = 0;
+static int rightPaddleType = 2;
+
+static float scoreboardColor[] = { 1.0, 0.0, 0.0 };
+
+static float leftHasScored = 1000;
+static float rightHasScored = 1000;
+
+static glm::vec4 convertColorToVec4(float scoreboardColor[3])
+{
+	return glm::vec4(scoreboardColor[0], scoreboardColor[1], scoreboardColor[2], 1.0f);
+}
 
 PongLayer::PongLayer()
 	: Layer("Pong", true), m_LeftPaddle(), m_RightPaddle(), m_Ball()
@@ -24,6 +53,13 @@ PongLayer::PongLayer()
 		[&](const Aquarius::Event& event)
 		{
 			onEvent(event);
+		});
+
+	app.getEventHandler().subscribe(Aquarius::eventType::WindowResizedEvent,
+		[&](const Aquarius::Event& event)
+		{
+			auto windowResize = static_cast<const Aquarius::WindowResizedEvent&>(event);
+			m_RightPaddle.position = glm::vec2(window.getWidth() - 30.0, (window.getHeight() / 2.0) - 40.0);
 		});
 }
 
@@ -43,8 +79,6 @@ void PongLayer::onCreation()
 	constexpr auto paddleWidth = 10.0;
 	constexpr auto paddleHeight = 80.0;
 	constexpr auto ballSize = 15.0;
-	constexpr auto leftPaddleSpeed = 0.3;
-	constexpr auto rightPaddleSpeed = 0.2;
 
 	Aquarius::TextureConfiguration textureConfiguration = {
 		Aquarius::TextureWrapOption::Repeat,
@@ -61,23 +95,24 @@ void PongLayer::onCreation()
 
 	m_SoundBuffer = Aquarius::Sound::SoundBuffer::Create();
     m_PaddleSound = m_SoundBuffer->addEffect("Sandbox/Assets/Paddle-sound.wav");
+	m_ScoreSound = m_SoundBuffer->addEffect("Sandbox/Assets/Score-sound.wav");
 
+	currentLeftPaddleType = static_cast<int>(PaddleTypes::Keyboard);
 	m_LeftPaddle = {
 		paddleTexture,
-		//std::make_unique<MousePaddleController>(),
 		std::make_unique<KeyboardPaddleController>(Aquarius::Input::KeyCode::Key_w, Aquarius::Input::KeyCode::Key_s),
-		//std::make_unique<AIPaddleController>(),
 		{ 20.0, (window.getHeight() / 2.0) - 40.0},
 		{ paddleWidth, paddleHeight },
-		leftPaddleSpeed
+		playerPaddleSpeed
 	};
 
+	rightPaddleType = static_cast<int>(PaddleTypes::AI);
 	m_RightPaddle = {
 		paddleTexture,
 		std::make_unique<AIPaddleController>(),
 		{ window.getWidth() - 30.0, (window.getHeight() / 2.0) - 40.0 },
 		{ paddleWidth, paddleHeight },
-		rightPaddleSpeed
+		aiPaddleSpeed
 	};
 
 	m_Ball = {
@@ -134,6 +169,70 @@ void PongLayer::onUpdate(Aquarius::timeDelta_t dt)
 
 	if (!m_isPaused)
 	{
+		if (leftPaddleType != currentLeftPaddleType)
+		{
+			switch (static_cast<PaddleTypes>(leftPaddleType))
+			{
+				case (PaddleTypes::Keyboard):
+				{
+					m_LeftPaddle.ChangePaddleController(
+						std::make_unique<KeyboardPaddleController>(
+							Aquarius::Input::KeyCode::Key_w, Aquarius::Input::KeyCode::Key_s));
+					currentLeftPaddleType = static_cast<int>(PaddleTypes::Keyboard);
+					m_LeftPaddle.speedY = playerPaddleSpeed;
+					break;
+				}
+
+				case (PaddleTypes::Mouse):
+				{
+					m_LeftPaddle.ChangePaddleController(std::make_unique<MousePaddleController>());
+					currentLeftPaddleType = static_cast<int>(PaddleTypes::Mouse);
+					m_LeftPaddle.speedY = playerPaddleSpeed;
+					break;
+				}
+
+				case (PaddleTypes::AI):
+				{
+					m_LeftPaddle.ChangePaddleController(std::make_unique<AIPaddleController>());
+					currentLeftPaddleType = static_cast<int>(PaddleTypes::AI);
+					m_LeftPaddle.speedY = aiPaddleSpeed;
+					break;
+				}
+			}
+		}
+
+		if (rightPaddleType != currentRightPaddleType)
+		{
+			switch (static_cast<PaddleTypes>(rightPaddleType))
+			{
+				case (PaddleTypes::Keyboard):
+				{
+					m_RightPaddle.ChangePaddleController(
+						std::make_unique<KeyboardPaddleController>(
+							Aquarius::Input::KeyCode::Key_up, Aquarius::Input::KeyCode::Key_down));
+					currentRightPaddleType = static_cast<int>(PaddleTypes::Keyboard);
+					m_RightPaddle.speedY = playerPaddleSpeed;
+					break;
+				}
+
+				case (PaddleTypes::Mouse):
+				{
+					m_RightPaddle.ChangePaddleController(std::make_unique<MousePaddleController>());
+					currentRightPaddleType = static_cast<int>(PaddleTypes::Mouse);
+					m_RightPaddle.speedY = playerPaddleSpeed;
+					break;
+				}
+
+				case (PaddleTypes::AI):
+				{
+					m_RightPaddle.ChangePaddleController(std::make_unique<AIPaddleController>());
+					currentRightPaddleType = static_cast<int>(PaddleTypes::AI);
+					m_RightPaddle.speedY = aiPaddleSpeed;
+					break;
+				}
+			}
+		}
+		
 		m_RightPaddle.controller->movePaddle(dt, &m_RightPaddle, &m_Ball);
 		m_LeftPaddle.controller->movePaddle(dt, &m_LeftPaddle, &m_Ball);
 
@@ -152,13 +251,37 @@ void PongLayer::onUpdate(Aquarius::timeDelta_t dt)
 	sprintf(leftScore, "%02d", m_Score.LeftScore);
 	sprintf(rightScore, "%02d", m_Score.RightScore);
 	
-	glm::vec4 red = { 1.0, 0.0, 0.0, 1.0 };
-	
 	// To center the scoreboard position, subtract 2.5 times the sprite width (scoreboard contains 5 sprites)
 	// and then multiply by 2.0 because of the multiplier on the font size in the RenderText call
 	glm::vec2 scoreboardPosition = { (window.getWidth() / 2.0) - (m_Font->getSpriteWidth() * 2.0 * 2.5), 20.0 };
 
-	m_Font->RenderText(std::string(leftScore) + "-" + std::string(rightScore), scoreboardPosition, 2.0, red);
+	m_Font->RenderText(std::string(leftScore) + "-" + std::string(rightScore),
+		               scoreboardPosition,
+		               2.0,
+		               convertColorToVec4(scoreboardColor));
+
+	// Displays for 1 second after respective paddle has scored
+	if (leftHasScored < 1000)
+	{
+		m_Font->RenderText(
+			"Left Scores",
+			glm::vec2((window.getWidth() / 2.0) - (m_Font->getSpriteWidth() * 2.0 * 5.5), (window.getHeight() / 2.0) - (m_Font->getSpriteHeight() * 2.0)),
+			2.0
+		);
+
+		leftHasScored += dt;
+	}
+
+	if (rightHasScored < 1000)
+	{
+		m_Font->RenderText(
+			"Right Scores",
+			glm::vec2((window.getWidth() / 2.0) - (m_Font->getSpriteWidth() * 2.0 * 6.0), (window.getHeight() / 2.0) - (m_Font->getSpriteHeight() * 2.0)),
+			2.0
+		);
+
+		rightHasScored += dt;
+	}
 	
 	m_LeftPaddle.Render();
 	m_RightPaddle.Render();
@@ -168,9 +291,88 @@ void PongLayer::onUpdate(Aquarius::timeDelta_t dt)
 	AQ_TRACE("FPS: %v", 1000 / dt);
 }
 
+void PongLayer::onUpdateGUI(Aquarius::timeDelta_t time)
+{
+	ImGui::Begin("Configuration Menu");
+
+	if (ImGui::CollapsingHeader("About"))
+	{
+		ImGui::Text("Game Controls:");
+		ImGui::Bullet();
+		ImGui::Text("To move the left paddle, use the W and S keys");
+		
+		ImGui::Bullet();
+		ImGui::Text("The right paddle is controlled by an AI");
+		
+		ImGui::Bullet();
+		ImGui::Text("The method of controlling paddles can be changed in configuration below");
+		
+		ImGui::Text("The configuration menu in the tab below can be used to change the following:");
+		ImGui::Bullet();
+		ImGui::Text("Volume");
+		
+		ImGui::Bullet();
+		ImGui::Text("Paddle Length");
+		
+		ImGui::Bullet();
+		ImGui::Text("Paddle and Ball Speed");
+		
+		ImGui::Bullet();
+		ImGui::Text("Scoreboard color");
+		
+		ImGui::Bullet();
+		ImGui::Text("Paddle Type");
+
+		ImGui::Text("The paddles can be configured to use either mouse, keyboard, or be controller by an AI");
+	}
+
+	if (ImGui::CollapsingHeader("Configuration"))
+	{
+		ImGui::SliderFloat("Sound Effect Volume", &m_Gain, 0.0, 1.0);
+
+		ImGui::SliderFloat("Ball Speed", &m_Ball.speed.x, 0.1f, 1.75f);
+
+		ImGui::SliderFloat("Left Paddle Length", &m_LeftPaddle.size.y, 40, 160);
+
+		ImGui::SliderFloat("Right Paddle Length", &m_RightPaddle.size.y, 40, 160);
+
+		ImGui::SliderFloat("Left Paddle Speed", &m_LeftPaddle.speedY, 0.1f, 0.8f);
+
+		ImGui::SliderFloat("Right Paddle Speed", &m_RightPaddle.speedY, 0.1f, 0.8f);
+
+		ImGui::Combo("Left Paddle Type", &leftPaddleType, paddleControllerTypes, IM_ARRAYSIZE(paddleControllerTypes));
+
+		ImGui::Combo("Right Paddle Type", &rightPaddleType, paddleControllerTypes, IM_ARRAYSIZE(paddleControllerTypes));
+
+		ImGui::ColorEdit3("Scoreboard Color", scoreboardColor);
+	}
+
+	if (ImGui::CollapsingHeader("Profiling"))
+	{
+		ImGui::Text("Application average %.3f ms/frame (%.1f FPS)", 1000.0f / ImGui::GetIO().Framerate, ImGui::GetIO().Framerate);
+
+	}
+
+	ImGui::End();
+}
+
 void PongLayer::onDestruction()
 {
 	m_SoundSource.endSoundThread();
+}
+
+void PongLayer::leftScore()
+{
+	m_SoundSource.queueSound(m_ScoreSound, m_Gain);
+	m_Score.LeftScore++;
+	leftHasScored = 0;
+}
+
+void PongLayer::rightScore()
+{
+	m_SoundSource.queueSound(m_ScoreSound, m_Gain);
+	m_Score.RightScore++;
+	rightHasScored = 0;
 }
 
 void PongLayer::checkPaddleCollision()
@@ -262,4 +464,3 @@ void PongLayer::handleCollision(bool isLeftPaddle)
 		m_Ball.speed = { std::min(m_Ball.speed.x + ballSpeedIncrease, maxBallSpeed), m_Ball.speed.y };
 	}
 }
-

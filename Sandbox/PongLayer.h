@@ -22,10 +22,11 @@ public:
 	void onCreation() override;
 	void onEvent(const Aquarius::Event&) override;
 	void onUpdate(Aquarius::timeDelta_t) override;
+	void onUpdateGUI(Aquarius::timeDelta_t time) override;
 	void onDestruction() override;
 
-	void leftScore() { m_Score.LeftScore++; }
-	void rightScore() { m_Score.RightScore++; }
+	void leftScore();
+	void rightScore();
 	Score getScore() const { return m_Score; }
 
 private:
@@ -54,5 +55,6 @@ private:
 	Aquarius::uniquePtr<Aquarius::Sound::SoundBuffer> m_SoundBuffer;
 	Aquarius::Sound::Source m_SoundSource;
     uint32_t m_PaddleSound;
-    double m_Gain = 1.0;
+	uint32_t m_ScoreSound;
+    float m_Gain = 1.0;
 };
