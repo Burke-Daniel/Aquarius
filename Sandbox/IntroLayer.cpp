@@ -5,10 +5,18 @@
 
 IntroLayer::IntroLayer()
         : Layer("Intro", true)
-{}
+{
+    app.getEventHandler().subscribe(Aquarius::eventType::WindowResizedEvent,
+                                    [&](const Aquarius::Event& event)
+    {
+        onEvent(event);
+    });
+}
 
 void IntroLayer::onCreation()
 {
+    xPosition = window.getWidth()/2;
+    yPosition = window.getHeight()/2;
     int height = window.getHeight();
     int width = window.getWidth();
 
@@ -30,6 +38,13 @@ void IntroLayer::onCreation()
     Aquarius::Renderer::Init();
 }
 
+void IntroLayer::onEvent(const Aquarius::Event& event)
+{
+    auto windowResize = static_cast<const Aquarius::WindowResizedEvent&>(event);
+    xPosition = windowResize.getWidth()/2;
+    yPosition = windowResize.getHeight()/2;
+}
+
 void IntroLayer::onUpdate(Aquarius::timeDelta_t dt)
 {
     float delay = dt * 0.5;
@@ -44,7 +59,7 @@ void IntroLayer::onUpdate(Aquarius::timeDelta_t dt)
         if (!maxAlpha)
         {
             Aquarius::Renderer::DrawQuad(
-                    { 200, 100 },
+                    { xPosition-200, yPosition-150 },
                     { 400, 300 },
                     AquariusLogo.get(),
                     nullptr,
@@ -67,7 +82,7 @@ void IntroLayer::onUpdate(Aquarius::timeDelta_t dt)
         else if (maxAlpha)
         {
             Aquarius::Renderer::DrawQuad(
-                    { 200, 100},
+                    { xPosition-200, yPosition-150},
                     { 400, 300},
                     AquariusLogo.get(),
                     nullptr,
@@ -96,7 +111,7 @@ void IntroLayer::onUpdate(Aquarius::timeDelta_t dt)
         if (!maxAlpha)
         {
             Aquarius::Renderer::DrawQuad(
-                    { 200,  100 },
+                    { xPosition - 200,  yPosition - 150 },
                     { 400,  300 },
                     MUNLogo.get(),
                     nullptr,
@@ -119,7 +134,7 @@ void IntroLayer::onUpdate(Aquarius::timeDelta_t dt)
         else if (maxAlpha)
         {
             Aquarius::Renderer::DrawQuad(
-                    { 200, 100 },
+                    { xPosition - 200, yPosition - 150 },
                     { 400, 300 },
                     MUNLogo.get(),
                     nullptr,

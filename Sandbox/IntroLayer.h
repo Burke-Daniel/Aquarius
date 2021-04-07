@@ -9,6 +9,7 @@ public:
     IntroLayer();
 
     void onCreation() override;
+    void onEvent(const Aquarius::Event&) override;
     void onUpdate(Aquarius::timeDelta_t) override;
 
 private:
@@ -16,6 +17,8 @@ private:
     bool maxAlpha = false;
     bool drawAquarius = true;
     bool drawMUN = false;
+    int xPosition;
+    int yPosition;
     Aquarius::Application& app = *Aquarius::Application::get();
     Aquarius::Window& window = *app.getWindow();
     Aquarius::sharedPtr<Aquarius::OrthographicCamera> m_Camera;
