@@ -211,7 +211,7 @@ void PongLayer::onUpdate(Aquarius::timeDelta_t dt)
 						std::make_unique<KeyboardPaddleController>(
 							Aquarius::Input::KeyCode::Key_up, Aquarius::Input::KeyCode::Key_down));
 					currentRightPaddleType = static_cast<int>(PaddleTypes::Keyboard);
-					m_LeftPaddle.speedY = playerPaddleSpeed;
+					m_RightPaddle.speedY = playerPaddleSpeed;
 					break;
 				}
 
@@ -219,7 +219,7 @@ void PongLayer::onUpdate(Aquarius::timeDelta_t dt)
 				{
 					m_RightPaddle.ChangePaddleController(std::make_unique<MousePaddleController>());
 					currentRightPaddleType = static_cast<int>(PaddleTypes::Mouse);
-					m_LeftPaddle.speedY = playerPaddleSpeed;
+					m_RightPaddle.speedY = playerPaddleSpeed;
 					break;
 				}
 
@@ -293,9 +293,41 @@ void PongLayer::onUpdate(Aquarius::timeDelta_t dt)
 
 void PongLayer::onUpdateGUI(Aquarius::timeDelta_t time)
 {
-	{
-		ImGui::Begin("Configuration Menu");
+	ImGui::Begin("Configuration Menu");
 
+	if (ImGui::CollapsingHeader("About"))
+	{
+		ImGui::Text("Game Controls:");
+		ImGui::Bullet();
+		ImGui::Text("To move the left paddle, use the W and S keys");
+		
+		ImGui::Bullet();
+		ImGui::Text("The right paddle is controller by an AI");
+		
+		ImGui::Bullet();
+		ImGui::Text("The method of controlling paddles can be changed in configuration below");
+		
+		ImGui::Text("The configuration menu in the tab below can be used to change the following:");
+		ImGui::Bullet();
+		ImGui::Text("Volume");
+		
+		ImGui::Bullet();
+		ImGui::Text("Paddle Length");
+		
+		ImGui::Bullet();
+		ImGui::Text("Paddle and Ball Speed");
+		
+		ImGui::Bullet();
+		ImGui::Text("Scoreboard color");
+		
+		ImGui::Bullet();
+		ImGui::Text("Paddle Type");
+
+		ImGui::Text("The paddles can be configured to use either mouse, keyboard, or be controller by an AI");
+	}
+
+	if (ImGui::CollapsingHeader("Configuration"))
+	{
 		ImGui::SliderFloat("Sound Effect Volume", &m_Gain, 0.0, 1.0);
 
 		ImGui::SliderFloat("Ball Speed", &m_Ball.speed.x, 0.1f, 1.0f);
@@ -304,24 +336,24 @@ void PongLayer::onUpdateGUI(Aquarius::timeDelta_t time)
 
 		ImGui::SliderFloat("Right Paddle Length", &m_RightPaddle.size.y, 40, 160);
 
-		ImGui::SliderFloat ("Left Paddle Speed", &m_LeftPaddle.speedY, 0.1f, 0.8f);
+		ImGui::SliderFloat("Left Paddle Speed", &m_LeftPaddle.speedY, 0.1f, 0.8f);
 
 		ImGui::SliderFloat("Right Paddle Speed", &m_RightPaddle.speedY, 0.1f, 0.8f);
-		
+
 		ImGui::Combo("Left Paddle Type", &leftPaddleType, paddleControllerTypes, IM_ARRAYSIZE(paddleControllerTypes));
 
 		ImGui::Combo("Right Paddle Type", &rightPaddleType, paddleControllerTypes, IM_ARRAYSIZE(paddleControllerTypes));
 
 		ImGui::ColorEdit3("Scoreboard Color", scoreboardColor);
-
-		if (ImGui::CollapsingHeader("Performance Statistics"))
-		{
-			ImGui::Text("Application average %.3f ms/frame (%.1f FPS)", 1000.0f / ImGui::GetIO().Framerate, ImGui::GetIO().Framerate);
-
-		}
-
-		ImGui::End();
 	}
+
+	if (ImGui::CollapsingHeader("Profiling"))
+	{
+		ImGui::Text("Application average %.3f ms/frame (%.1f FPS)", 1000.0f / ImGui::GetIO().Framerate, ImGui::GetIO().Framerate);
+
+	}
+
+	ImGui::End();
 }
 
 void PongLayer::onDestruction()
