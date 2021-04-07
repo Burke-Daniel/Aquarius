@@ -25,8 +25,9 @@ private:
 	Aquarius::sharedPtr<Aquarius::VertexArray> m_vertexArray;
 	Aquarius::sharedPtr<Aquarius::OrthographicCamera> m_Camera;
 	Aquarius::sharedPtr<Aquarius::Texture> m_texture;
-
+	
 	std::vector<Entity*> m_entities;
+	Aquarius::uniquePtr<Aquarius::SpriteSheet> m_spritesheet;
 
 	// Tex coords
 	Aquarius::QuadTexCoords m_uv;
