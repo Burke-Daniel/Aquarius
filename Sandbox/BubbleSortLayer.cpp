@@ -65,8 +65,8 @@ void BubbleSortLayer::onResizeEvent(const Aquarius::Event& event)
     m_Height = window->getHeight();
     for (int i = 0; i < numRectangles; i++)
     {
-        int heightFactor = barHeights[i];
-        barHeights[i] = heightFactor-(m_Height-100)*0.00005;
+        int heightFactor = m_Height*0.00005;
+        barHeights[i] = barHeights[i]+(m_Height-30)*0.00005;
     }
 }
 
