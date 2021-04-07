@@ -42,7 +42,7 @@ void SandboxLayer::onCreation()
 
     // Textures / spritesheets
     // m_texture = std::make_shared<Aquarius::Texture>("Sandbox/Assets/greenguy.png", texConfig, true);
-    m_texture = std::make_shared<Aquarius::Texture>("Sandbox/Assets/mun-logo.png", texConfig, true, false);
+    m_texture = std::make_shared<Aquarius::Texture>("Sandbox/Assets/mun-logo.png", texConfig, true);
     m_texture->bind(0);
 
     m_spritesheet = std::make_unique<Aquarius::SpriteSheet>(m_texture.get(), 32, 32);
@@ -237,7 +237,7 @@ void SandboxLayer::onUpdateGUI(Aquarius::timeDelta_t ts)
             if (ImGui::Button("Pop N Entities", ButtonSize))
             {
                 // TODO - Make it so you can configure the entity
-                if (numEntitiesToPop < m_entities.size())
+                if (numEntitiesToPop <= m_entities.size())
                 {
                     for (int i = 0; i < numEntitiesToPop; i++)
                     {
@@ -319,16 +319,16 @@ void SandboxLayer::onUpdateGUI(Aquarius::timeDelta_t ts)
 
         if (ImGui::CollapsingHeader("Texture Preview"))
         {
-            ImGui::Text("Demo Only - ");
+            ImGui::Text("Demo Only");
 
             // size, uv0, uv1
-
-            ImGui::Image((void*)(intptr_t)m_texture->getID(), 
-                         ImVec2(m_texture->getWidth(), 
-                                m_texture->getHeight()),
-                          ImVec2(1,0),
-                          ImVec2(0,1)
-                );
+            ImGui::Image(
+                (void*)(intptr_t)m_texture->getID(), 
+                ImVec2(128, 
+                       128),
+                ImVec2(0,1),
+                ImVec2(1,0)
+            );
             ImGui::NewLine();
         }
 
