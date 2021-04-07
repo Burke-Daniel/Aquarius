@@ -47,6 +47,7 @@ namespace Aquarius {
 		int getWidth() const { return m_Width; }
 		int getHeight() const { return m_Height; }
 		int getNumColorChannels() const { return m_NumColorChannels; }
+		uint32_t getID() { return m_ID; }
 
 		void setConfiguration(const TextureConfiguration& configuration) { m_Configuration = configuration; }
 
