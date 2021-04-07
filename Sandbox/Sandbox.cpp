@@ -41,11 +41,12 @@ void SandboxLayer::onCreation()
     };
 
     // Textures / spritesheets
-    m_texture = std::make_shared<Aquarius::Texture>("Sandbox/Assets/greenguy.png", texConfig, true);
+    // m_texture = std::make_shared<Aquarius::Texture>("Sandbox/Assets/greenguy.png", texConfig, true);
+    m_texture = std::make_shared<Aquarius::Texture>("Sandbox/Assets/mun-logo.png", texConfig, true, false);
     m_texture->bind(0);
 
-    Aquarius::SpriteSheet sheet(m_texture.get(), 32, 32);
-    m_uv = sheet.getSpriteCoords(0, 1);
+    m_spritesheet = std::make_unique<Aquarius::SpriteSheet>(m_texture.get(), 32, 32);
+    m_uv = m_spritesheet->getSpriteCoords(0, 1);
 
     // Create list of entities
     m_entities = std::vector<Entity*>();
@@ -81,13 +82,10 @@ void SandboxLayer::onUpdate(Aquarius::timeDelta_t ts)
     Aquarius::Renderer::ClearColor({ 0.2, 0.3, 0.7 });
     Aquarius::Renderer::Clear();
 
-    // Draw quad in center and follow camera
-    // In the future, camera should probably follow quad
-
-
     // Draw each entity
-    for (const auto* entity : m_entities)
+    for (auto entity : m_entities)
     {
+        entity->onUpdate(ts);
         entity->draw();
     }
     
@@ -99,6 +97,21 @@ void SandboxLayer::onUpdate(Aquarius::timeDelta_t ts)
 
 void SandboxLayer::onUpdateGUI(Aquarius::timeDelta_t ts)
 {
+    ImVec2 ButtonSize = { 200, 20 };
+    Aquarius::Application* app = Aquarius::Application::get();
+    int screenW = app->getWindow()->getWidth();
+    int screenH = app->getWindow()->getHeight();
+    static float cameraMoveSpeed = 1;
+    static float cameraZoomSpeed = 0.1;
+    static int maxRandEntityWidth = 32;
+    static int maxRandEntityHeight = 32;
+    static float randomEntityAnimSpeed = 0.1;
+    static bool animateRandomEntities = false;
+    static glm::vec2 customEntityPosition = {0, 0};
+    static glm::vec2 customEntityScale = {32, 32};
+    static glm::vec4 customEntityColor = { 0, 0, 0, 1 };
+    static bool customEntityIsAnimated = false;
+    static float customEntityAnimSpeed = 0.1;
 
     if (m_MenuOpen)
     {
@@ -116,42 +129,73 @@ void SandboxLayer::onUpdateGUI(Aquarius::timeDelta_t ts)
             ImGui::Text("   - Popped one at a time");
             ImGui::Text("   - Added in bulk (N at a time)");
             ImGui::Text("   - Cleared (nuked)");
+            ImGui::NewLine();
+        }
+
+        if (ImGui::CollapsingHeader("Configuration"))
+        {
+            ImGui::PushItemWidth(200);
+            ImGui::Text("To aid the demo, a couple of options are configurable here!");
+
+            ImGui::SliderInt("Max Random Entity Height", &maxRandEntityHeight, 32, screenH);
+            ImGui::SliderInt("Max Random Entity Width", &maxRandEntityWidth, 32, screenW);
+            ImGui::SliderFloat("Random Entity Anim Speed", &randomEntityAnimSpeed, 0, 1);
+            ImGui::Checkbox("Animate Random Entities?", &animateRandomEntities);
+
+            ImGui::SliderFloat("Camera Move Speed", &cameraMoveSpeed, 0, 5);
+            ImGui::SliderFloat("Camera Zoom Speed", &cameraZoomSpeed, 0, 0.3);
+
+            m_Camera->setMoveSpeed(cameraMoveSpeed);
+            m_Camera->setZoomSpeed(cameraZoomSpeed);
+
+            if (ImGui::CollapsingHeader("Custom Entity Configuration"))
+            {
+                // LOOK: Can spawn items off screen because max is same for height and width
+                ImGui::SliderFloat2("Entity Position", &(customEntityPosition.x), 0, screenW);
+                ImGui::SliderFloat2("Entity Scale", &customEntityScale.x, 0, screenW);
+                ImGui::ColorPicker4("Entity Color", &customEntityColor.x);
+                ImGui::SliderFloat("Entity Anim Speed", &customEntityAnimSpeed, 0, 1);
+                ImGui::Checkbox("Animate?", &customEntityIsAnimated);
+
+                ImGui::NewLine();
+            }
+
+            ImGui::NewLine();
         }
 
         if (ImGui::CollapsingHeader("Controls"))
         {
-            if (ImGui::Button("Generate Single Entity"))
+            if (ImGui::Button("Generate Custom Entity", ButtonSize))
             {
-                // TODO - Make it so you can configure the entity
                 Entity* ent = new Entity(
-                    { rand() % 800, rand() % 600 },
-                    { 32, 32 },
-                    { (rand() % 255) / 255.0, (rand() % 255) / 255.0, (rand() % 255) / 255.0, 1 },
-                    0
+                    customEntityPosition,
+                    customEntityScale,
+                    customEntityColor,
+                    0,
+                    customEntityIsAnimated
                 );
+                ent->m_animationSpeed = customEntityAnimSpeed;
                 m_entities.push_back(ent);
             }
-            
-            static int numEntities;
-            ImGui::InputInt("Num Entities", &numEntities);
-            
-            if (ImGui::Button("Generate N Entities"))
-            {
-                for (int i = 0; i < numEntities; i++)
-                {
-                    Entity* ent = new Entity(
-                        { rand() % 800, rand() % 600 },
-                        { 32, 32 },
-                        { (rand() % 255) / 255.0, (rand() % 255) / 255.0, (rand() % 255) / 255.0, 1 },
-                        0
-                    );
-                    m_entities.push_back(ent);
-                }
+
+            if (ImGui::Button("Generate Random Entity", ButtonSize))
+            {   
+                int w = rand() % maxRandEntityWidth;
+                int h = rand() % maxRandEntityHeight;
+
+                Entity* ent = new Entity(
+                    { rand() % screenW-w, rand() % screenH-h},
+                    { w, h },
+                    { (rand() % 255) / 255.0, (rand() % 255) / 255.0, (rand() % 255) / 255.0, 1 },
+                    0,
+                    animateRandomEntities
+                );
+                ent->m_animationSpeed = randomEntityAnimSpeed;
+                m_entities.push_back(ent);
             }
 
-            if (ImGui::Button("Pop Entity"))
+            if (ImGui::Button("Pop Single Entity", ButtonSize))
             {
-                // TODO - Make it so you can configure the entity
                 if (m_entities.size() != 0)
                 {
                     Entity* ent = m_entities.back();
@@ -165,10 +209,53 @@ void SandboxLayer::onUpdateGUI(Aquarius::timeDelta_t ts)
                 }
 
             }
+            
+            static int numEntities;
+            static int numEntitiesToPop;
 
-            if (ImGui::Button("Clear Entities"))
+            if (ImGui::Button("Generate N Entities (32x32)", ButtonSize))
+            {
+                for (int i = 0; i < numEntities; i++)
+                {
+                    Entity* ent = new Entity(
+                        { rand() % screenW, rand() %  screenH},
+                        { 32, 32 },
+                        { (rand() % 255) / 255.0, (rand() % 255) / 255.0, (rand() % 255) / 255.0, 1 },
+                        0,
+                        animateRandomEntities
+                    );
+                    m_entities.push_back(ent);
+
+                    ent->m_animationSpeed = randomEntityAnimSpeed;
+                }
+            }
+
+            ImGui::SameLine();
+            ImGui::PushItemWidth(100);
+            ImGui::SliderInt("N##1", &numEntities, 0, 1000);
+
+            if (ImGui::Button("Pop N Entities", ButtonSize))
             {
                 // TODO - Make it so you can configure the entity
+                if (numEntitiesToPop < m_entities.size())
+                {
+                    for (int i = 0; i < numEntitiesToPop; i++)
+                    {
+                        Entity* ent = m_entities.back();
+                        delete ent;
+                        ent = nullptr;
+                        m_entities.pop_back();
+                    }
+                }
+
+            }
+
+            ImGui::SameLine();
+            ImGui::PushItemWidth(100);
+            ImGui::SliderInt("N##2", &numEntitiesToPop, 0, m_entities.size());
+
+            if (ImGui::Button("Clear All Entities", ButtonSize))
+            {
                 if (m_entities.size() != 0)
                 {
                     for (auto ent : m_entities)
@@ -178,10 +265,19 @@ void SandboxLayer::onUpdateGUI(Aquarius::timeDelta_t ts)
                     m_entities.clear();
                 }
             }
+
+            if (ImGui::Button("Home Camera", ButtonSize))
+            {
+                m_Camera->setPosition({ 0, 0, -1});
+            }
+
+            ImGui::NewLine();
         }
 
         if (ImGui::CollapsingHeader("Entity Viewer"))
         {
+
+            ImGui::Text("Entities: %i", m_entities.size());
             static bool showPropertyEditor = false;
             if (ImGui::Button("Open Property Viewer"))
             {
@@ -210,15 +306,7 @@ void SandboxLayer::onUpdateGUI(Aquarius::timeDelta_t ts)
                 ImGui::PopStyleVar();
                 ImGui::End();
             }
-        }
-
-        if (ImGui::CollapsingHeader("Configuration"))
-        {
-            ImGui::Text("To aid the demo, a couple of options are configurable here!");
-            // TODO
-            // Camera move speed
-            // Camera zoom speed
-            // Random bounds for position and size
+            ImGui::NewLine();
         }
 
         if (ImGui::CollapsingHeader("Profiling"))
@@ -226,6 +314,22 @@ void SandboxLayer::onUpdateGUI(Aquarius::timeDelta_t ts)
             ImGui::Text("Application average %.3f ms/frame (%.1f FPS)",
                 1000.0f / ImGui::GetIO().Framerate,
                 ImGui::GetIO().Framerate);
+            ImGui::NewLine();
+        }
+
+        if (ImGui::CollapsingHeader("Texture Preview"))
+        {
+            ImGui::Text("Demo Only - ");
+
+            // size, uv0, uv1
+
+            ImGui::Image((void*)(intptr_t)m_texture->getID(), 
+                         ImVec2(m_texture->getWidth(), 
+                                m_texture->getHeight()),
+                          ImVec2(1,0),
+                          ImVec2(0,1)
+                );
+            ImGui::NewLine();
         }
 
         ImGui::End();
@@ -320,6 +424,30 @@ static void ShowEntity(const char* prefix, Entity* entity)
 
         ImGuiColorEditFlags colorPickerFlags = ImGuiColorEditFlags_Float;
         ImGui::ColorEdit4("Color##Color", &(entity->m_color.x), colorPickerFlags);
+        ImGui::NextColumn();
+        ImGui::PopID();
+
+        // Animation Speed
+        ImGui::PushID("Animation Speed");
+        ImGui::TableNextRow();
+        ImGui::TableSetColumnIndex(0);
+        ImGui::TreeNodeEx("Field", flags, "Animation Speed");
+        ImGui::AlignTextToFramePadding();
+        ImGui::TableSetColumnIndex(1);
+        ImGui::SetNextItemWidth(-FLT_MIN);
+        ImGui::SliderFloat("AnimationSpeed##AnimationSpeed", &entity->m_animationSpeed, 0, 1);
+        ImGui::NextColumn();
+        ImGui::PopID();
+
+        // Animated
+        ImGui::PushID("Animated");
+        ImGui::TableNextRow();
+        ImGui::TableSetColumnIndex(0);
+        ImGui::TreeNodeEx("Field", flags, "Animated");
+        ImGui::AlignTextToFramePadding();
+        ImGui::TableSetColumnIndex(1);
+        ImGui::SetNextItemWidth(-FLT_MIN);
+        ImGui::Checkbox("Animated##Animated", &entity->m_isAnimated);
         ImGui::NextColumn();
         ImGui::PopID();
 
