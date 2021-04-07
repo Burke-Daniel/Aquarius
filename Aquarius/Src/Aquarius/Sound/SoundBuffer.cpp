@@ -19,11 +19,11 @@ namespace Aquarius {
             return std::make_unique<SoundBuffer>();
         }
 
-        /*SoundBuffer::~SoundBuffer()
+        SoundBuffer::~SoundBuffer()
         {
             alDeleteBuffers(m_EffectBuffer.size(), m_EffectBuffer.data());
             m_EffectBuffer.clear();
-        }*/
+        }
 
         uint32_t SoundBuffer::addEffect(const std::string file_path)
         {
