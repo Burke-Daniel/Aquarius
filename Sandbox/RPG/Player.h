@@ -202,7 +202,6 @@ public:
 
 	void addItem(Item* item)
 	{
-		// If the bucket for this item type exists
 		if (m_inventory.find(item->m_name) == m_inventory.end()) 
 		{
 			m_inventory[item->m_name] = std::vector<Item*>{ item };
