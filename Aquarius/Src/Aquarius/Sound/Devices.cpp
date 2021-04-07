@@ -45,15 +45,27 @@ namespace Aquarius {
             }
         }
 
+        Device* Device::device = nullptr;
+
         Device * Device::get()
         {
-            static Device* device = new Device();
+            if (device == nullptr)
+            {
+                device = new Device();
+            }
+
+            else
+            {
+                device = nullptr;
+            }
+
             return device;
         }
 
         Device::~Device()
         {
             Deallocate();
+            delete device;
         }
 
         void Device::Deallocate()

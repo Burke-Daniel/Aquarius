@@ -19,8 +19,8 @@ namespace Aquarius {
             Device();
 
         private:
-
             void Initialize();
+            static Device* device;
             ALCdevice* m_Device;
             ALCcontext* m_Context;
         };
