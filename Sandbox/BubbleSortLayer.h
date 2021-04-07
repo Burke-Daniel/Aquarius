@@ -8,7 +8,8 @@ public:
     BubbleSortLayer();
 
     void onCreation() override;
-    void onEvent(const Aquarius::Event&) override;
+    void onKeyEvent(const Aquarius::Event&);
+    void onResizeEvent(const Aquarius::Event&);
     void onUpdate(Aquarius::timeDelta_t time) override;
     void onUpdateGUI(Aquarius::timeDelta_t time) override;
 
