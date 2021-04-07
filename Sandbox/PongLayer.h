@@ -55,5 +55,5 @@ private:
 	Aquarius::uniquePtr<Aquarius::Sound::SoundBuffer> m_SoundBuffer;
 	Aquarius::Sound::Source m_SoundSource;
     uint32_t m_PaddleSound;
-    double m_Gain = 1.0;
+    float m_Gain = 1.0;
 };

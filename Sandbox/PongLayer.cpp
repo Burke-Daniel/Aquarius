@@ -295,6 +295,8 @@ void PongLayer::onUpdateGUI(Aquarius::timeDelta_t time)
 	{
 		ImGui::Begin("Configuration Menu");
 
+		ImGui::SliderFloat("Sound Effect Volume", &m_Gain, 0.0, 1.0);
+
 		ImGui::SliderFloat("Ball Speed", &m_Ball.speed.x, 0.1f, 1.0f);
 
 		ImGui::SliderFloat("Left Paddle Length", &m_LeftPaddle.size.y, 40, 160);
@@ -311,12 +313,12 @@ void PongLayer::onUpdateGUI(Aquarius::timeDelta_t time)
 
 		ImGui::ColorEdit3("Scoreboard Color", scoreboardColor);
 
-		ImGui::End();
-	}
+		if (ImGui::CollapsingHeader("Performance Statistics"))
+		{
+			ImGui::Text("Application average %.3f ms/frame (%.1f FPS)", 1000.0f / ImGui::GetIO().Framerate, ImGui::GetIO().Framerate);
 
-	{
-		ImGui::Begin("Performance Statistics");
-		ImGui::Text("Application average %.3f ms/frame (%.1f FPS)", 1000.0f / ImGui::GetIO().Framerate, ImGui::GetIO().Framerate);
+		}
+
 		ImGui::End();
 	}
 }
