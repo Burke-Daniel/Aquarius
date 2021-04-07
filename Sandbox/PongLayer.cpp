@@ -302,7 +302,7 @@ void PongLayer::onUpdateGUI(Aquarius::timeDelta_t time)
 		ImGui::Text("To move the left paddle, use the W and S keys");
 		
 		ImGui::Bullet();
-		ImGui::Text("The right paddle is controller by an AI");
+		ImGui::Text("The right paddle is controlled by an AI");
 		
 		ImGui::Bullet();
 		ImGui::Text("The method of controlling paddles can be changed in configuration below");
@@ -330,7 +330,7 @@ void PongLayer::onUpdateGUI(Aquarius::timeDelta_t time)
 	{
 		ImGui::SliderFloat("Sound Effect Volume", &m_Gain, 0.0, 1.0);
 
-		ImGui::SliderFloat("Ball Speed", &m_Ball.speed.x, 0.1f, 1.0f);
+		ImGui::SliderFloat("Ball Speed", &m_Ball.speed.x, 0.1f, 1.75f);
 
 		ImGui::SliderFloat("Left Paddle Length", &m_LeftPaddle.size.y, 40, 160);
 
