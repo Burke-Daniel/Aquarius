@@ -8,7 +8,6 @@
 
 #include <glm/gtc/matrix_transform.hpp>
 
-//static void ShowPlaceholderObject(const char* prefix, int uid);
 static void ShowEntity(const char* prefix, Entity* entity);
 
 SandboxLayer::SandboxLayer()
@@ -41,7 +40,6 @@ void SandboxLayer::onCreation()
     };
 
     // Textures / spritesheets
-    // m_texture = std::make_shared<Aquarius::Texture>("Sandbox/Assets/greenguy.png", texConfig, true);
     m_texture = std::make_shared<Aquarius::Texture>("Sandbox/Assets/mun-logo.png", texConfig, true);
     m_texture->bind(0);
 
@@ -324,8 +322,7 @@ void SandboxLayer::onUpdateGUI(Aquarius::timeDelta_t ts)
             // size, uv0, uv1
             ImGui::Image(
                 (void*)(intptr_t)m_texture->getID(), 
-                ImVec2(128, 
-                       128),
+                ImVec2(128, 128),
                 ImVec2(0,1),
                 ImVec2(1,0)
             );
