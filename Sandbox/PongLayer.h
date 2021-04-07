@@ -6,8 +6,6 @@
 #include "Pong/Paddle.h"
 #include "Pong/PaddleController.h"
 
-#include <future>
-
 
 struct Score
 {

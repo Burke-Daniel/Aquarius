@@ -1,5 +1,7 @@
 #pragma once
 
+#include "Aquarius/Core/Utility.h"
+
 #include <AL/alc.h>
 #include <memory>
 
@@ -7,16 +9,16 @@
 namespace Aquarius {
 
     namespace Sound {
+
         class Device
         {
         public:
-            static Device* get();
+            Device();
+            static uniquePtr<Device> Create();
+            void Deallocate();
 
         private:
-            Device();
-            ~Device();
             void Initialize();
-            void Deallocate();
             ALCdevice* m_Device;
             ALCcontext* m_Context;
         };

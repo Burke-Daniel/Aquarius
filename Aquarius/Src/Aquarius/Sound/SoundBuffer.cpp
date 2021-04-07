@@ -6,17 +6,17 @@
 #include <AudioFile.h>
 #include <AL/alext.h>
 #include <AL/al.h>
-#include <string>
 
 
 namespace Aquarius {
 
     namespace Sound {
 
-        SoundBuffer* SoundBuffer::get()
+        SoundBuffer::SoundBuffer() {}
+
+        uniquePtr<SoundBuffer> SoundBuffer::Create()
         {
-            static SoundBuffer* sound_buffer = new SoundBuffer();
-            return sound_buffer;
+            return std::make_unique<SoundBuffer>();
         }
 
         uint32_t SoundBuffer::addEffect(const std::string file_path)
@@ -33,6 +33,7 @@ namespace Aquarius {
             if(!loaded)
             {
                 AQ_CORE_ERROR("Unable to open audio file %v, due to %v", file_path);
+                return 0;
             }
 
             int m_Channels = sound_file.getNumChannels();
@@ -72,18 +73,6 @@ namespace Aquarius {
             m_EffectBuffer.push_back(buffer);
 
             return buffer;
-        }
-
-        SoundBuffer::SoundBuffer()
-        {
-            m_EffectBuffer.clear();
-        }
-
-        SoundBuffer::~SoundBuffer()
-        {
-            alDeleteBuffers(m_EffectBuffer.size(), m_EffectBuffer.data());
-
-            m_EffectBuffer.clear();
         }
 
     } // namespace Sound

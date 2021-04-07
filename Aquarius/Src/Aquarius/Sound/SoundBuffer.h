@@ -1,7 +1,11 @@
 #pragma once
+
+#include "Aquarius/Core/Utility.h"
+
 #include <cstdint>
 #include <vector>
 #include <string>
+#include <memory>
 
 
 namespace Aquarius {
@@ -11,13 +15,12 @@ namespace Aquarius {
         class SoundBuffer
         {
         public:
-            static SoundBuffer* get();
+            SoundBuffer();
+            static uniquePtr<SoundBuffer> Create();
 
             uint32_t addEffect(const std::string file_path);
 
         private:
-            SoundBuffer();
-            ~SoundBuffer();
             std::vector<uint32_t> m_EffectBuffer;
         };
 

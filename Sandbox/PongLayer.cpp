@@ -59,7 +59,7 @@ void PongLayer::onCreation()
 	m_FontTexture = std::make_shared<Aquarius::Texture>("Sandbox/Assets/8bitfont.png", textureConfiguration, true);
 	m_Font = std::make_shared<Aquarius::Bitmap>(m_FontTexture.get(), 21, 28);
 
-    m_PaddleSound = Aquarius::Sound::SoundBuffer::get()->addEffect("Sandbox/Assets/Paddle-sound.wav");
+    m_PaddleSound = Aquarius::Sound::SoundBuffer::Create()->addEffect("Sandbox/Assets/Paddle-sound.wav");
 
 	m_LeftPaddle = {
 		paddleTexture,

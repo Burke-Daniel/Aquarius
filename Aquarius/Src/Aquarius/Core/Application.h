@@ -4,7 +4,6 @@
 #include "Aquarius/Core/Utility.h"
 #include "Aquarius/Core/Window.h"
 #include "Aquarius/Events/EventHandler.h"
-#include "Aquarius/Sound/Devices.h"
 
 #include <memory>
 
@@ -42,7 +41,6 @@ namespace Aquarius {
 		uniquePtr<Window> m_Window;
 		EventHandler m_EventHandler;
         LayerStack m_layerStack;
-        Sound::Device* m_SoundDevice;
 	};
 
 } // namespace Aquarius

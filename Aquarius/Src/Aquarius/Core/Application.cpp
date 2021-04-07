@@ -26,7 +26,6 @@ namespace Aquarius {
 
 		Log::initLoggers();
 		m_Window->Initialize();
-		m_SoundDevice->get();
 
 		Gui::Init();
 		Gui::AttachRenderer(m_Window.get()->get(), "#version 410 core");
