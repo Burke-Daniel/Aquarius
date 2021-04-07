@@ -3,6 +3,8 @@
 #include <chrono>
 #include <thread>
 
+static float s_count = 0;
+static float s_interval = 1000;
 
 BubbleSortLayer::BubbleSortLayer()
         : Aquarius::Layer("Bubble Sort", true)
@@ -76,9 +78,12 @@ void BubbleSortLayer::onUpdate(Aquarius::timeDelta_t dt)
 {
     Aquarius::Renderer::Clear();
 
+    s_count += dt;
+
     int delay = dt * delayConstant;
 
-    char comparisonCountDigits[5];
+
+    char comparisonCountDigits[8];
 
     sprintf(comparisonCountDigits, "%04d", comparisonCount);
 
@@ -121,33 +126,35 @@ void BubbleSortLayer::onUpdate(Aquarius::timeDelta_t dt)
         Aquarius::Renderer::ClearColor({ 219.0 / 255.0, 219.0 / 255.0, 219.0 / 255.0 });
         renderBars(numRectangles);
 
-        swapBars(i, j);
-        i += 1;
-        j += 1;
-
-        if (i == numRectangles - 1 && j == numRectangles)
+        if (s_count > s_interval)
         {
+            s_count = 0;
+            swapBars(i, j);
+            i += 1;
+            j += 1;
+
+            if (i == numRectangles - 1 && j == numRectangles)
+            {
                 i = 0;
                 j = 1;
+            }
+
+            comparisonCount++;
         }
 
-        comparisonCount++;
-
-        if (std::is_sorted(barHeights, barHeights+40))
+        if (std::is_sorted(barHeights, barHeights + 40))
         {
             sorted = true;
             comparisonCount--;
             m_Font->RenderText("SORT COMPLETED", statusPosition, 0.5, { 0.133, 0.289, 0.010, 1.0 });
         }
 
-        if (!(std::is_sorted(barHeights, barHeights+40)))
+        if (!(std::is_sorted(barHeights, barHeights + 40)))
         {
             sorted = false;
             m_Font->RenderText("SORT IN PROGRESS", statusPosition, 0.5, { 0.0, 0.0, 1.0, 1.0 });
         }
 
-        // This delay will allow for the changes occurring during the sort to be visible
-        std::this_thread::sleep_for(std::chrono::microseconds(delay));
     }
 }
 
@@ -169,8 +176,8 @@ void BubbleSortLayer::onUpdateGUI(Aquarius::timeDelta_t dt)
 
         if (ImGui::CollapsingHeader("Configuration"))
         {
-            ImGui::SliderInt("Delay Speed", &delayConstant, 0, 1000);
-
+            //ImGui::SliderInt("Delay Speed", &delayConstant, 0, 1000);
+            ImGui::SliderFloat("Delay Length (ms)", &s_interval, 0, 3000);
             ImGuiColorEditFlags colorPickerFlags = ImGuiColorEditFlags_Float;
             ImGui::ColorEdit4("Bar Color##Bar Color", &barColors.x, colorPickerFlags);
         }
