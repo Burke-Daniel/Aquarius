@@ -54,11 +54,6 @@ namespace Aquarius {
                 device = new Device();
             }
 
-            else
-            {
-                device = nullptr;
-            }
-
             return device;
         }
 
