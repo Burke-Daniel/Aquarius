@@ -61,7 +61,10 @@ void BubbleSortLayer::onKeyEvent(const Aquarius::Event& event)
 void BubbleSortLayer::onResizeEvent(const Aquarius::Event& event)
 {
     auto windowResize = static_cast<const Aquarius::WindowResizedEvent&>(event);
-    m_Height = window->getHeight();
+
+    int windowHeight = windowResize.getHeight();
+
+    deltaHeight = windowHeight - window->getHeight();
 
     resized = true;
 }
@@ -72,7 +75,7 @@ void BubbleSortLayer::onUpdate(Aquarius::timeDelta_t dt)
 
     int delay = dt * delayConstant;
 
-    char comparisonCountDigits[4];
+    char comparisonCountDigits[5];
 
     sprintf(comparisonCountDigits, "%04d", comparisonCount);
 
@@ -87,7 +90,7 @@ void BubbleSortLayer::onUpdate(Aquarius::timeDelta_t dt)
     {
         for (int i = 0; i < numRectangles; i++)
         {
-            barHeights[i] = barHeights[i]+(m_Height-100)*0.005;
+            barHeights[i] = barHeights[i] + deltaHeight;
         }
 
         resized = false;

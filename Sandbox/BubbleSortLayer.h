@@ -27,9 +27,8 @@ private:
     bool m_MenuOpen = true;
     bool resized = false;
     int m_Height = window->getHeight();
-    //float barHeight = window->getHeight()
+    int deltaHeight = 0;
     float barWidth = (window->getWidth() / numRectangles) - 1.0;
-    int yposition;
     glm::vec4 barColors = {1.0, 0.0, 0.0, 1.0};
     glm::vec4 titleColor = { 0.0, 0.0, 0.0, 1.0 };
     int barHeights [numRectangles];
@@ -41,4 +40,9 @@ private:
     void swapBars(int i, int j);
 
     Aquarius::uniquePtr<Aquarius::OrthographicCamera> m_Camera;
+
+    // Audio
+    Aquarius::Sound::Source m_SoundSource;
+    uint32_t m_DoneSound;
+    double m_Gain = 1.0;
 };
