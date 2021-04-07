@@ -95,6 +95,7 @@ void PongLayer::onCreation()
 
 	m_SoundBuffer = Aquarius::Sound::SoundBuffer::Create();
     m_PaddleSound = m_SoundBuffer->addEffect("Sandbox/Assets/Paddle-sound.wav");
+	m_ScoreSound = m_SoundBuffer->addEffect("Sandbox/Assets/Score-sound.wav");
 
 	currentLeftPaddleType = static_cast<int>(PaddleTypes::Keyboard);
 	m_LeftPaddle = {
@@ -330,12 +331,14 @@ void PongLayer::onDestruction()
 
 void PongLayer::leftScore()
 {
+	m_SoundSource.queueSound(m_ScoreSound, m_Gain);
 	m_Score.LeftScore++;
 	leftHasScored = 0;
 }
 
 void PongLayer::rightScore()
 {
+	m_SoundSource.queueSound(m_ScoreSound, m_Gain);
 	m_Score.RightScore++;
 	rightHasScored = 0;
 }
