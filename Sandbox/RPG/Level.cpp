@@ -30,6 +30,11 @@ Level::Level(Aquarius::SpriteSheet* spritesheet,
 	}
 }
 
+void Level::addItem(Item* item)
+{
+	m_items.push_back(item);
+}
+
 void Level::setTile(int mapI, int mapJ, int spriteI, int spriteJ)
 {
 	m_map[mapI][mapJ].i = spriteI;
@@ -68,5 +73,19 @@ void Level::draw()
 				0.0f
 			);
 		}
+	}
+
+	// Draw each of the worlds items
+	for (auto item: m_items)
+	{
+		item->draw();
+	}
+}
+
+Level::~Level()
+{
+	for (Item* item : m_items)
+	{
+		delete item;
 	}
 }

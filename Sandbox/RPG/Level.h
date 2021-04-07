@@ -1,6 +1,7 @@
 #pragma once 
 
 #include "Aquarius.h"
+#include "Item.h"
 
 #include <array>
 #include <string> 
@@ -18,7 +19,10 @@ public:
 		  const std::string& name
 	);
 
-	~Level() = default;
+	~Level();
+
+
+	void addItem(Item* item);
 
 	// Set the given tile to the given texture 
 	void setTile(int mapI, int mapJ, int spriteI, int spriteJ);
@@ -57,7 +61,7 @@ private:
 	int m_tileHeight;
 	int m_tileWidth;
 
-	// TODO Could be an array
 	std::vector<std::vector<Tile>> m_map;
+	std::vector<Item*> m_items;
 };
 
