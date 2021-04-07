@@ -17,10 +17,12 @@ class PongLayer : public Aquarius::Layer
 {
 public:
 	PongLayer();
+	virtual ~PongLayer();
 
 	void onCreation() override;
 	void onEvent(const Aquarius::Event&) override;
 	void onUpdate(Aquarius::timeDelta_t) override;
+	void onDestruction() override;
 
 	void leftScore() { m_Score.LeftScore++; }
 	void rightScore() { m_Score.RightScore++; }
@@ -47,4 +49,10 @@ private:
 
 	// State management
 	bool m_isPaused = false;
+
+	// Audio
+	Aquarius::uniquePtr<Aquarius::Sound::SoundBuffer> m_SoundBuffer;
+	Aquarius::Sound::Source m_SoundSource;
+    uint32_t m_PaddleSound;
+    double m_Gain = 1.0;
 };

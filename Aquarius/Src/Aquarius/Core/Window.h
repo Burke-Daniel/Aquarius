@@ -2,6 +2,7 @@
 
 #include "Aquarius/Core/Utility.h"
 #include "Aquarius/Renderer/RenderingContext.h"
+#include "Aquarius/Sound/Devices.h"
 
 #include <memory>
 #include <GLFW/glfw3.h>
@@ -44,7 +45,7 @@ namespace Aquarius {
         bool m_VsyncEnabled;
         GLFWwindow* m_Window;
         std::unique_ptr<RenderingContext> m_Context;
-
+        Sound::Device* m_SoundDevice;
 
         // Deallocate window resources
         void Deallocate();

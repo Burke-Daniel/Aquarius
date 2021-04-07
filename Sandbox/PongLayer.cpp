@@ -27,6 +27,11 @@ PongLayer::PongLayer()
 		});
 }
 
+PongLayer::~PongLayer()
+{
+	onDestruction();
+}
+
 void PongLayer::onCreation()
 {
 	int height = window.getHeight();
@@ -54,6 +59,9 @@ void PongLayer::onCreation()
 	m_FontTexture = std::make_shared<Aquarius::Texture>("Sandbox/Assets/8bitfont.png", textureConfiguration, true);
 	m_Font = std::make_shared<Aquarius::Bitmap>(m_FontTexture.get(), 21, 28);
 
+	m_SoundBuffer = Aquarius::Sound::SoundBuffer::Create();
+    m_PaddleSound = m_SoundBuffer->addEffect("Sandbox/Assets/Paddle-sound.wav");
+
 	m_LeftPaddle = {
 		paddleTexture,
 		//std::make_unique<MousePaddleController>(),
@@ -80,6 +88,8 @@ void PongLayer::onCreation()
 		this,
 		ballTexture
 	};
+
+	m_SoundSource.beginSoundThread();
 }
 
 void PongLayer::onEvent(const Aquarius::Event& event)
@@ -158,6 +168,11 @@ void PongLayer::onUpdate(Aquarius::timeDelta_t dt)
 	AQ_TRACE("FPS: %v", 1000 / dt);
 }
 
+void PongLayer::onDestruction()
+{
+	m_SoundSource.endSoundThread();
+}
+
 void PongLayer::checkPaddleCollision()
 {
 	// Constants for readability
@@ -197,6 +212,7 @@ void PongLayer::checkPaddleCollision()
 		   (ballCoords[bottomRight].y >= rightPaddleCoords[topLeft].y &&
 			ballCoords[bottomRight].y <= rightPaddleCoords[bottomLeft].y))
 		{
+		    m_SoundSource.queueSound(m_PaddleSound, m_Gain);
 			AQ_INFO("Collision with right paddle!!");
 			handleCollision(false);
 		}
@@ -210,6 +226,7 @@ void PongLayer::checkPaddleCollision()
 		   (ballCoords[bottomLeft].y >= leftPaddleCoords[topRight].y &&
 			ballCoords[bottomLeft].y <= leftPaddleCoords[bottomRight].y))
 		{
+            m_SoundSource.queueSound(m_PaddleSound, m_Gain);
 			AQ_INFO("Collision with left paddle!!");
 			handleCollision(true);
 		}

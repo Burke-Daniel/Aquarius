@@ -60,6 +60,9 @@ namespace Aquarius {
         m_Context = RenderingContext::Create(m_Window);
         m_Context->Initialize();
 
+        // Initialize Sound
+        m_SoundDevice->get();
+
         glViewport(0, 0, m_Width, m_Height);
         setVsync(m_VsyncEnabled);
 

@@ -31,6 +31,11 @@
 // -- Imgui
 #include "Aquarius/Imgui/GuiManager.h"
 
+// -- Sound
+#include "Aquarius/Sound/Devices.h"
+#include "Aquarius/Sound/SoundBuffer.h"
+#include "Aquarius/Sound/Source.h"
+
 #include <easylogging++.h>
 #include <glad/glad.h>
 #include <GLFW/glfw3.h>
