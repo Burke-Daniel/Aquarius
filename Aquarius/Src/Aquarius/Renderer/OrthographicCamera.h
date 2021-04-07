@@ -23,8 +23,11 @@ namespace Aquarius {
 		void updateProjection();
 
 		void setPosition(const glm::vec3& pos) { m_Position = pos; updateView(); }
+		void setMoveSpeed(float speed) { m_moveSpeed = speed; }
+		void setZoomSpeed(float speed) { m_ZoomSpeed = speed; }
 		void setZoom(float zoom) { m_Zoom = zoom; updateView(); }
 		float getZoom() const { return m_Zoom; }
+
 		const glm::mat4& getView() const { return m_View; };
 		const glm::mat4& getProjection() const { return m_Projection; }
 		const glm::vec3& getPosition() const { return m_Position; }
