@@ -18,7 +18,7 @@ namespace Aquarius {
 
             void beginSoundThread();
             void endSoundThread();
-            void queueSound(uint32_t sound_buffer);
+            void queueSound(uint32_t sound_buffer, double gain);
 
         private:
             void audioLoop();

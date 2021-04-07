@@ -71,9 +71,10 @@ namespace Aquarius {
             alSourcePlay(m_Source);
         }
 
-        void Source::queueSound(uint32_t sound_buffer)
+        void Source::queueSound(uint32_t sound_buffer, double gain)
         {
             std::lock_guard<std::mutex> lock(m_SoundMutex);
+            alSourcef(m_Source, AL_GAIN, gain);
             m_QueuedSounds.push(sound_buffer);
         }
 

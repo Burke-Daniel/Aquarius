@@ -211,7 +211,7 @@ void PongLayer::checkPaddleCollision()
 		   (ballCoords[bottomRight].y >= rightPaddleCoords[topLeft].y &&
 			ballCoords[bottomRight].y <= rightPaddleCoords[bottomLeft].y))
 		{
-		    m_SoundSource.queueSound(m_PaddleSound);
+		    m_SoundSource.queueSound(m_PaddleSound, m_Gain);
 			AQ_INFO("Collision with right paddle!!");
 			handleCollision(false);
 		}
@@ -225,7 +225,7 @@ void PongLayer::checkPaddleCollision()
 		   (ballCoords[bottomLeft].y >= leftPaddleCoords[topRight].y &&
 			ballCoords[bottomLeft].y <= leftPaddleCoords[bottomRight].y))
 		{
-            m_SoundSource.queueSound(m_PaddleSound);
+            m_SoundSource.queueSound(m_PaddleSound, m_Gain);
 			AQ_INFO("Collision with left paddle!!");
 			handleCollision(true);
 		}
