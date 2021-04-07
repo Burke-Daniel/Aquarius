@@ -22,7 +22,6 @@ private:
     static constexpr int numRectangles = 40;
     bool pauseSort = false;
     bool sorted = false;
-    bool swapped = false;
     bool resetSort = true;
     bool m_MenuOpen = true;
     bool resized = false;
