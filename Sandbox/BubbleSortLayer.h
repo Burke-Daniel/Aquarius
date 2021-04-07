@@ -27,6 +27,7 @@ private:
     bool m_MenuOpen = true;
     bool resized = false;
     int m_Height = window->getHeight();
+    //float barHeight = window->getHeight()
     float barWidth = (window->getWidth() / numRectangles) - 1.0;
     int yposition;
     glm::vec4 barColors = {1.0, 0.0, 0.0, 1.0};

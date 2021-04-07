@@ -61,13 +61,9 @@ void BubbleSortLayer::onKeyEvent(const Aquarius::Event& event)
 void BubbleSortLayer::onResizeEvent(const Aquarius::Event& event)
 {
     auto windowResize = static_cast<const Aquarius::WindowResizedEvent&>(event);
-
     m_Height = window->getHeight();
-    for (int i = 0; i < numRectangles; i++)
-    {
-        int heightFactor = m_Height*0.00005;
-        barHeights[i] = barHeights[i]+(m_Height-30)*0.00005;
-    }
+
+    resized = true;
 }
 
 void BubbleSortLayer::onUpdate(Aquarius::timeDelta_t dt)
@@ -87,16 +83,16 @@ void BubbleSortLayer::onUpdate(Aquarius::timeDelta_t dt)
     m_Font->RenderText("BUBBLE SORT", titlePosition, 1.0, titleColor);
     m_Font->RenderText("COMPARISON COUNT-" + std::string(comparisonCountDigits), comparisonPosition, 0.5, titleColor);
 
-    /*if (resized)
+    if (resized)
     {
         for (int i = 0; i < numRectangles; i++)
         {
-            barHeights[i] += (m_Height-200)*0.00005;
+            barHeights[i] = barHeights[i]+(m_Height-100)*0.005;
         }
 
-        AQ_CORE_INFO("Resized event");
         resized = false;
-    }*/
+    }
+
     if (Aquarius::Input::isKeyPressed(Aquarius::Input::KeyCode::Key_m))
     {
         m_MenuOpen = true;
