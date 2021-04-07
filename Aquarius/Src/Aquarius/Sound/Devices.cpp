@@ -12,11 +12,6 @@ namespace Aquarius {
             Initialize();
         }
 
-        uniquePtr<Device> Device::Create()
-        {
-            return std::make_unique<Device>();
-        }
-
         void Device::Initialize()
         {
             m_Device = alcOpenDevice(nullptr);
@@ -48,6 +43,17 @@ namespace Aquarius {
             {
                 AQ_CORE_ERROR("Failed to make the context current");
             }
+        }
+
+        Device * Device::get()
+        {
+            static Device* device = new Device();
+            return device;
+        }
+
+        Device::~Device()
+        {
+            Deallocate();
         }
 
         void Device::Deallocate()

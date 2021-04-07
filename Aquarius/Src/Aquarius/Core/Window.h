@@ -45,7 +45,7 @@ namespace Aquarius {
         bool m_VsyncEnabled;
         GLFWwindow* m_Window;
         std::unique_ptr<RenderingContext> m_Context;
-        std::unique_ptr<Sound::Device> m_SoundDevice;
+        Sound::Device* m_SoundDevice;
 
         // Deallocate window resources
         void Deallocate();

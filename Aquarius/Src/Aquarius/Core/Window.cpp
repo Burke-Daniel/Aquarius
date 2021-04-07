@@ -61,7 +61,7 @@ namespace Aquarius {
         m_Context->Initialize();
 
         // Initialize Sound
-        m_SoundDevice->Create();
+        m_SoundDevice->get();
 
         glViewport(0, 0, m_Width, m_Height);
         setVsync(m_VsyncEnabled);
@@ -127,8 +127,6 @@ namespace Aquarius {
         glfwTerminate();
 
         AQ_CORE_INFO("Window destroyed and GLFW terminated");
-
-        m_SoundDevice->Deallocate();
     }
 
     void Window::setVsync(bool enabled)

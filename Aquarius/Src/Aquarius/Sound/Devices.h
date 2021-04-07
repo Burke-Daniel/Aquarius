@@ -1,7 +1,5 @@
 #pragma once
 
-#include "Aquarius/Core/Utility.h"
-
 #include <AL/alc.h>
 #include <memory>
 
@@ -13,11 +11,15 @@ namespace Aquarius {
         class Device
         {
         public:
-            Device();
-            static uniquePtr<Device> Create();
+            static Device* get();
             void Deallocate();
 
+            ~Device();
+
+            Device();
+
         private:
+
             void Initialize();
             ALCdevice* m_Device;
             ALCcontext* m_Context;

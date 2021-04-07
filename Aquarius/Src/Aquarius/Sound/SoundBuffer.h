@@ -16,6 +16,7 @@ namespace Aquarius {
         {
         public:
             SoundBuffer();
+            //~SoundBuffer();
             static uniquePtr<SoundBuffer> Create();
 
             uint32_t addEffect(const std::string file_path);
