@@ -37,6 +37,7 @@ private:
     int comparisonCount = 0;
     void renderBars(int size);
     void swapBars(int i, int j);
+    bool swapped;
 
     Aquarius::uniquePtr<Aquarius::OrthographicCamera> m_Camera;
 
