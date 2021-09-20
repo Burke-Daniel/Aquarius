@@ -23,8 +23,8 @@ running. Please see the below instructions based on your operating system.**
 3. If a window opens, you have successfully built and run a sample Aquarius application!
 
 ## Sandbox Demo Application
-To demonstrate the features of the engine, three demo applications were developed. Using a layering system, one executable 
-was developed containing all for demos, where page-up / page-down can be used to cycle between the demos. 
+To demonstrate the features of the engine, four demo applications were developed. Using a layering system, one executable 
+was developed containing all for demos, where page-up / page-down can be used to cycle between the demos. The code for each layer of the demo is in `Sandbox`. 
 
 ### Entity Viewer
 ![](Resources/EntityViewer.png)
