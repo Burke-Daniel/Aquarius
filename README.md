@@ -3,11 +3,6 @@
 A 2D game engine developed by Colton Smith, Daniel Burke, & Liam Warren for the Junior Software Design Project 
 (ECE 5010).
 
-![](Resources/EntityViewer.png) 
-![](Resources/RPG-Config.png)
-![](Resources/BubbleSortVisualizer.png)
-![](Resources/Pong.png)
-
 ## Additional Required Software
 - CMake Version 3.10 ([Download](https://cmake.org/download/))
 
@@ -26,3 +21,17 @@ running. Please see the below instructions based on your operating system.**
 1. Navigate in a command-line interface to the project folder
 2. In your command-line interface execute the following command `build-run-sample-app.bat`
 3. If a window opens, you have successfully built and run a sample Aquarius application!
+
+## Sandbox Demo Application
+To demonstrate the features of the engine, three demo applications were developed. Using a layering system, one executable 
+was developed containing all for demos, where page-up / page-down can be used to cycle between the demos. 
+
+### Entity Viewer
+![](Resources/EntityViewer.png)
+
+### Bubblesort Visualizer
+![](Resources/BubbleSortVisualizer.png)
+### 2D Construction RPG
+![](Resources/RPG-Config.png)
+### Pong Clone
+![](Resources/Pong.png)
